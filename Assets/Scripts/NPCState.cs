@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCSpeaking : MonoBehaviour
+public class NPCState : MonoBehaviour
 {
     // Start is called before the first frame update
+    public bool isDead;
+
     void Start()
     {
     }
@@ -16,6 +18,11 @@ public class NPCSpeaking : MonoBehaviour
 
     public void StartSpeak()
     {
+        if (isDead)
+        {
+            return;
+        }
+
         transform.Find("DialogWindow").gameObject.SetActive(true);
         Invoke(nameof(StopSpeak), 5f);
     }
@@ -23,5 +30,11 @@ public class NPCSpeaking : MonoBehaviour
     public void StopSpeak()
     {
         transform.Find("DialogWindow").gameObject.SetActive(false);
+    }
+
+    public void Die()
+    {
+        transform.GetComponent<SpriteRenderer>().color = Color.red;
+        isDead = true;
     }
 }

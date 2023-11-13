@@ -6,6 +6,7 @@ public class InteractWithNPC : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject NPC;
+    public bool haveWeapon;
 
     void Start()
     {
@@ -18,7 +19,15 @@ public class InteractWithNPC : MonoBehaviour
         {
             if (NPC != null)
             {
-                NPC.GetComponent<NPCSpeaking>().StartSpeak();
+                NPC.GetComponent<NPCState>().StartSpeak();
+            }
+        }
+
+        if (Input.GetKey(KeyCode.R))
+        {
+            if (NPC != null && haveWeapon)
+            {
+                NPC.GetComponent<NPCState>().Die();
             }
         }
     }
