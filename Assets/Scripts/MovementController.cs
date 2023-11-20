@@ -14,6 +14,7 @@ public class MovementController : MonoBehaviour
         _input = new Controls();
         _input.Enable();
         _rb = GetComponent<Rigidbody2D>();
+        
     }
 
     // Update is called once per frame

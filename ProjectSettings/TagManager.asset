@@ -5,15 +5,18 @@ TagManager:
   serializedVersion: 2
   tags:
   - NPC
+  - Door
+  - Weapon
+  - Clothes
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Door
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - PickUpAble
   - 
   - 
   - 
