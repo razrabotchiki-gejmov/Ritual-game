@@ -5,15 +5,15 @@ using UnityEngine;
 public class WeaponScript : MonoBehaviour
 {
     [SerializeField] private GameObject weaponSlot;
+    public GameObject player;
+
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void PickUpWeapon()
@@ -22,5 +22,6 @@ public class WeaponScript : MonoBehaviour
         weapon.transform.parent = weaponSlot.transform;
         weapon.GetComponent<BoxCollider2D>().enabled = false;
         Destroy(gameObject);
+        player.GetComponent<InteractWithNPC>().haveWeapon = true;
     }
 }

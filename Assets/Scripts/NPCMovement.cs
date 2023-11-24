@@ -6,11 +6,14 @@ public class NPCMovement : MonoBehaviour
 {
     // Start is called before the first frame update
     private Rigidbody2D _rb;
+    public float speed;
+    public float dir = 1;
+    public GameObject body;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        Move();
+        MoveRight();
     }
 
     // Update is called once per frame
@@ -20,40 +23,49 @@ public class NPCMovement : MonoBehaviour
     }
 
 
-    public void Move()
+    // public void Move()
+    // {
+    //     var dir =
+    //         var methodValue = Random.Range(0, 4);
+    //     Debug.Log(methodValue);
+    //     if (methodValue == 0)
+    //     {
+    //         MoveLeft();
+    //     }
+    //     else if (methodValue == 1)
+    //     {
+    //         MoveDown();
+    //     }
+    //     else if (methodValue == 2)
+    //     {
+    //         MoveRight();
+    //     }
+    //     else
+    //     {
+    //         MoveUp();
+    //     }
+    //
+    //     Invoke(nameof(Stop), 3);
+    // }
+    public void RotateBody()
     {
-        var methodValue = Random.Range(0, 4);
-        Debug.Log(methodValue);
-        if (methodValue == 0)
-        {
-            MoveLeft();
-        }
-        else if (methodValue == 1)
-        {
-            MoveDown();
-        }
-        else if (methodValue == 2)
-        {
-            MoveRight();
-        }
-        else
-        {
-            MoveUp();
-        }
-
-        Invoke(nameof(Stop), 3);
+        body.transform.Rotate(0, 0, 180);
     }
 
     public void MoveLeft()
     {
-        transform.localRotation = new Quaternion(0, 0, 0, 0);
-        _rb.velocity = Vector2.left * 2;
+        RotateBody();
+        // transform.localRotation = new Quaternion(0, 0, 0, 0);
+        _rb.velocity = Vector2.left * speed;
+        Invoke(nameof(Stop), 3);
     }
 
     public void MoveRight()
     {
-        transform.localRotation = new Quaternion(0, 0, 180, 0);
-        _rb.velocity = Vector2.right * 2;
+        RotateBody();
+        // transform.localRotation = new Quaternion(0, 0, 180, 0);
+        _rb.velocity = Vector2.right * speed;
+        Invoke(nameof(Stop), 3);
     }
 
     public void MoveUp()
@@ -66,11 +78,27 @@ public class NPCMovement : MonoBehaviour
     {
         transform.localRotation = new Quaternion(0, 0, 90, 0);
         _rb.velocity = Vector2.down * 2;
+
+        // Invoke(nameof(Stop), 3);
     }
 
     public void Stop()
     {
+        dir = (dir + 1) % 2;
         _rb.velocity = Vector2.zero;
-        Invoke(nameof(Move), 1);
+        if (dir == 0)
+        {
+            Invoke(nameof(MoveLeft), 1);
+        }
+        else
+        {
+            Invoke(nameof(MoveRight), 1);
+        }
+    }
+
+    public void FullStop()
+    {
+        _rb.velocity = Vector2.zero;
+        CancelInvoke();
     }
 }

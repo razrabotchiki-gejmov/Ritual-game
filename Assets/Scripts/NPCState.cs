@@ -34,7 +34,8 @@ public class NPCState : MonoBehaviour
 
     public void Die()
     {
-        transform.GetComponent<SpriteRenderer>().color = Color.red;
+        // transform.GetComponent<SpriteRenderer>().color = Color.red;
         isDead = true;
+        GetComponent<NPCMovement>().FullStop();
     }
 }
