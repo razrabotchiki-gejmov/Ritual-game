@@ -9,6 +9,7 @@ public class NPCMovement : MonoBehaviour
     public float speed;
     public float dir = 1;
     public GameObject body;
+    public bool isMoveToPoint;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class NPCMovement : MonoBehaviour
     void Update()
     {
         // _rb.velocity = Vector2.left * 2;
+        if (isMoveToPoint) MoveToPoint(new Vector3(9, 9, 0));
     }
 
 
@@ -100,5 +102,12 @@ public class NPCMovement : MonoBehaviour
     {
         _rb.velocity = Vector2.zero;
         CancelInvoke();
+        isMoveToPoint = false;
+    }
+
+    public void MoveToPoint(Vector2 point)
+    {
+        var vector = point - (Vector2)transform.position;
+        _rb.velocity = Vector2.Min(vector, (vector).normalized) * 2;
     }
 }

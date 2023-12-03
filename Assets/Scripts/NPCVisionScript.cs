@@ -11,6 +11,7 @@ public class NPCVisionScript : MonoBehaviour
     public GameObject player;
     public GameObject detectionRatingScale;
     public GameObject detectionRatingText;
+    public GameObject NPC;
 
     void Start()
     {
@@ -23,7 +24,8 @@ public class NPCVisionScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && player.GetComponent<InteractWithNPC>().haveWeapon)
+        if (other.CompareTag("Player") && player.GetComponent<InteractWithNPC>().haveWeapon &&
+            !NPC.GetComponent<NPCState>().isDead && !player.GetComponent<InteractWithNPC>().isInvisible)
         {
             IncreaseDetectionRating(20);
         }
