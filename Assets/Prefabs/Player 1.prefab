@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 3292787310635837508}
   - component: {fileID: 8530143677410190095}
   - component: {fileID: 6970897971096797278}
+  - component: {fileID: 4499276404109488796}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Player
@@ -302,6 +303,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+--- !u!114 &4499276404109488796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846053984003708616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5be39ce18d24c946bbd94184b45b0f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponSlot: {fileID: 4421270007954810364}
 --- !u!1 &4421270007954810364
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,6 +325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2825439126429985120}
+  - component: {fileID: 280075975196701321}
   m_Layer: 6
   m_Name: WeaponSlot
   m_TagString: Untagged
@@ -333,3 +348,16 @@ Transform:
   m_Children: []
   m_Father: {fileID: 529538920399930663}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -69.367}
+--- !u!114 &280075975196701321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4421270007954810364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c7462f385da0054ca8f99f265077df0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons: []

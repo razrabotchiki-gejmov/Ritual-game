@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class Clothes : MonoBehaviour
 {
+    public bool isInBlood = false;
     [SerializeField] private GameObject clothesSlot;
     // Start is called before the first frame update
     void Start()
@@ -22,5 +24,10 @@ public class Clothes : MonoBehaviour
         clothes.transform.parent = clothesSlot.transform;
         clothes.GetComponent<BoxCollider2D>().enabled = false;
         Destroy(gameObject);
+    }
+
+    public void PaintInBlood()
+    {
+        isInBlood = true;
     }
 }

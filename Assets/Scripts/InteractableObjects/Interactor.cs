@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEditor.SearchService;
 using UnityEditor.UIElements;
 using UnityEngine;
 
@@ -25,7 +27,7 @@ public class Interactor : MonoBehaviour
             if(tag == "Door")
             {
                 Debug.Log("this is door");
-                if (_input.Interact.Door.WasPerformedThisFrame())
+                if (_input.Interact.InteractWithObjects.WasPerformedThisFrame())
                 {
                     Debug.Log("Door is interacted");
                     var door = GetComponent<Door>();
@@ -53,17 +55,25 @@ public class Interactor : MonoBehaviour
                 Debug.Log("this is clothes");
                 if (_input.Interact.PickupClothes.WasPerformedThisFrame())
                 {
-                    var weapon = GetComponent<Clothes>();
+                    var clothes = GetComponent<Clothes>();
                     Debug.Log("clothes pickuped");
                     isInteractInRange = false;
-                    weapon.PickUpClothes();
+                    clothes.PickUpClothes();
+
+                }
+            }
+            if (tag== "Iterable")
+            {
+                Debug.Log("this is smth Iterable");
+                if(name == "Lamp")
+                {
 
                 }
             }
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("Player"))
         {
@@ -71,12 +81,11 @@ public class Interactor : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             isInteractInRange = false;
         }
     }
-
 }
