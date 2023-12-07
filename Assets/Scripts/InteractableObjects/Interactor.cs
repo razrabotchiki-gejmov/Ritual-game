@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.SearchService;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class Interactor : MonoBehaviour
