@@ -9,9 +9,17 @@ public class NPCMovement : MonoBehaviour
     public float speed;
     public float dir = 1;
     public GameObject body;
+    public bool isMoveToPoint;
+    public bool isMoveToStartPoint;
+    public float timeToReturn = 60;
+    public float timeToMove = 3;
+    public Vector2 startPoint;
 
     void Start()
     {
+        startPoint = transform.position;
+        body.transform.rotation = new Quaternion(0, 0, 0, 0);
+        dir = 1;
         _rb = GetComponent<Rigidbody2D>();
         MoveRight();
     }
@@ -20,6 +28,21 @@ public class NPCMovement : MonoBehaviour
     void Update()
     {
         // _rb.velocity = Vector2.left * 2;
+        if (isMoveToPoint) MoveToPoint(new Vector3(9, 9, 0));
+        if (timeToReturn <= 0)
+        {
+            timeToReturn = 60;
+            isMoveToPoint = false;
+            isMoveToStartPoint = true;
+        }
+
+        if (isMoveToStartPoint) ReturnToStartPoint();
+        if (timeToMove <= 0)
+        {
+            timeToMove = 3;
+            isMoveToStartPoint = false;
+            Start();
+        }
     }
 
 
@@ -100,5 +123,28 @@ public class NPCMovement : MonoBehaviour
     {
         _rb.velocity = Vector2.zero;
         CancelInvoke();
+        isMoveToPoint = false;
+    }
+
+    public void MoveToPoint(Vector2 point)
+    {
+        var vector = point - (Vector2)transform.position;
+        _rb.velocity = Vector2.Min(vector, (vector).normalized) * 2;
+        timeToReturn -= Time.deltaTime;
+    }
+
+    public void ReturnToStartPoint()
+    {
+        var vector = startPoint - (Vector2)transform.position;
+        var normalizedVector = (vector).normalized;
+        if (normalizedVector.magnitude > vector.magnitude)
+        {
+            timeToMove -= Time.deltaTime;
+            _rb.velocity = vector * 2;
+        }
+        else
+        {
+            _rb.velocity = normalizedVector * 2;
+        }
     }
 }

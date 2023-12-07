@@ -23,7 +23,7 @@ public class WeaponScript : MonoBehaviour
         weapon.transform.parent = weaponSlot.transform;
         weapon.GetComponent<BoxCollider2D>().enabled = false;
         weaponSlot.GetComponent<WeaponSlotController>().AddWeapon(weapon.gameObject);
-        player.GetComponent<InteractWithNPC>().haveWeapon = true;
+        if (gameObject.name == "Knife") player.GetComponent<InteractWithNPC>().haveWeapon = true;
         weapon.pickedUp = true;
         Destroy(gameObject);
     }

@@ -11,6 +11,7 @@ public class NPCVisionScript : MonoBehaviour
     public GameObject player;
     public GameObject detectionRatingScale;
     public GameObject detectionRatingText;
+    public GameObject NPC;
 
     void Start()
     {
@@ -23,7 +24,8 @@ public class NPCVisionScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && player.GetComponent<InteractWithNPC>().haveWeapon)
+        if (other.CompareTag("Player") && player.GetComponent<InteractWithNPC>().haveWeapon &&
+            !NPC.GetComponent<NPCState>().isDead && !player.GetComponent<InteractWithNPC>().isInvisible)
         {
             IncreaseDetectionRating(20);
         }
@@ -32,12 +34,13 @@ public class NPCVisionScript : MonoBehaviour
     public void IncreaseDetectionRating(int value)
     {
         var currentValue = int.Parse(detectionRatingText.GetComponent<TextMeshProUGUI>().text);
-        if (currentValue == 100)
+        var newValue = currentValue + value;
+        if (newValue > 100)
         {
-            return;
+            newValue = 100;
         }
 
-        detectionRatingText.GetComponent<TextMeshProUGUI>().text = (currentValue + value).ToString();
-        detectionRatingScale.GetComponent<RectTransform>().sizeDelta += Vector2.right * value * 4;
+        detectionRatingText.GetComponent<TextMeshProUGUI>().text = newValue.ToString();
+        detectionRatingScale.GetComponent<RectTransform>().sizeDelta = new Vector2(newValue * 4, 20);
     }
 }
