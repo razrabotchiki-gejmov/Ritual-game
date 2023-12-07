@@ -398,6 +398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
+  type: 2
 --- !u!50 &907902631037830492
 Rigidbody2D:
   serializedVersion: 4
@@ -440,6 +441,11 @@ MonoBehaviour:
   speed: 2
   dir: 1
   body: {fileID: 6489550146334373108}
+  isMoveToPoint: 0
+  isMoveToStartPoint: 0
+  timeToReturn: 60
+  timeToMove: 3
+  startPoint: {x: 0, y: 0}
 --- !u!1 &6033208712179112795
 GameObject:
   m_ObjectHideFlags: 0

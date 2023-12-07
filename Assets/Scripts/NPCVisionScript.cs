@@ -34,12 +34,13 @@ public class NPCVisionScript : MonoBehaviour
     public void IncreaseDetectionRating(int value)
     {
         var currentValue = int.Parse(detectionRatingText.GetComponent<TextMeshProUGUI>().text);
-        if (currentValue == 100)
+        var newValue = currentValue + value;
+        if (newValue > 100)
         {
-            return;
+            newValue = 100;
         }
 
-        detectionRatingText.GetComponent<TextMeshProUGUI>().text = (currentValue + value).ToString();
-        detectionRatingScale.GetComponent<RectTransform>().sizeDelta += Vector2.right * value * 4;
+        detectionRatingText.GetComponent<TextMeshProUGUI>().text = newValue.ToString();
+        detectionRatingScale.GetComponent<RectTransform>().sizeDelta = new Vector2(newValue * 4, 20);
     }
 }

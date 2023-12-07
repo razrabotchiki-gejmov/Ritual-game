@@ -6,6 +6,8 @@ public class NPCState : MonoBehaviour
 {
     // Start is called before the first frame update
     public bool isDead;
+    public int type;
+    //0 -монахи и повара, 1 - стражники, 2 - паладины, 3 - настоятель
 
     void Start()
     {

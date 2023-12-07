@@ -38,7 +38,7 @@ public class InteractWithNPC : MonoBehaviour
 
         if (Input.GetKey(KeyCode.R))
         {
-            if (NPC != null && haveWeapon)
+            if (NPC != null && haveWeapon && NPC.GetComponent<NPCState>().type == 0)
             {
                 NPC.GetComponent<NPCState>().Die();
                 BecomeVisible();
@@ -47,7 +47,7 @@ public class InteractWithNPC : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Alpha1))
         {
-            if (NPC != null && !NPC.GetComponent<NPCState>().isDead)
+            if (NPC != null && !NPC.GetComponent<NPCState>().isDead && NPC.GetComponent<NPCState>().type != 2)
             {
                 NPC.GetComponent<NPCMovement>().FullStop();
                 NPC.GetComponent<NPCMovement>().isMoveToPoint = true;
@@ -61,8 +61,7 @@ public class InteractWithNPC : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Alpha3))
         {
-            BecomeInvisible();
-            if (NPC != null)
+            if (NPC != null && NPC.GetComponent<NPCState>().type <= 1)
             {
                 NPC.GetComponent<NPCState>().Die();
                 BecomeVisible();

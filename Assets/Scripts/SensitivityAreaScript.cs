@@ -61,6 +61,6 @@ public class SensitivityAreaScript : MonoBehaviour
         }
 
         detectionRatingText.GetComponent<TextMeshProUGUI>().text = (newValue).ToString();
-        detectionRatingScale.GetComponent<RectTransform>().sizeDelta += Vector2.right * value * 4;
+        detectionRatingScale.GetComponent<RectTransform>().sizeDelta = new Vector2(newValue * 4, 20);
     }
 }

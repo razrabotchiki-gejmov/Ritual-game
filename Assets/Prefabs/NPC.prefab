@@ -318,6 +318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
+  type: 0
 --- !u!50 &6706757905587179420
 Rigidbody2D:
   serializedVersion: 4
@@ -360,6 +361,11 @@ MonoBehaviour:
   speed: 2
   dir: 1
   body: {fileID: 4107582835711054090}
+  isMoveToPoint: 0
+  isMoveToStartPoint: 0
+  timeToReturn: 60
+  timeToMove: 3
+  startPoint: {x: 0, y: 0}
 --- !u!1 &4107582835711054090
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,7 +391,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4107582835711054090}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -436,7 +442,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0.942582, b: 0, a: 1}
+  m_Color: {r: 0.88071203, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
