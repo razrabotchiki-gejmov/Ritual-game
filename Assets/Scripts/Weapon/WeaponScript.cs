@@ -5,6 +5,7 @@ using UnityEngine;
 public class WeaponScript : MonoBehaviour
 {
     [SerializeField] private GameObject weaponSlot;
+    [SerializeField] private bool pickedUp = false;
     public GameObject player;
 
     void Start()
@@ -21,7 +22,9 @@ public class WeaponScript : MonoBehaviour
         var weapon = Instantiate(this, weaponSlot.transform.position, weaponSlot.transform.rotation);
         weapon.transform.parent = weaponSlot.transform;
         weapon.GetComponent<BoxCollider2D>().enabled = false;
-        Destroy(gameObject);
+        weaponSlot.GetComponent<WeaponSlotController>().AddWeapon(weapon.gameObject);
         player.GetComponent<InteractWithNPC>().haveWeapon = true;
+        weapon.pickedUp = true;
+        Destroy(gameObject);
     }
 }

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 775837010013885504}
   - component: {fileID: 7310814317012572470}
-  - component: {fileID: 5645933101775511266}
   - component: {fileID: 7508582533449203141}
   - component: {fileID: 4048421572557122089}
   - component: {fileID: 5270682992562261050}
@@ -88,51 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &5645933101775511266
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1874271693272901835}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!61 &7508582533449203141
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -191,6 +145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponSlot: {fileID: 0}
+  pickedUp: 0
+  player: {fileID: 8040821102654569234, guid: ad2cf29f90760c94e8c334ded28272aa, type: 3}
 --- !u!114 &5270682992562261050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,3 +160,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInteractInRange: 0
+  player: {fileID: 8040821102654569234, guid: ad2cf29f90760c94e8c334ded28272aa, type: 3}

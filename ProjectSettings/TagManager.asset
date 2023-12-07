@@ -8,6 +8,8 @@ TagManager:
   - Door
   - Weapon
   - Clothes
+  - Iterable
+  - Food
   layers:
   - Default
   - TransparentFX

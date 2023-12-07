@@ -78,15 +78,6 @@
             "id": "1db2b2d7-54a1-4875-8855-21bbffc11b79",
             "actions": [
                 {
-                    "name": "Door",
-                    "type": "Button",
-                    "id": "9abcfdbd-9fdd-48b2-a739-e9197c2cfabd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "PickupWeapon",
                     "type": "Button",
                     "id": "a90e12e6-6bf5-49db-83c3-906bb3e99a08",
@@ -103,20 +94,27 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "InteractWithObjects",
+                    "type": "Button",
+                    "id": "7b66d263-66db-4d6e-b669-2054e536167c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PaintClothes",
+                    "type": "Button",
+                    "id": "05254ab8-c14d-486f-a782-b2ed1bb02485",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "14fda922-22de-471d-86eb-e6b435963f15",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Door",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "d8152a82-3830-4cbd-85e4-4201f1a9b40e",
@@ -136,6 +134,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "PickupClothes",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64cb398e-8d0b-4fcb-ae5d-393affb41e2f",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "InteractWithObjects",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "27ad163d-80f2-40c5-b615-81e559bfc50e",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PaintClothes",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

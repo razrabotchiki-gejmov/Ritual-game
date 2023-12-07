@@ -100,15 +100,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ""id"": ""1db2b2d7-54a1-4875-8855-21bbffc11b79"",
             ""actions"": [
                 {
-                    ""name"": ""Door"",
-                    ""type"": ""Button"",
-                    ""id"": ""9abcfdbd-9fdd-48b2-a739-e9197c2cfabd"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""PickupWeapon"",
                     ""type"": ""Button"",
                     ""id"": ""a90e12e6-6bf5-49db-83c3-906bb3e99a08"",
@@ -125,20 +116,27 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InteractWithObjects"",
+                    ""type"": ""Button"",
+                    ""id"": ""7b66d263-66db-4d6e-b669-2054e536167c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PaintClothes"",
+                    ""type"": ""Button"",
+                    ""id"": ""05254ab8-c14d-486f-a782-b2ed1bb02485"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""14fda922-22de-471d-86eb-e6b435963f15"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Door"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""d8152a82-3830-4cbd-85e4-4201f1a9b40e"",
@@ -160,6 +158,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""PickupClothes"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""64cb398e-8d0b-4fcb-ae5d-393affb41e2f"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InteractWithObjects"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""27ad163d-80f2-40c5-b615-81e559bfc50e"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PaintClothes"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -171,9 +191,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
         // Interact
         m_Interact = asset.FindActionMap("Interact", throwIfNotFound: true);
-        m_Interact_Door = m_Interact.FindAction("Door", throwIfNotFound: true);
         m_Interact_PickupWeapon = m_Interact.FindAction("PickupWeapon", throwIfNotFound: true);
         m_Interact_PickupClothes = m_Interact.FindAction("PickupClothes", throwIfNotFound: true);
+        m_Interact_InteractWithObjects = m_Interact.FindAction("InteractWithObjects", throwIfNotFound: true);
+        m_Interact_PaintClothes = m_Interact.FindAction("PaintClothes", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -281,16 +302,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     // Interact
     private readonly InputActionMap m_Interact;
     private List<IInteractActions> m_InteractActionsCallbackInterfaces = new List<IInteractActions>();
-    private readonly InputAction m_Interact_Door;
     private readonly InputAction m_Interact_PickupWeapon;
     private readonly InputAction m_Interact_PickupClothes;
+    private readonly InputAction m_Interact_InteractWithObjects;
+    private readonly InputAction m_Interact_PaintClothes;
     public struct InteractActions
     {
         private @Controls m_Wrapper;
         public InteractActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Door => m_Wrapper.m_Interact_Door;
         public InputAction @PickupWeapon => m_Wrapper.m_Interact_PickupWeapon;
         public InputAction @PickupClothes => m_Wrapper.m_Interact_PickupClothes;
+        public InputAction @InteractWithObjects => m_Wrapper.m_Interact_InteractWithObjects;
+        public InputAction @PaintClothes => m_Wrapper.m_Interact_PaintClothes;
         public InputActionMap Get() { return m_Wrapper.m_Interact; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -300,28 +323,34 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_InteractActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_InteractActionsCallbackInterfaces.Add(instance);
-            @Door.started += instance.OnDoor;
-            @Door.performed += instance.OnDoor;
-            @Door.canceled += instance.OnDoor;
             @PickupWeapon.started += instance.OnPickupWeapon;
             @PickupWeapon.performed += instance.OnPickupWeapon;
             @PickupWeapon.canceled += instance.OnPickupWeapon;
             @PickupClothes.started += instance.OnPickupClothes;
             @PickupClothes.performed += instance.OnPickupClothes;
             @PickupClothes.canceled += instance.OnPickupClothes;
+            @InteractWithObjects.started += instance.OnInteractWithObjects;
+            @InteractWithObjects.performed += instance.OnInteractWithObjects;
+            @InteractWithObjects.canceled += instance.OnInteractWithObjects;
+            @PaintClothes.started += instance.OnPaintClothes;
+            @PaintClothes.performed += instance.OnPaintClothes;
+            @PaintClothes.canceled += instance.OnPaintClothes;
         }
 
         private void UnregisterCallbacks(IInteractActions instance)
         {
-            @Door.started -= instance.OnDoor;
-            @Door.performed -= instance.OnDoor;
-            @Door.canceled -= instance.OnDoor;
             @PickupWeapon.started -= instance.OnPickupWeapon;
             @PickupWeapon.performed -= instance.OnPickupWeapon;
             @PickupWeapon.canceled -= instance.OnPickupWeapon;
             @PickupClothes.started -= instance.OnPickupClothes;
             @PickupClothes.performed -= instance.OnPickupClothes;
             @PickupClothes.canceled -= instance.OnPickupClothes;
+            @InteractWithObjects.started -= instance.OnInteractWithObjects;
+            @InteractWithObjects.performed -= instance.OnInteractWithObjects;
+            @InteractWithObjects.canceled -= instance.OnInteractWithObjects;
+            @PaintClothes.started -= instance.OnPaintClothes;
+            @PaintClothes.performed -= instance.OnPaintClothes;
+            @PaintClothes.canceled -= instance.OnPaintClothes;
         }
 
         public void RemoveCallbacks(IInteractActions instance)
@@ -345,8 +374,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     }
     public interface IInteractActions
     {
-        void OnDoor(InputAction.CallbackContext context);
         void OnPickupWeapon(InputAction.CallbackContext context);
         void OnPickupClothes(InputAction.CallbackContext context);
+        void OnInteractWithObjects(InputAction.CallbackContext context);
+        void OnPaintClothes(InputAction.CallbackContext context);
     }
 }
