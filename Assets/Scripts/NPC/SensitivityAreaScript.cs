@@ -10,12 +10,12 @@ public class SensitivityAreaScript : MonoBehaviour
     public float sensitivityCooldown = 2f;
     public float timeToSense;
     public bool isPlayerNear;
-    public GameObject detectionRatingScale;
-    public GameObject detectionRatingText;
+    public GameManager gameManager;
     public GameObject NPC;
 
     void Start()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -25,7 +25,8 @@ public class SensitivityAreaScript : MonoBehaviour
         {
             if (timeToSense <= 0)
             {
-                IncreaseDetectionRating(5);
+                gameManager.IncreaseDetectionRating(5);
+                NPC.GetComponent<NPCState>().StartSpeak(8);
                 timeToSense = sensitivityCooldown;
             }
             else
@@ -49,18 +50,5 @@ public class SensitivityAreaScript : MonoBehaviour
         {
             isPlayerNear = false;
         }
-    }
-
-    public void IncreaseDetectionRating(int value)
-    {
-        var currentValue = int.Parse(detectionRatingText.GetComponent<TextMeshProUGUI>().text);
-        var newValue = currentValue + value;
-        if (newValue > 100)
-        {
-            newValue = 100;
-        }
-
-        detectionRatingText.GetComponent<TextMeshProUGUI>().text = (newValue).ToString();
-        detectionRatingScale.GetComponent<RectTransform>().sizeDelta = new Vector2(newValue * 4, 20);
     }
 }

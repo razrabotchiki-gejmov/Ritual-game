@@ -31,40 +31,40 @@ public class InteractWithNPC : MonoBehaviour
             timeToBecomeVisible -= Time.deltaTime;
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             if (NPC != null)
             {
-                NPC.GetComponent<NPCState>().StartSpeak();
+                NPC.GetComponent<NPCState>().StartSpeak(0);
             }
         }
 
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            if (NPC != null && haveWeapon && NPC.GetComponent<NPCState>().type == 0)
+            if (NPC != null && haveWeapon && NPC.GetComponent<NPCState>().type <= 1)
             {
                 NPC.GetComponent<NPCState>().Die();
                 BecomeVisible();
             }
         }
 
-        if (Input.GetKey(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (NPC != null && !NPC.GetComponent<NPCState>().isDead && NPC.GetComponent<NPCState>().type != 2)
+            if (NPC != null && !NPC.GetComponent<NPCState>().isDead && NPC.GetComponent<NPCState>().type != 3)
             {
                 NPC.GetComponent<NPCMovement>().FullStop();
                 NPC.GetComponent<NPCMovement>().isMoveToPoint = true;
             }
         }
 
-        if (Input.GetKey(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             BecomeInvisible();
         }
 
-        if (Input.GetKey(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            if (NPC != null && NPC.GetComponent<NPCState>().type <= 1)
+            if (NPC != null && NPC.GetComponent<NPCState>().type <= 2)
             {
                 NPC.GetComponent<NPCState>().Die();
                 BecomeVisible();

@@ -398,7 +398,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
-  type: 2
+  type: 3
+  day: 0
+  dialogWindow: {fileID: 0}
+  dialogMessage: {fileID: 0}
 --- !u!50 &907902631037830492
 Rigidbody2D:
   serializedVersion: 4

@@ -281,7 +281,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
-  type: 1
+  type: 2
+  day: 0
+  dialogWindow: {fileID: 0}
+  dialogMessage: {fileID: 0}
 --- !u!50 &7554657735504384348
 Rigidbody2D:
   serializedVersion: 4
@@ -339,7 +342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9041778190553213231}
   - component: {fileID: 7363944795827489159}
-  - component: {fileID: 1151210946069166464}
+  - component: {fileID: 2861051711180767224}
   m_Layer: 0
   m_Name: Body
   m_TagString: NPC
@@ -416,7 +419,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1151210946069166464
+--- !u!114 &2861051711180767224
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -425,7 +428,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1739492417801867311}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fff0b31d521375d4ead0109b6cabe4fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cd3fd336aeb7774388a185bb08bff25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   NPC: {fileID: 1632793557475089259}
