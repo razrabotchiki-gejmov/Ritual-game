@@ -8,6 +8,9 @@ public class MoveToLevel : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.transform.position = nextLevel.position - new Vector3(2,0,0);
+        if (collision.CompareTag("Player"))
+        {
+            collision.transform.position = nextLevel.position - new Vector3(2, 0, 0);
+        }
     }
 }

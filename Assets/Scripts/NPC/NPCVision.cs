@@ -13,13 +13,13 @@ public class NPCVision : MonoBehaviour
     public bool isPlayerSpotted;
     public GameManager gameManager;
     public GameObject player;
-    public NPCState NPC;
+    public GameObject NPC;
 
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         player = GameObject.FindWithTag("Player");
-        NPC = GetComponentInParent<NPCState>();
+        NPC = GetComponentInParent<NPCState>().gameObject;
     }
 
     // Update is called once per frame
@@ -33,7 +33,7 @@ public class NPCVision : MonoBehaviour
             Vector2 dir = transform.TransformDirection(new Vector2(x, y));
             var hits = Physics2D.RaycastAll((Vector2)transform.position + offset,
                 dir, distance);
-            var isSomethingFound = false;
+            var isSomethingFounded = false;
             foreach (var hit in hits)
             {
                 if (hit.collider.gameObject.CompareTag("Player"))
@@ -45,19 +45,19 @@ public class NPCVision : MonoBehaviour
                     }
 
                     Debug.DrawLine((Vector2)transform.position + offset, hit.point, Color.green);
-                    isSomethingFound = true;
+                    isSomethingFounded = true;
                     break;
                 }
 
-                if (hit.collider.gameObject.CompareTag("Door"))
+                if (hit.collider.gameObject.GetComponent<Obstacle>())
                 {
                     Debug.DrawLine((Vector2)transform.position + offset, hit.point, Color.blue);
-                    isSomethingFound = true;
+                    isSomethingFounded = true;
                     break;
                 }
             }
 
-            if (!isSomethingFound)
+            if (!isSomethingFounded)
             {
                 Debug.DrawRay((Vector2)transform.position + offset, dir * distance, Color.red);
             }

@@ -17,6 +17,7 @@ public class NPCState : MonoBehaviour
     {
         dialogWindow = transform.Find("DialogWindow").gameObject;
         dialogMessage = dialogWindow.transform.Find("Background").Find("Text").gameObject.GetComponent<Text>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         // dialogMessage = transform.Find("Text").gameObject.GetComponent<Text>();
     }
 
