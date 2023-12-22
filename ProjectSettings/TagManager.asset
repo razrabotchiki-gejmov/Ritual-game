@@ -10,6 +10,7 @@ TagManager:
   - Clothes
   - Iterable
   - Food
+  - Item
   layers:
   - Default
   - TransparentFX

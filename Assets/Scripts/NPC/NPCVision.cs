@@ -38,8 +38,8 @@ public class NPCVision : MonoBehaviour
             {
                 if (hit.collider.gameObject.CompareTag("Player"))
                 {
-                    if (player.GetComponent<InteractWithNPC>().haveWeapon &&
-                        !NPC.GetComponent<NPCState>().isDead && !player.GetComponent<InteractWithNPC>().isInvisible)
+                    if (player.GetComponent<Interaction>().haveWeapon &&
+                        !NPC.GetComponent<NPCState>().isDead && !player.GetComponent<Interaction>().isInvisible)
                     {
                         newIsPlayerSpotted = true;
                     }

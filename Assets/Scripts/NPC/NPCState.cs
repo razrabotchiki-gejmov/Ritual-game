@@ -68,7 +68,7 @@ public class NPCState : MonoBehaviour
         {
             if (type == 0)
             {
-                if (gameManager.day == 1)
+                if (GameData.Day == 1)
                 {
                     return new[]
                     {
@@ -77,7 +77,7 @@ public class NPCState : MonoBehaviour
                     }[
                         Random.Range(0, 5)];
                 }
-                else if (gameManager.day == 2)
+                else if (GameData.Day == 2)
                 {
                     return new[]
                     {
@@ -96,7 +96,7 @@ public class NPCState : MonoBehaviour
             }
             else if (type == 1)
             {
-                if (gameManager.day == 1)
+                if (GameData.Day == 1)
                 {
                     return new[]
                     {

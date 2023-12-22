@@ -9,6 +9,7 @@ public class CameraFollow : MonoBehaviour
 
     void Start()
     {
+        playerTransform = GameObject.FindWithTag("Player").transform;
     }
 
     // Update is called once per frame

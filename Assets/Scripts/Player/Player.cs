@@ -22,22 +22,22 @@ public class Player : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Food"))
-        {
-            if (collision.GetComponent<Food>().isPoisened != true)
-            {
-                Debug.Log("In range of food");
-                if (weaponSlot.GetComponentInChildren<Poison>())
-                {
-                    Debug.Log("Poison found");
-                    if (_input.Interact.InteractWithObjects.WasPerformedThisFrame())
-                    {
-                        Debug.Log("Food poisoned");
-                        collision.GetComponent<Food>().isPoisened = true;
-                        weaponSlot.GetComponent<WeaponSlotController>().RemoveWeapon(weaponSlot.GetComponentInChildren<Poison>().gameObject);
-                    }
-                }
-            }
-        }
+        // if (collision.CompareTag("Food"))
+        // {
+        //     if (collision.GetComponent<Food>().isPoisoned != true)
+        //     {
+        //         Debug.Log("In range of food");
+        //         if (weaponSlot.GetComponentInChildren<Poison>())
+        //         {
+        //             Debug.Log("Poison found");
+        //             if (_input.Interact.InteractWithObjects.WasPerformedThisFrame())
+        //             {
+        //                 Debug.Log("Food poisoned");
+        //                 collision.GetComponent<Food>().isPoisoned = true;
+        //                 weaponSlot.GetComponent<ItemSlotController>().RemoveWeapon(weaponSlot.GetComponentInChildren<Poison>().gameObject);
+        //             }
+        //         }
+        //     }
+        // }
     }
 }

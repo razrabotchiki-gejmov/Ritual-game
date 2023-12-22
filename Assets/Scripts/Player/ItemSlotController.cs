@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class WeaponSlotController : MonoBehaviour
+public class ItemSlotController : MonoBehaviour
 {
     public List<string> weapons;
     // Start is called before the first frame update

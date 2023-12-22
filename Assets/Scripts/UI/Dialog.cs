@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Dialog : MonoBehaviour
@@ -15,6 +16,8 @@ public class Dialog : MonoBehaviour
     public List<MyClass> list = new();
     public int chances = 3;
     public int index;
+    public GameObject gameOverMenu;
+    public GameObject victoryMenu;
 
     void Start()
     {
@@ -150,6 +153,38 @@ public class Dialog : MonoBehaviour
 
     public void EndDialog()
     {
-        Debug.Log(chances <= 0);
+        if (chances <= 0)
+        {
+            Loose();
+        }
+        else
+        {
+            if (GameData.Day == 3)
+            {
+                Win();
+            }
+            else
+            {
+                StartDay();
+            }
+        }
+    }
+
+    public void StartDay()
+    {
+        {
+            GameData.Day += 1;
+            SceneManager.LoadScene(GameData.Day);
+        }
+    }
+
+    public void Loose()
+    {
+        gameOverMenu.SetActive(true);
+    }
+
+    public void Win()
+    {
+        victoryMenu.SetActive(true);
     }
 }

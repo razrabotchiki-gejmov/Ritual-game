@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -10,7 +11,6 @@ public class GameManager : MonoBehaviour
     public GameObject detectionRatingScale;
     public TextMeshProUGUI detectionRatingText;
     public GameObject pauseMenu;
-    public int day;
     public bool isPaused;
 
     void Start()
@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                
                 Pause();
             }
         }
@@ -72,5 +71,10 @@ public class GameManager : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
+    }
+
+    public void EndDay()
+    {
+        SceneManager.LoadScene(4);
     }
 }
