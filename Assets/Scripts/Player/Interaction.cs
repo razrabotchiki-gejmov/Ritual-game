@@ -1,19 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractWithNPC : MonoBehaviour
+public class Interaction : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject NPC;
+    public Food food;
+    public DoorNew door;
+    public Item item;
+    public bool havePoison;
+    public bool haveKey;
     public bool haveWeapon;
     public float invisibilityCooldown = 60f;
     public float timeToBecomeVisible;
     public bool isInvisible;
+
+    public PlayerSpeak playerSpeak;
     // private Controls _input;
 
     void Start()
     {
+        playerSpeak = GetComponent<PlayerSpeak>();
         // _input = new Controls();
         // _input.Enable();
     }
@@ -37,6 +46,36 @@ public class InteractWithNPC : MonoBehaviour
             {
                 NPC.GetComponent<NPCState>().StartSpeak(0);
             }
+
+            if (door != null)
+            {
+                if (door.isLocked)
+                {
+                    if (haveKey)
+                    {
+                        door.Unlock();
+                        haveKey = false;
+                        Destroy(GetComponentInChildren<Item>().gameObject);
+                    }
+                    else
+                    {
+                        playerSpeak.StartSpeak("Похоже она заперта");
+                    }
+                }
+
+                else if (!door.isOpened)
+                    door.Open();
+                else
+                    door.Close();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (item != null)
+            {
+                item.PickUpWeapon();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -45,6 +84,19 @@ public class InteractWithNPC : MonoBehaviour
             {
                 NPC.GetComponent<NPCState>().Die();
                 BecomeVisible();
+            }
+
+            if (food != null && havePoison)
+            {
+                PoisonFood();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            if (GetComponentInChildren<Item>())
+            {
+                DropWeapon();
             }
         }
 
@@ -70,21 +122,14 @@ public class InteractWithNPC : MonoBehaviour
                 BecomeVisible();
             }
         }
-        // if (GetComponentInChildren<WeaponSlotController>().GetComponentInChildren<Paint>())
-        // {
-        //     Debug.Log("Have paint");
-        //     if (_input.Interact.PaintClothes.WasPerformedThisFrame())
-        //     {
-        //         Debug.Log("Try to paint");
-        //         if (NPC.GetComponentInChildren<Transform>().GetComponentInChildren<Clothes>().isInBlood != true)
-        //         {
-        //             Debug.Log("Painted");
-        //             NPC.GetComponentInChildren<Transform>().GetComponentInChildren<Clothes>().isInBlood = true;
-        //             NPC.GetComponentInChildren<Transform>().GetComponentInChildren<Clothes>().GetComponent<SpriteRenderer>().color = Color.cyan;
-        //             GetComponentInChildren<WeaponSlotController>().RemoveWeapon(GetComponentInChildren<WeaponSlotController>().GetComponentInChildren<Paint>().gameObject);
-        //         }
-        //     }
-        // }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Finish"))
+        {
+            GameObject.Find("GameManager").GetComponent<GameManager>().EndDay();
+        }
     }
 
     public void BecomeInvisible()
@@ -102,5 +147,24 @@ public class InteractWithNPC : MonoBehaviour
         GetComponent<SpriteRenderer>().color = newColor;
         timeToBecomeVisible = invisibilityCooldown;
         isInvisible = false;
+    }
+
+    public void PoisonFood()
+    {
+        food.GetComponent<Food>().BecomePoisoned();
+        Destroy(GetComponentInChildren<Item>().gameObject);
+        havePoison = false;
+    }
+
+    public void DropWeapon()
+    {
+        var equippedItem = GetComponentInChildren<Item>().gameObject;
+        var droppedWeapon = Instantiate(equippedItem,
+            GetComponent<Transform>().position, GetComponent<Transform>().rotation);
+        droppedWeapon.GetComponent<Collider2D>().enabled = true;
+        haveWeapon = false;
+        havePoison = false;
+        haveKey = false;
+        Destroy(equippedItem);
     }
 }

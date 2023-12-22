@@ -18,7 +18,7 @@ public class Poison : MonoBehaviour
 
     public void poisonFood(Food food)
     {
-        food.isPoisened = true;
+        food.isPoisoned = true;
         Destroy(gameObject);
     }
 }
