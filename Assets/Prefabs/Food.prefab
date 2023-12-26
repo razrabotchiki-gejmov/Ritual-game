@@ -158,4 +158,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515418f380158584cac7409c1efde82b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPoisened: 0
+  isPoisoned: 0
+  poison: {fileID: 0}

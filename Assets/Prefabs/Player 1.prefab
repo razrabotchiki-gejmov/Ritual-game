@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6473384694252987687}
+  - component: {fileID: 5705001526041635186}
   m_Layer: 6
-  m_Name: ClothesSlot
+  m_Name: ClothesSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,12 +26,64 @@ Transform:
   m_GameObject: {fileID: 607593730347912307}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.3, z: -0.1}
-  m_LocalScale: {x: 1, y: 1.5, z: 1}
+  m_LocalPosition: {x: 0, y: -0.25, z: -0.1}
+  m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 529538920399930663}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &5705001526041635186
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607593730347912307}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &822632931609072243
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,7 +96,7 @@ GameObject:
   - component: {fileID: 7535372134968445219}
   - component: {fileID: 6555197942801659466}
   m_Layer: 0
-  m_Name: InteractionZone
+  m_Name: DetectionZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +164,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab7d368cf58e1e94fb6b7fb6cb83d095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 846053984003708616}
+  interaction: {fileID: 0}
+  NPCs: []
+  foods: []
+  doors: []
+  items: []
+  clothes: []
+  playerSpeak: {fileID: 0}
 --- !u!1 &846053984003708616
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,10 +350,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NPC: {fileID: 0}
+  food: {fileID: 0}
+  door: {fileID: 0}
+  item: {fileID: 0}
+  clothes: {fileID: 0}
+  havePoison: 0
+  haveKey: 0
   haveWeapon: 0
   invisibilityCooldown: 60
   timeToBecomeVisible: 0
   isInvisible: 0
+  isClothesBlooded: 0
+  clothesSprite: {fileID: 5705001526041635186}
+  playerSpeak: {fileID: 0}
 --- !u!114 &6970897971096797278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,6 +401,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 204312d8b323e0147b3310e81a9df23d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogWindow: {fileID: 0}
+  dialogMessage: {fileID: 0}
 --- !u!1 &4224124654349063810
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,7 +493,7 @@ GameObject:
   - component: {fileID: 2825439126429985120}
   - component: {fileID: 280075975196701321}
   m_Layer: 6
-  m_Name: WeaponSlot
+  m_Name: ItemSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -439,7 +509,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.56904393, w: 0.82230717}
   m_LocalPosition: {x: 0.938, y: -0.15275568, z: 0}
-  m_LocalScale: {x: 1.4379201, y: 1.0620899, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 529538920399930663}

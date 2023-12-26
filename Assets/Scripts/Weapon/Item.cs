@@ -40,6 +40,7 @@ public class Item : MonoBehaviour
         itemSlot.GetComponent<ItemSlotController>().AddWeapon(item.gameObject);
         if (type <= 2) player.GetComponent<Interaction>().haveWeapon = true;
         if (type == 3) player.GetComponent<Interaction>().havePoison = true;
+        if (type == 4) player.GetComponent<Interaction>().havePaint = true;
         if (type == 6) player.GetComponent<Interaction>().haveKey = true;
         image.color = GetComponent<SpriteRenderer>().color;
         image.sprite = GetComponent<SpriteRenderer>().sprite;
@@ -49,11 +50,12 @@ public class Item : MonoBehaviour
     public void SwapEquippedWeapon()
     {
         var equippedItem = itemSlot.GetComponentInChildren<SpriteRenderer>().gameObject;
-        var droppedWeapon = Instantiate(equippedItem, 
+        var droppedWeapon = Instantiate(equippedItem,
             GetComponent<Transform>().position, GetComponent<Transform>().rotation);
         droppedWeapon.GetComponent<Collider2D>().enabled = true;
         player.GetComponent<Interaction>().haveWeapon = false;
         player.GetComponent<Interaction>().havePoison = false;
+        player.GetComponent<Interaction>().havePaint = false;
         player.GetComponent<Interaction>().haveKey = false;
         Destroy(equippedItem);
     }
@@ -62,9 +64,9 @@ public class Item : MonoBehaviour
     {
         backlight.SetActive(true);
     }
+
     public void RemoveBacklight()
     {
         backlight.SetActive(false);
     }
-    
 }

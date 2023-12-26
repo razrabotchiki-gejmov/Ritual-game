@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4048421572557122089}
   m_Layer: 7
   m_Name: Vein
-  m_TagString: Weapon
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 2176609602744205162}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 36.254}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7310814317012572470
 SpriteRenderer:
   m_ObjectHideFlags: 0

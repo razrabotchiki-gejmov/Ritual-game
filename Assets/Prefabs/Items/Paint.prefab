@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 6538013529797808704}
   m_Layer: 0
   m_Name: Paint
-  m_TagString: Weapon
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

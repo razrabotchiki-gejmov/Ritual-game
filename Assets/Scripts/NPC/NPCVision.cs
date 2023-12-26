@@ -13,12 +13,14 @@ public class NPCVision : MonoBehaviour
     public bool isPlayerSpotted;
     public GameManager gameManager;
     public GameObject player;
+    public Interaction interaction;
     public GameObject NPC;
 
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         player = GameObject.FindWithTag("Player");
+        interaction = player.GetComponent<Interaction>();
         NPC = GetComponentInParent<NPCState>().gameObject;
     }
 
@@ -36,14 +38,10 @@ public class NPCVision : MonoBehaviour
             var isSomethingFounded = false;
             foreach (var hit in hits)
             {
-                if (hit.collider.gameObject.CompareTag("Player"))
+                if (hit.collider.gameObject.CompareTag("Player") && !NPC.GetComponent<NPCState>().isDead &&
+                    !player.GetComponent<Interaction>().isInvisible)
                 {
-                    if (player.GetComponent<Interaction>().haveWeapon &&
-                        !NPC.GetComponent<NPCState>().isDead && !player.GetComponent<Interaction>().isInvisible)
-                    {
-                        newIsPlayerSpotted = true;
-                    }
-
+                    newIsPlayerSpotted = true;
                     Debug.DrawLine((Vector2)transform.position + offset, hit.point, Color.green);
                     isSomethingFounded = true;
                     break;
@@ -65,8 +63,16 @@ public class NPCVision : MonoBehaviour
 
         if (!isPlayerSpotted && newIsPlayerSpotted)
         {
-            gameManager.IncreaseDetectionRating(20);
-            NPC.GetComponent<NPCState>().StartSpeak(1);
+            if (interaction.isClothesBlooded)
+            {
+                gameManager.IncreaseDetectionRating(40);
+                NPC.GetComponent<NPCState>().StartSpeak(2);
+            }
+            else if (interaction.haveWeapon)
+            {
+                gameManager.IncreaseDetectionRating(20);
+                NPC.GetComponent<NPCState>().StartSpeak(1);
+            }
         }
 
         isPlayerSpotted = newIsPlayerSpotted;

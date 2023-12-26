@@ -11574,6 +11574,26 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 853953c0a4ff14843a5a8f1e157c4a16, type: 3}
+--- !u!1 &1573691691 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2948525627397227690, guid: 853953c0a4ff14843a5a8f1e157c4a16, type: 3}
+  m_PrefabInstance: {fileID: 1573691690}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1573691692 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4562275291078717351, guid: 853953c0a4ff14843a5a8f1e157c4a16, type: 3}
+  m_PrefabInstance: {fileID: 1573691690}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1573691693 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4219642354963328881, guid: 853953c0a4ff14843a5a8f1e157c4a16, type: 3}
+  m_PrefabInstance: {fileID: 1573691690}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1573691694 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6651176693947633570, guid: 853953c0a4ff14843a5a8f1e157c4a16, type: 3}
+  m_PrefabInstance: {fileID: 1573691690}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1602709062
 GameObject:
   m_ObjectHideFlags: 0
@@ -14562,9 +14582,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRatingScale: {fileID: 425964957}
+  invisibilityTimeScale: {fileID: 1573691694}
   detectionRatingText: {fileID: 1830547542}
   pauseMenu: {fileID: 1375652818}
   isPaused: 0
+  conviction: {fileID: 1573691693}
+  invisibility: {fileID: 1573691692}
+  superpower: {fileID: 1573691691}
+  canUseConviction: 0
+  canUseInvisibility: 0
+  canUseSuperpower: 0
 --- !u!4 &1938762013
 Transform:
   m_ObjectHideFlags: 0

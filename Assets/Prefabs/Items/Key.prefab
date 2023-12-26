@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 6847855846063593909}
   m_Layer: 7
   m_Name: Key
-  m_TagString: Weapon
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,7 +118,7 @@ Transform:
   m_Children:
   - {fileID: 59096642577806188}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 36.254}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7310814317012572470
 SpriteRenderer:
   m_ObjectHideFlags: 0
