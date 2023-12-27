@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Interaction : MonoBehaviour
 {
@@ -10,19 +11,25 @@ public class Interaction : MonoBehaviour
     public Food food;
     public DoorNew door;
     public Item item;
+    public Clothes clothes;
+    public LusterTrigger lusterTrigger;
     public bool havePoison;
     public bool haveKey;
     public bool haveWeapon;
+    public bool havePaint;
     public float invisibilityCooldown = 60f;
     public float timeToBecomeVisible;
     public bool isInvisible;
-
+    public bool isClothesBlooded;
+    public SpriteRenderer clothesSprite;
     public PlayerSpeak playerSpeak;
+    public GameManager gameManager;
     // private Controls _input;
 
     void Start()
     {
         playerSpeak = GetComponent<PlayerSpeak>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         // _input = new Controls();
         // _input.Enable();
     }
@@ -38,13 +45,21 @@ public class Interaction : MonoBehaviour
         if (isInvisible)
         {
             timeToBecomeVisible -= Time.deltaTime;
+            gameManager.DecreaseInvisibilityTimeScale(timeToBecomeVisible, invisibilityCooldown);
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (NPC != null)
             {
-                NPC.GetComponent<NPCState>().StartSpeak(0);
+                if (isInvisible)
+                {
+                    NPC.GetComponent<NPCState>().StartSpeak(6);
+                }
+                else
+                {
+                    NPC.GetComponent<NPCState>().StartSpeak(0);
+                }
             }
 
             if (door != null)
@@ -78,12 +93,40 @@ public class Interaction : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (lusterTrigger != null)
+            {
+                lusterTrigger.lusterConstruction.DropLuster();
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (NPC != null && haveWeapon && NPC.GetComponent<NPCState>().type <= 1)
+            if (NPC != null && NPC.GetComponent<NPCState>().type <= 1 && !NPC.GetComponent<NPCState>().isDead)
             {
-                NPC.GetComponent<NPCState>().Die();
-                BecomeVisible();
+                if (haveWeapon)
+                {
+                    GameData.Names.Add(NPC.name);
+                    var currentItem = GetComponentInChildren<Item>();
+                    if (currentItem.type is 1 or 2)
+                    {
+                        GameData.Items.Add(currentItem.gameObject.name);
+                    }
+
+                    NPC.GetComponent<NPCState>().Die();
+                    Destroy(currentItem.gameObject);
+                    haveWeapon = false;
+                    BecomeVisible();
+                    BloodyClothes();
+                }
+
+                if (havePaint)
+                {
+                    NPC.GetComponentInChildren<SpriteRenderer>().color = Color.magenta;
+                    Destroy(GetComponentInChildren<Item>().gameObject);
+                    havePaint = false;
+                }
             }
 
             if (food != null && havePoison)
@@ -100,10 +143,18 @@ public class Interaction : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            clothes.PickUpClothes();
+            CleanClothes();
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (NPC != null && !NPC.GetComponent<NPCState>().isDead && NPC.GetComponent<NPCState>().type != 3)
+            if (NPC != null && !NPC.GetComponent<NPCState>().isDead && NPC.GetComponent<NPCState>().type != 3 &&
+                gameManager.canUseConviction)
             {
+                gameManager.BecomeOutOfUse(1);
                 NPC.GetComponent<NPCMovement>().FullStop();
                 NPC.GetComponent<NPCMovement>().isMoveToPoint = true;
             }
@@ -111,13 +162,17 @@ public class Interaction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            BecomeInvisible();
+            if (gameManager.canUseInvisibility)
+            {
+                BecomeInvisible();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            if (NPC != null && NPC.GetComponent<NPCState>().type <= 2)
+            if (NPC != null && NPC.GetComponent<NPCState>().type <= 2 && gameManager.canUseSuperpower)
             {
+                gameManager.BecomeOutOfUse(3);
                 NPC.GetComponent<NPCState>().Die();
                 BecomeVisible();
             }
@@ -128,16 +183,18 @@ public class Interaction : MonoBehaviour
     {
         if (other.CompareTag("Finish"))
         {
-            GameObject.Find("GameManager").GetComponent<GameManager>().EndDay();
+            gameManager.EndDay();
         }
     }
 
     public void BecomeInvisible()
     {
+        gameManager.BecomeOutOfUse(2);
         var newColor = GetComponent<SpriteRenderer>().color;
         newColor.a = 0.1f;
         GetComponent<SpriteRenderer>().color = newColor;
         isInvisible = true;
+        gameManager.ShowInvisibilityTimeScale();
     }
 
     public void BecomeVisible()
@@ -147,6 +204,7 @@ public class Interaction : MonoBehaviour
         GetComponent<SpriteRenderer>().color = newColor;
         timeToBecomeVisible = invisibilityCooldown;
         isInvisible = false;
+        gameManager.HideInvisibilityTimeScale();
     }
 
     public void PoisonFood()
@@ -162,9 +220,23 @@ public class Interaction : MonoBehaviour
         var droppedWeapon = Instantiate(equippedItem,
             GetComponent<Transform>().position, GetComponent<Transform>().rotation);
         droppedWeapon.GetComponent<Collider2D>().enabled = true;
+        droppedWeapon.name = equippedItem.name;
         haveWeapon = false;
         havePoison = false;
         haveKey = false;
         Destroy(equippedItem);
+    }
+
+    public void BloodyClothes()
+    {
+        clothesSprite.color = Color.red;
+        isClothesBlooded = true;
+        playerSpeak.StartSpeak("В таком виде мне лучше не попадаться на глаза");
+    }
+
+    public void CleanClothes()
+    {
+        clothesSprite.color = Color.white;
+        isClothesBlooded = false;
     }
 }

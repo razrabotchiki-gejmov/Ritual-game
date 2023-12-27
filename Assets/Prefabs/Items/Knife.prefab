@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4048421572557122089}
   m_Layer: 7
   m_Name: Knife
-  m_TagString: Weapon
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 533409031326403655}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 36.254}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7310814317012572470
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24681e1cd587a01429067f47e3ccad69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8040821102654569234, guid: ad2cf29f90760c94e8c334ded28272aa, type: 3}
+  player: {fileID: 0}
   image: {fileID: 0}
   type: 0
   backlight: {fileID: 6241588053298493817}

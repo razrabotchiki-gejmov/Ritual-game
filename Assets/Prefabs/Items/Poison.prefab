@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 6901858223261369180}
   m_Layer: 0
   m_Name: Poison
-  m_TagString: Weapon
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24681e1cd587a01429067f47e3ccad69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8040821102654569234, guid: ad2cf29f90760c94e8c334ded28272aa, type: 3}
+  player: {fileID: 0}
   image: {fileID: 0}
   type: 3
   backlight: {fileID: 1465600341315322021}

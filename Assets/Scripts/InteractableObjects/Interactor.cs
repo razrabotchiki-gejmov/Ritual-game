@@ -66,7 +66,7 @@ public class Interactor : MonoBehaviour
                     var clothes = GetComponent<Clothes>();
                     Debug.Log("clothes pickuped");
                     isInteractInRange = false;
-                    clothes.PickUpClothes();
+                    // clothes.PickUpClothes();
                 }
             }
 

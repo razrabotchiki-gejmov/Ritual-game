@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2994744642294432771}
   - component: {fileID: 4164379086931453181}
-  - component: {fileID: 7530941773645299819}
   - component: {fileID: 1524223234525631521}
-  - component: {fileID: 3927373534741176264}
+  - component: {fileID: 3418811429773764240}
   m_Layer: 7
   m_Name: Clothes
   m_TagString: Clothes
@@ -87,8 +86,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &7530941773645299819
-BoxCollider2D:
+--- !u!114 &1524223234525631521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8083312083525439388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c34beac00c31a544aaa66240b55d40e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!58 &3418811429773764240
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -120,41 +131,5 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.5}
-  m_EdgeRadius: 0
---- !u!114 &1524223234525631521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8083312083525439388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c34beac00c31a544aaa66240b55d40e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clothesSlot: {fileID: 0}
---- !u!114 &3927373534741176264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8083312083525439388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a0859ce090102840a4c29a16b1de6d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isInteractInRange: 0
+  m_Radius: 0.5
