@@ -83,6 +83,11 @@ public class Detection : MonoBehaviour
                     "Красная краска напоминает кровь, что если я смогу устроить театральное представление");
             }
         }
+
+        if (other.CompareTag("LusterTrigger"))
+        {
+            interaction.lusterTrigger = other.GetComponent<LusterTrigger>();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -152,6 +157,11 @@ public class Detection : MonoBehaviour
                 interaction.item = items[^1].GetComponent<Item>();
                 interaction.item.AddBacklight();
             }
+        }
+
+        if (other.CompareTag("LusterTrigger"))
+        {
+            interaction.lusterTrigger = null;
         }
     }
 }

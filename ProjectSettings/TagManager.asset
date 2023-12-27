@@ -11,6 +11,7 @@ TagManager:
   - Iterable
   - Food
   - Item
+  - LusterTrigger
   layers:
   - Default
   - TransparentFX

@@ -15,6 +15,11 @@ public class Item : MonoBehaviour
     // 0 - нож, 1 - камень, 2 - жила животного, 3 - яд, 4 - краска, 5 - монета, 6 - ключи
     void Start()
     {
+        if (GameData.Items.Contains(gameObject.name))
+        {
+            Destroy(gameObject);
+        }
+
         player = GameObject.FindWithTag("Player");
         itemSlot = player.GetComponentInChildren<ItemSlotController>().gameObject;
         image = GameObject.Find("ItemImage").GetComponent<Image>();
@@ -38,6 +43,7 @@ public class Item : MonoBehaviour
         item.GetComponent<Collider2D>().enabled = false;
         item.RemoveBacklight();
         itemSlot.GetComponent<ItemSlotController>().AddWeapon(item.gameObject);
+        item.gameObject.name = gameObject.name;
         if (type <= 2) player.GetComponent<Interaction>().haveWeapon = true;
         if (type == 3) player.GetComponent<Interaction>().havePoison = true;
         if (type == 4) player.GetComponent<Interaction>().havePaint = true;
@@ -53,6 +59,7 @@ public class Item : MonoBehaviour
         var droppedWeapon = Instantiate(equippedItem,
             GetComponent<Transform>().position, GetComponent<Transform>().rotation);
         droppedWeapon.GetComponent<Collider2D>().enabled = true;
+        droppedWeapon.name = equippedItem.name;
         player.GetComponent<Interaction>().haveWeapon = false;
         player.GetComponent<Interaction>().havePoison = false;
         player.GetComponent<Interaction>().havePaint = false;

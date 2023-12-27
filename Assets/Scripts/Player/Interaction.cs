@@ -12,6 +12,7 @@ public class Interaction : MonoBehaviour
     public DoorNew door;
     public Item item;
     public Clothes clothes;
+    public LusterTrigger lusterTrigger;
     public bool havePoison;
     public bool haveKey;
     public bool haveWeapon;
@@ -92,13 +93,30 @@ public class Interaction : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (lusterTrigger != null)
+            {
+                lusterTrigger.lusterConstruction.DropLuster();
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             if (NPC != null && NPC.GetComponent<NPCState>().type <= 1 && !NPC.GetComponent<NPCState>().isDead)
             {
                 if (haveWeapon)
                 {
+                    GameData.Names.Add(NPC.name);
+                    var currentItem = GetComponentInChildren<Item>();
+                    if (currentItem.type is 1 or 2)
+                    {
+                        GameData.Items.Add(currentItem.gameObject.name);
+                    }
+
                     NPC.GetComponent<NPCState>().Die();
+                    Destroy(currentItem.gameObject);
+                    haveWeapon = false;
                     BecomeVisible();
                     BloodyClothes();
                 }
@@ -202,6 +220,7 @@ public class Interaction : MonoBehaviour
         var droppedWeapon = Instantiate(equippedItem,
             GetComponent<Transform>().position, GetComponent<Transform>().rotation);
         droppedWeapon.GetComponent<Collider2D>().enabled = true;
+        droppedWeapon.name = equippedItem.name;
         haveWeapon = false;
         havePoison = false;
         haveKey = false;

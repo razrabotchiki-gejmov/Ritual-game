@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,14 +10,20 @@ public class NPCState : MonoBehaviour
     public bool isDead;
     public int type;
     public GameObject dialogWindow;
-    public Text dialogMessage;
+    public TextMeshProUGUI dialogMessage;
     public GameManager gameManager;
     //0 -монахи, 1 - повара, 2 - стражники, 3 - паладины, 4- настоятель
 
     void Start()
     {
+        if (GameData.Names.Contains(gameObject.name))
+        {
+            Destroy(gameObject);
+        }
+
         dialogWindow = transform.Find("DialogWindow").gameObject;
-        dialogMessage = dialogWindow.transform.Find("Background").Find("Text").gameObject.GetComponent<Text>();
+        dialogMessage = dialogWindow.transform.Find("Background").Find("Text").gameObject
+            .GetComponent<TextMeshProUGUI>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         // dialogMessage = transform.Find("Text").gameObject.GetComponent<Text>();
     }
@@ -49,6 +56,7 @@ public class NPCState : MonoBehaviour
         isDead = true;
         GetComponentInChildren<SpriteRenderer>().color = Color.red;
         GetComponent<NPCMovement>().FullStop();
+        gameManager.SomeoneDied();
     }
 
     // cause

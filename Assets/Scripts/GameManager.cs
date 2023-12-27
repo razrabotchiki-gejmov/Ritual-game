@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     // Start is called before the first frame update
+    public GameObject endDayPoint;
     public GameObject detectionRatingScale;
     public GameObject invisibilityTimeScale;
     public TextMeshProUGUI detectionRatingText;
@@ -17,9 +18,11 @@ public class GameManager : MonoBehaviour
     public bool canUseConviction;
     public bool canUseInvisibility;
     public bool canUseSuperpower;
+    public bool isSomeoneKilled;
 
     void Start()
     {
+        endDayPoint = GameObject.FindWithTag("Finish");
         canUseConviction = true;
         canUseInvisibility = true;
         canUseSuperpower = true;
@@ -136,8 +139,16 @@ public class GameManager : MonoBehaviour
     {
         invisibilityTimeScale.SetActive(true);
     }
+
     public void HideInvisibilityTimeScale()
     {
         invisibilityTimeScale.SetActive(false);
+    }
+
+    public void SomeoneDied()
+    {
+        isSomeoneKilled = true;
+        endDayPoint.GetComponent<SpriteRenderer>().enabled = true;
+        endDayPoint.GetComponent<CircleCollider2D>().enabled = true;
     }
 }
