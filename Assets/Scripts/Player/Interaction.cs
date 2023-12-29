@@ -220,6 +220,7 @@ public class Interaction : MonoBehaviour
     {
         food.GetComponent<Food>().BecomePoisoned();
         Destroy(GetComponentInChildren<Item>().gameObject);
+        gameManager.SomeoneDied();
         havePoison = false;
     }
 

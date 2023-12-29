@@ -14,6 +14,8 @@ public class NPCMovement : MonoBehaviour
     public float timeToReturn = 60;
     public float timeToMove = 3;
     public Vector2 startPoint;
+    public bool isMovingToCoin = false;
+    private bool isStopped = false;
 
     void Start()
     {
@@ -27,21 +29,24 @@ public class NPCMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // _rb.velocity = Vector2.left * 2;
-        if (isMoveToPoint) MoveToPoint(new Vector3(9, 9, 0));
-        if (timeToReturn <= 0)
+        if (!isStopped && !isMovingToCoin)
         {
-            timeToReturn = 60;
-            isMoveToPoint = false;
-            isMoveToStartPoint = true;
-        }
+            // _rb.velocity = Vector2.left * 2;
+            if (isMoveToPoint) MoveToPoint(new Vector3(9, 9, 0));
+            if (timeToReturn <= 0)
+            {
+                timeToReturn = 60;
+                isMoveToPoint = false;
+                isMoveToStartPoint = true;
+            }
 
-        if (isMoveToStartPoint) ReturnToStartPoint();
-        if (timeToMove <= 0)
-        {
-            timeToMove = 3;
-            isMoveToStartPoint = false;
-            Start();
+            if (isMoveToStartPoint) ReturnToStartPoint();
+            if (timeToMove <= 0)
+            {
+                timeToMove = 3;
+                isMoveToStartPoint = false;
+                Start();
+            }
         }
     }
 
@@ -124,6 +129,7 @@ public class NPCMovement : MonoBehaviour
         _rb.velocity = Vector2.zero;
         CancelInvoke();
         isMoveToPoint = false;
+        isStopped = true;
     }
 
     public void MoveToPoint(Vector2 point)
@@ -145,6 +151,14 @@ public class NPCMovement : MonoBehaviour
         else
         {
             _rb.velocity = normalizedVector * 2;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if(collision.GetComponent<Item>().type == 5)
+        {
+            FullStop();
         }
     }
 }
