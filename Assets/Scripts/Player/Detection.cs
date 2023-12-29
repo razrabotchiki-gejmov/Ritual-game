@@ -34,6 +34,7 @@ public class Detection : MonoBehaviour
     {
         if (other.CompareTag("NPC"))
         {
+            if (other.GetComponent<NPCState>().isDead) return;
             NPCs.Add(other);
             interaction.NPC = other.gameObject;
         }
@@ -86,7 +87,13 @@ public class Detection : MonoBehaviour
 
         if (other.CompareTag("LusterTrigger"))
         {
+            playerSpeak.StartSpeak("На вид тяжелая, а что если она упадет на кого-нибудь…");
             interaction.lusterTrigger = other.GetComponent<LusterTrigger>();
+        }
+
+        if (other.CompareTag("CoinPoint"))
+        {
+            interaction.isCoinPointNear = true;
         }
     }
 
@@ -127,7 +134,7 @@ public class Detection : MonoBehaviour
             }
             else
             {
-                interaction.door = doors[^1].GetComponent<DoorNew>();
+                interaction.door = doors[^1].GetComponentInParent<DoorNew>();
             }
         }
 
@@ -162,6 +169,11 @@ public class Detection : MonoBehaviour
         if (other.CompareTag("LusterTrigger"))
         {
             interaction.lusterTrigger = null;
+        }
+
+        if (other.CompareTag("CoinPoint"))
+        {
+            interaction.isCoinPointNear = false;
         }
     }
 }

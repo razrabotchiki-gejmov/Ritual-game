@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
 
     public void StartTheGame()
     {
+        GameData.Reset();
         SceneManager.LoadScene(1);
     }
 
@@ -37,8 +38,14 @@ public class UIManager : MonoBehaviour
     {
         gameManager.Resume();
     }
+
     public void Pause()
     {
         gameManager.Pause();
+    }
+
+    public void LoadStartScreen()
+    {
+        SceneManager.LoadScene(0);
     }
 }

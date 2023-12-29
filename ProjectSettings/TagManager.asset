@@ -12,6 +12,7 @@ TagManager:
   - Food
   - Item
   - LusterTrigger
+  - CoinPoint
   layers:
   - Default
   - TransparentFX

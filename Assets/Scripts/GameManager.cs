@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     public bool canUseConviction;
     public bool canUseInvisibility;
     public bool canUseSuperpower;
-    public bool isSomeoneKilled;
 
     void Start()
     {
@@ -147,7 +146,6 @@ public class GameManager : MonoBehaviour
 
     public void SomeoneDied()
     {
-        isSomeoneKilled = true;
         endDayPoint.GetComponent<SpriteRenderer>().enabled = true;
         endDayPoint.GetComponent<CircleCollider2D>().enabled = true;
     }

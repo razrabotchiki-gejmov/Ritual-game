@@ -13,10 +13,13 @@ public class Interaction : MonoBehaviour
     public Item item;
     public Clothes clothes;
     public LusterTrigger lusterTrigger;
+    public GameObject coinPoint;
+    public bool isCoinPointNear;
     public bool havePoison;
     public bool haveKey;
     public bool haveWeapon;
     public bool havePaint;
+    public bool haveCoin;
     public float invisibilityCooldown = 60f;
     public float timeToBecomeVisible;
     public bool isInvisible;
@@ -30,6 +33,7 @@ public class Interaction : MonoBehaviour
     {
         playerSpeak = GetComponent<PlayerSpeak>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        coinPoint = GameObject.FindWithTag("CoinPoint");
         // _input = new Controls();
         // _input.Enable();
     }
@@ -95,7 +99,7 @@ public class Interaction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (lusterTrigger != null)
+            if (lusterTrigger != null && coinPoint.transform.childCount > 0)
             {
                 lusterTrigger.lusterConstruction.DropLuster();
             }
@@ -112,10 +116,10 @@ public class Interaction : MonoBehaviour
                     if (currentItem.type is 1 or 2)
                     {
                         GameData.Items.Add(currentItem.gameObject.name);
+                        Destroy(currentItem.gameObject);
                     }
 
                     NPC.GetComponent<NPCState>().Die();
-                    Destroy(currentItem.gameObject);
                     haveWeapon = false;
                     BecomeVisible();
                     BloodyClothes();
@@ -132,6 +136,11 @@ public class Interaction : MonoBehaviour
             if (food != null && havePoison)
             {
                 PoisonFood();
+            }
+
+            if (haveCoin && isCoinPointNear)
+            {
+                PlaceCoin();
             }
         }
 
@@ -224,6 +233,9 @@ public class Interaction : MonoBehaviour
         haveWeapon = false;
         havePoison = false;
         haveKey = false;
+        havePaint = false;
+        haveCoin = false;
+        coinPoint.GetComponent<SpriteRenderer>().enabled = false;
         Destroy(equippedItem);
     }
 
@@ -238,5 +250,20 @@ public class Interaction : MonoBehaviour
     {
         clothesSprite.color = Color.white;
         isClothesBlooded = false;
+    }
+
+    public void PlaceCoin()
+    {
+        var coin = GetComponentInChildren<ItemSlotController>().GetComponentInChildren<SpriteRenderer>().gameObject;
+        var droppedCoin = Instantiate(coin,
+            coinPoint.transform.position, coinPoint.transform.rotation);
+        // droppedCoin.transform.parent = coinPoint.transform;
+        droppedCoin.transform.SetParent(coinPoint.transform);
+        // droppedCoin.transform.localScale = coin.transform.lossyScale;
+        droppedCoin.GetComponent<Collider2D>().enabled = true;
+        coinPoint.GetComponent<SpriteRenderer>().enabled = false;
+        droppedCoin.name = coin.name;
+        haveCoin = false;
+        Destroy(coin);
     }
 }

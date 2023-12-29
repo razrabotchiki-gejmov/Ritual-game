@@ -13,7 +13,8 @@ public class PlayerSpeak : MonoBehaviour
     void Start()
     {
         dialogWindow = transform.Find("DialogWindow").gameObject;
-        dialogMessage = dialogWindow.transform.Find("Background").Find("Text").gameObject.GetComponent<TextMeshProUGUI>();
+        dialogMessage = dialogWindow.transform.Find("Background").Find("Text").gameObject
+            .GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -23,6 +24,7 @@ public class PlayerSpeak : MonoBehaviour
 
     public void StartSpeak(string phrase)
     {
+        CancelInvoke();
         dialogMessage.text = phrase;
         dialogWindow.SetActive(true);
         Invoke(nameof(StopSpeak), 5f);

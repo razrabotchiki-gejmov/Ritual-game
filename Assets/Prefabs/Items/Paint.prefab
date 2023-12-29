@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24681e1cd587a01429067f47e3ccad69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  interaction: {fileID: 0}
   image: {fileID: 0}
   type: 4
   backlight: {fileID: 3023743371952396289}

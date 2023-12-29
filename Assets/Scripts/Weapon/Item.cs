@@ -7,7 +7,9 @@ using UnityEngine.UI;
 public class Item : MonoBehaviour
 {
     private GameObject itemSlot;
-    public GameObject player;
+
+    // public GameObject player;
+    public Interaction interaction;
     public Image image;
     public int type;
     public GameObject backlight;
@@ -20,7 +22,8 @@ public class Item : MonoBehaviour
             Destroy(gameObject);
         }
 
-        player = GameObject.FindWithTag("Player");
+        var player = GameObject.FindWithTag("Player");
+        interaction = player.GetComponent<Interaction>();
         itemSlot = player.GetComponentInChildren<ItemSlotController>().gameObject;
         image = GameObject.Find("ItemImage").GetComponent<Image>();
         // backlight = GetComponentsInChildren<Transform>()[1].gameObject;
@@ -39,15 +42,23 @@ public class Item : MonoBehaviour
         }
 
         var item = Instantiate(this, itemSlot.transform.position, itemSlot.transform.rotation);
-        item.transform.parent = itemSlot.transform;
+        item.transform.SetParent(itemSlot.transform);
+        item.transform.localScale = transform.lossyScale;
         item.GetComponent<Collider2D>().enabled = false;
         item.RemoveBacklight();
         itemSlot.GetComponent<ItemSlotController>().AddWeapon(item.gameObject);
         item.gameObject.name = gameObject.name;
-        if (type <= 2) player.GetComponent<Interaction>().haveWeapon = true;
-        if (type == 3) player.GetComponent<Interaction>().havePoison = true;
-        if (type == 4) player.GetComponent<Interaction>().havePaint = true;
-        if (type == 6) player.GetComponent<Interaction>().haveKey = true;
+        if (type <= 2) interaction.haveWeapon = true;
+        if (type == 3) interaction.havePoison = true;
+        if (type == 4) interaction.havePaint = true;
+        if (type == 5)
+        {
+            interaction.haveCoin = true;
+            interaction.coinPoint.GetComponent<SpriteRenderer>().enabled = true;
+        }
+
+        if (type == 6) interaction.haveKey = true;
+
         image.color = GetComponent<SpriteRenderer>().color;
         image.sprite = GetComponent<SpriteRenderer>().sprite;
         Destroy(gameObject);
@@ -56,14 +67,16 @@ public class Item : MonoBehaviour
     public void SwapEquippedWeapon()
     {
         var equippedItem = itemSlot.GetComponentInChildren<SpriteRenderer>().gameObject;
-        var droppedWeapon = Instantiate(equippedItem,
+        var droppedItem = Instantiate(equippedItem,
             GetComponent<Transform>().position, GetComponent<Transform>().rotation);
-        droppedWeapon.GetComponent<Collider2D>().enabled = true;
-        droppedWeapon.name = equippedItem.name;
-        player.GetComponent<Interaction>().haveWeapon = false;
-        player.GetComponent<Interaction>().havePoison = false;
-        player.GetComponent<Interaction>().havePaint = false;
-        player.GetComponent<Interaction>().haveKey = false;
+        droppedItem.GetComponent<Collider2D>().enabled = true;
+        droppedItem.name = equippedItem.name;
+        interaction.haveWeapon = false;
+        interaction.havePoison = false;
+        interaction.havePaint = false;
+        interaction.haveKey = false;
+        interaction.haveCoin = false;
+        interaction.coinPoint.GetComponent<SpriteRenderer>().enabled = false;
         Destroy(equippedItem);
     }
 
