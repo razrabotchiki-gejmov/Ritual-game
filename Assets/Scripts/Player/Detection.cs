@@ -43,7 +43,7 @@ public class Detection : MonoBehaviour
         {
             foods.Add(other);
             interaction.food = other.GetComponent<Food>();
-            playerSpeak.StartSpeak("Если мне удастся залить туда яд…");
+            playerSpeak.StartSpeak("Если мне удастся залить туда яд…", true);
         }
 
         if (other.CompareTag("Door"))
@@ -70,24 +70,24 @@ public class Detection : MonoBehaviour
             interaction.item.AddBacklight();
             if (interaction.item.type == 6)
             {
-                playerSpeak.StartSpeak("Ключи, это будет полезно");
+                playerSpeak.StartSpeak("Ключи, это будет полезно", true);
             }
 
             if (interaction.item.type == 5)
             {
-                playerSpeak.StartSpeak("Хмм, она явно сможет привлечь чье-нибудь внимание");
+                playerSpeak.StartSpeak("Хмм, она явно сможет привлечь чье-нибудь внимание", true);
             }
 
             if (interaction.item.type == 4)
             {
                 playerSpeak.StartSpeak(
-                    "Красная краска напоминает кровь, что если я смогу устроить театральное представление");
+                    "Красная краска напоминает кровь, что если я смогу устроить театральное представление", true);
             }
         }
 
         if (other.CompareTag("LusterTrigger"))
         {
-            playerSpeak.StartSpeak("На вид тяжелая, а что если она упадет на кого-нибудь…");
+            playerSpeak.StartSpeak("На вид тяжелая, а что если она упадет на кого-нибудь…", true);
             interaction.lusterTrigger = other.GetComponent<LusterTrigger>();
         }
 

@@ -154,11 +154,11 @@ public class NPCMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if(collision.GetComponent<Item>().type == 5)
-        {
-            FullStop();
-        }
-    }
+    // private void OnTriggerStay2D(Collider2D collision)
+    // {
+    //     if(collision.GetComponent<Item>().type == 5)
+    //     {
+    //         FullStop();
+    //     }
+    // }
 }

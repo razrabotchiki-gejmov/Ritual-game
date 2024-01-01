@@ -9,6 +9,9 @@ public static class GameData
     public static int Chances = 3;
     public static List<string> Names = new();
     public static List<string> Items = new();
+    public static List<string> SpokenPhrases = new();
+    public static List<int> SpokeWithPotentialKiller1 = new() { 0, 0, 0 };
+    public static NPCState SmearedNPC;
 
     public static void Reset()
     {
@@ -16,5 +19,7 @@ public static class GameData
         Chances = 3;
         Names = new();
         Items = new();
+        SpokenPhrases = new();
+        SmearedNPC = null;
     }
 }
