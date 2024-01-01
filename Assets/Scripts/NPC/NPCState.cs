@@ -57,7 +57,14 @@ public class NPCState : MonoBehaviour
         GetComponentInChildren<SpriteRenderer>().color = Color.red;
         var npcMovement = GetComponent<NPCMovement>();
         if (npcMovement.enabled) npcMovement.FullStop();
+        GameData.Names.Add(name);
         gameManager.SomeoneDied();
+    }
+
+    public void GetSmeared()
+    {
+        GetComponentInChildren<SpriteRenderer>().color = Color.magenta;
+        GameData.SmearedNPC = this;
     }
 
     // cause
@@ -71,6 +78,7 @@ public class NPCState : MonoBehaviour
     // 7 - игрок долго стоит перед стражником
     // 8 - игрок подошёл близко к паладину 
     // 9 - настоятель отвлекается
+    // 10 - игрок сообщаект стражнику о запятнаном NPC
     public string UsePhrase(int cause)
     {
         if (cause == 0)
@@ -168,6 +176,10 @@ public class NPCState : MonoBehaviour
         else if (cause == 9)
         {
             return "Спасибо что рассказ, я обязательно займусь этим";
+        }
+        else if (cause == 10)
+        {
+            return "Я покараю этого нечестивого";
         }
 
         return "...";

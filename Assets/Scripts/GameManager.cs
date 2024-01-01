@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     // Start is called before the first frame update
+    public int detectionRating;
     public GameObject endDayPoint;
     public GameObject detectionRatingScale;
     public GameObject invisibilityTimeScale;
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     public bool canUseConviction;
     public bool canUseInvisibility;
     public bool canUseSuperpower;
+    public bool isSomeoneKilledDirectly;
 
     void Start()
     {
@@ -54,19 +56,19 @@ public class GameManager : MonoBehaviour
 
     public void IncreaseDetectionRating(int value)
     {
-        var currentValue = int.Parse(detectionRatingText.text);
-        var newValue = currentValue + value;
-        if (newValue <= 33)
+        detectionRating += value;
+        var showedValue = detectionRating;
+        if (showedValue <= 33)
         {
             detectionRatingScale.GetComponent<Image>().color = Color.green;
             GameData.Chances = 3;
         }
-        else if (newValue <= 66)
+        else if (showedValue <= 66)
         {
             detectionRatingScale.GetComponent<Image>().color = Color.yellow;
             GameData.Chances = 2;
         }
-        else if (newValue <= 99)
+        else if (showedValue <= 99)
         {
             detectionRatingScale.GetComponent<Image>().color = new Color(1, 0.4f, 0);
             GameData.Chances = 1;
@@ -74,12 +76,12 @@ public class GameManager : MonoBehaviour
         else
         {
             detectionRatingScale.GetComponent<Image>().color = Color.red;
-            newValue = 100;
+            showedValue = 100;
             GameData.Chances = 0;
         }
 
-        detectionRatingText.text = newValue.ToString();
-        detectionRatingScale.GetComponent<RectTransform>().sizeDelta = new Vector2(newValue * 4, 20);
+        detectionRatingText.text = showedValue.ToString();
+        detectionRatingScale.GetComponent<RectTransform>().sizeDelta = new Vector2(showedValue * 4, 20);
     }
 
     public void Pause()

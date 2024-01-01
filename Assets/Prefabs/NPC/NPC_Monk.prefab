@@ -266,6 +266,7 @@ MonoBehaviour:
   timeToReturn: 60
   timeToMove: 3
   startPoint: {x: 0, y: 0}
+  isMovingToCoin: 0
 --- !u!195 &7633904223482287111
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -400,11 +401,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda2c0101d6fd694fa403e96bb425b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rays: 7
+  rays: 11
   distance: 10
   angle: 50
   offset: {x: 0, y: 0}
   isPlayerSpotted: 0
+  isSomeoneKilledDirectly: 0
   gameManager: {fileID: 0}
   player: {fileID: 0}
   interaction: {fileID: 0}

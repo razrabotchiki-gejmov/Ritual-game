@@ -22,8 +22,10 @@ public class PlayerSpeak : MonoBehaviour
     {
     }
 
-    public void StartSpeak(string phrase)
+    public void StartSpeak(string phrase, bool isOneOff = false)
     {
+        if (GameData.SpokenPhrases.Contains(phrase)) return;
+        if (isOneOff) GameData.SpokenPhrases.Add(phrase);
         CancelInvoke();
         dialogMessage.text = phrase;
         dialogWindow.SetActive(true);

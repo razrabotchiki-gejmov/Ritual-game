@@ -11,6 +11,11 @@ public class MoveToLevel : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             collision.transform.position = nextLevel.position - new Vector3(2, 0, 0);
+            if (name == "Teleport 2-3")
+            {
+                collision.GetComponent<PlayerSpeak>()
+                    .StartSpeak("Комната смотрителя недалеко, уверен там я могу найти много интересного.", true);
+            }
         }
     }
 }
