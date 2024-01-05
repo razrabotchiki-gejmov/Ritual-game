@@ -127,8 +127,8 @@ public class Interaction : MonoBehaviour
                 if (haveWeapon)
                 {
                     var currentItem = GetComponentInChildren<Item>();
-                    var npcMovement = NPC.GetComponent<NPCMovement>();
-                    if (npcMovement) npcMovement.FullStop();
+                    var npcMovement = NPC.GetComponent<NPCMovementOld>();
+                    // if (npcMovement) npcMovement.FullStop();
                     playerMovement.enabled = false;
                     GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                     if (currentItem.type == 0)
@@ -203,8 +203,8 @@ public class Interaction : MonoBehaviour
                 else if (NPC.GetComponent<NPCState>().type <= 2)
                 {
                     playerSpeak.StartSpeak(" Иди найди тихое место и жди меня там");
-                    NPC.GetComponent<NPCMovement>().FullStop();
-                    NPC.GetComponent<NPCMovement>().isMoveToPoint = true;
+                    NPC.GetComponent<NPCMovementOld>().FullStop();
+                    NPC.GetComponent<NPCMovementOld>().isMoveToPoint = true;
                     NPC.GetComponent<NPCState>().StartSpeak(5);
                     gameManager.BecomeOutOfUse(1);
                 }

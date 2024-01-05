@@ -131,9 +131,8 @@ GameObject:
   - component: {fileID: 6585237855141587015}
   - component: {fileID: 6706757905587179420}
   - component: {fileID: 4433004626662005919}
-  - component: {fileID: 7633904223482287111}
-  - component: {fileID: 3987873436428082485}
   - component: {fileID: 7329446480793944068}
+  - component: {fileID: 7463342288245414223}
   m_Layer: 0
   m_Name: NPC_New
   m_TagString: NPC
@@ -254,7 +253,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717778537300043596}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 213f43269a0e378448e9627b62c629f5, type: 3}
   m_Name: 
@@ -268,42 +267,6 @@ MonoBehaviour:
   timeToMove: 3
   startPoint: {x: 0, y: 0}
   isMovingToCoin: 0
---- !u!195 &7633904223482287111
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1717778537300043596}
-  m_Enabled: 0
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 1
-  m_ObstacleAvoidanceType: 4
---- !u!114 &3987873436428082485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1717778537300043596}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c99c7bfc518b614a823564cb6a9cf94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movePosition: {fileID: 0}
-  navMeshAgent: {fileID: 7633904223482287111}
 --- !u!212 &7329446480793944068
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -356,6 +319,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7463342288245414223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717778537300043596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c013bd67493a24d9618ff832f5b715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  cooldowns:
+  - 3
+  - 1
+  - 3
+  - 2
+  spots:
+  - {x: 3, y: 2}
+  - {x: -3, y: 2}
+  - {x: -3, y: -1}
+  - {x: 3, y: -1}
+  spotIndex: 0
+  sprites:
+  - {fileID: 21300000, guid: 3008c352443a2114fbd70fd9beee69fb, type: 3}
+  - {fileID: 21300000, guid: 6b9d8e1d0073972499f97de27037fc13, type: 3}
+  - {fileID: 21300000, guid: d2dc2f8f1a859a844a028619b34f3acc, type: 3}
+  - {fileID: 21300000, guid: ed391d8a96268114ba4474c91197b40d, type: 3}
+  spriteRenderer: {fileID: 0}
+  body: {fileID: 4107582835711054090}
 --- !u!1 &4107582835711054090
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,11 +452,13 @@ MonoBehaviour:
   angle: 50
   offset: {x: 0, y: 0}
   isPlayerSpotted: 0
+  isPlayerHaveWeapon: 0
   isSomeoneKilledDirectly: 0
   gameManager: {fileID: 0}
   player: {fileID: 0}
   interaction: {fileID: 0}
   NPC: {fileID: 0}
+  lastDetectionRating: 0
 --- !u!1 &5695804671219927993
 GameObject:
   m_ObjectHideFlags: 0

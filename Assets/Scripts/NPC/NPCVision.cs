@@ -36,7 +36,7 @@ public class NPCVision : MonoBehaviour
         for (int i = -rays / 2; i < rays / 2 + 1; i++)
         {
             var y = Mathf.Sin(i * angle / (rays - 1) * Mathf.Deg2Rad);
-            var x = -Mathf.Cos(i * angle / (rays - 1) * Mathf.Deg2Rad);
+            var x = Mathf.Cos(i * angle / (rays - 1) * Mathf.Deg2Rad);
             Vector2 dir = transform.TransformDirection(new Vector2(x, y));
             var hits = Physics2D.RaycastAll((Vector2)transform.position + offset,
                 dir, distance);
@@ -65,8 +65,8 @@ public class NPCVision : MonoBehaviour
                         gameObject.GetComponentInParent<NPCState>().type == 0)
                     {
                         Debug.DrawLine((Vector2)transform.position + offset, hit.point, Color.blue);
-                        gameObject.GetComponentInParent<NPCMovement>().MoveToPoint(hit.point);
-                        gameObject.GetComponentInParent<NPCMovement>().isMovingToCoin = true;
+                        gameObject.GetComponentInParent<NPCMovementOld>().MoveToPoint(hit.point);
+                        gameObject.GetComponentInParent<NPCMovementOld>().isMovingToCoin = true;
                         break;
                     }
                 }

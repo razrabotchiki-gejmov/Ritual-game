@@ -55,8 +55,10 @@ public class NPCState : MonoBehaviour
         // transform.GetComponent<SpriteRenderer>().color = Color.red;
         isDead = true;
         GetComponentInChildren<SpriteRenderer>().color = Color.red;
-        var npcMovement = GetComponent<NPCMovement>();
-        if (npcMovement.enabled) npcMovement.FullStop();
+        // var npcMovement = GetComponent<NPCMovement>();
+        // if (npcMovement.enabled) npcMovement.FullStop();
+        var npcMovementTest = GetComponent<NPCMovement>();
+        if (npcMovementTest) npcMovementTest.enabled = false;
         GameData.Names.Add(name);
         gameManager.SomeoneDied();
     }

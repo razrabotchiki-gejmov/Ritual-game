@@ -1,164 +1,101 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class NPCMovement : MonoBehaviour
 {
     // Start is called before the first frame update
-    private Rigidbody2D _rb;
     public float speed;
-    public float dir = 1;
-    public GameObject body;
-    public bool isMoveToPoint;
-    public bool isMoveToStartPoint;
-    public float timeToReturn = 60;
-    public float timeToMove = 3;
-    public Vector2 startPoint;
-    public bool isMovingToCoin = false;
-    private bool isStopped = false;
+    private float timeToMove;
+    public List<float> cooldowns = new();
+    public List<Vector2> spots;
+    public int spotIndex;
+    public List<Sprite> sprites = new();
+    private SpriteRenderer spriteRenderer;
+    private Transform body;
 
     void Start()
     {
-        startPoint = transform.position;
-        body.transform.rotation = new Quaternion(0, 0, 0, 0);
-        dir = 1;
-        _rb = GetComponent<Rigidbody2D>();
-        MoveRight();
+        body = GetComponentInChildren<NPCVision>().transform;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        timeToMove = cooldowns[0];
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!isStopped && !isMovingToCoin)
-        {
-            // _rb.velocity = Vector2.left * 2;
-            if (isMoveToPoint) MoveToPoint(new Vector3(9, 9, 0));
-            if (timeToReturn <= 0)
-            {
-                timeToReturn = 60;
-                isMoveToPoint = false;
-                isMoveToStartPoint = true;
-            }
-
-            if (isMoveToStartPoint) ReturnToStartPoint();
-            if (timeToMove <= 0)
-            {
-                timeToMove = 3;
-                isMoveToStartPoint = false;
-                Start();
-            }
-        }
-    }
-
-
-    // public void Move()
-    // {
-    //     var dir =
-    //         var methodValue = Random.Range(0, 4);
-    //     Debug.Log(methodValue);
-    //     if (methodValue == 0)
-    //     {
-    //         MoveLeft();
-    //     }
-    //     else if (methodValue == 1)
-    //     {
-    //         MoveDown();
-    //     }
-    //     else if (methodValue == 2)
-    //     {
-    //         MoveRight();
-    //     }
-    //     else
-    //     {
-    //         MoveUp();
-    //     }
-    //
-    //     Invoke(nameof(Stop), 3);
-    // }
-    public void RotateBody()
-    {
-        body.transform.Rotate(0, 0, 180);
-    }
-
-    public void MoveLeft()
-    {
-        RotateBody();
-        // transform.localRotation = new Quaternion(0, 0, 0, 0);
-        _rb.velocity = Vector2.left * speed;
-        Invoke(nameof(Stop), 3);
-    }
-
-    public void MoveRight()
-    {
-        RotateBody();
-        // transform.localRotation = new Quaternion(0, 0, 180, 0);
-        _rb.velocity = Vector2.right * speed;
-        Invoke(nameof(Stop), 3);
-    }
-
-    public void MoveUp()
-    {
-        transform.localRotation = new Quaternion(0, 0, 270, 0);
-        _rb.velocity = Vector2.up * 2;
-    }
-
-    public void MoveDown()
-    {
-        transform.localRotation = new Quaternion(0, 0, 90, 0);
-        _rb.velocity = Vector2.down * 2;
-
-        // Invoke(nameof(Stop), 3);
-    }
-
-    public void Stop()
-    {
-        dir = (dir + 1) % 2;
-        _rb.velocity = Vector2.zero;
-        if (dir == 0)
-        {
-            Invoke(nameof(MoveLeft), 1);
-        }
+        var dir = (spots[spotIndex] - (Vector2)transform.position).normalized;
+        if (dir.magnitude > 0.1) Move(dir);
         else
-        {
-            Invoke(nameof(MoveRight), 1);
-        }
-    }
-
-    public void FullStop()
-    {
-        _rb.velocity = Vector2.zero;
-        CancelInvoke();
-        isMoveToPoint = false;
-        isStopped = true;
-    }
-
-    public void MoveToPoint(Vector2 point)
-    {
-        var vector = point - (Vector2)transform.position;
-        _rb.velocity = Vector2.Min(vector, (vector).normalized) * 2;
-        timeToReturn -= Time.deltaTime;
-    }
-
-    public void ReturnToStartPoint()
-    {
-        var vector = startPoint - (Vector2)transform.position;
-        var normalizedVector = (vector).normalized;
-        if (normalizedVector.magnitude > vector.magnitude)
         {
             timeToMove -= Time.deltaTime;
-            _rb.velocity = vector * 2;
         }
-        else
+
+        if (timeToMove <= 0)
         {
-            _rb.velocity = normalizedVector * 2;
+            ChangeSpot();
         }
     }
 
-    // private void OnTriggerStay2D(Collider2D collision)
-    // {
-    //     if(collision.GetComponent<Item>().type == 5)
-    //     {
-    //         FullStop();
-    //     }
-    // }
+    public void Move(Vector2 dir)
+    {
+        // Идёт вертикально
+        if (Mathf.Abs(dir.x) < 0.3)
+        {
+            // Смотрит вверх
+            if (dir.y > 0)
+            {
+                spriteRenderer.sprite = sprites[0];
+                body.rotation = Quaternion.Euler(0, 0, 90);
+            }
+            // Смотрит вниз
+            else
+            {
+                spriteRenderer.sprite = sprites[1];
+                body.rotation = Quaternion.Euler(0, 0, -90);
+            }
+        }
+        // Идёт горизонтально
+        else if (Mathf.Abs(dir.y) < 0.3)
+        {
+            // Смотрит вправо
+            if (dir.x > 0)
+            {
+                spriteRenderer.sprite = sprites[2];
+                body.rotation = Quaternion.Euler(0, 0, 0);
+            }
+            // Смотрит влево
+            else
+            {
+                spriteRenderer.sprite = sprites[3];
+                body.rotation = Quaternion.Euler(0, 0, 180);
+            }
+        }
+        // Диагональное движение
+        else if (dir.x > 0.3 && dir.y > 0.3)
+        {
+            body.rotation = Quaternion.Euler(0, 0, 45);
+        }
+        else if (dir.x > 0.3 && dir.y < -0.3)
+        {
+            body.rotation = Quaternion.Euler(0, 0, -45);
+        }
+        else if (dir.x < -0.3 && dir.y < -0.3)
+        {
+            body.rotation = Quaternion.Euler(0, 0, -135);
+        }
+        else if (dir.x < -0.3 && dir.y > 0.3)
+        {
+            body.rotation = Quaternion.Euler(0, 0, 135);
+        }
+
+        transform.position = Vector2.MoveTowards(transform.position, spots[spotIndex], speed * Time.deltaTime);
+    }
+
+    public void ChangeSpot()
+    {
+        spotIndex = (spotIndex + 1) % spots.Count;
+        timeToMove = cooldowns[spotIndex];
+    }
 }
