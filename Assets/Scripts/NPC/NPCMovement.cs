@@ -32,16 +32,19 @@ public class NPCMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var dir = (spots[spotIndex] - (Vector2)transform.position).normalized;
-        if (dir.magnitude > 0.1) Move(dir);
-        else
+        if (spots.Count > 0)
         {
-            timeToMove -= Time.deltaTime;
-        }
+            var dir = (spots[spotIndex] - (Vector2)transform.position).normalized;
+            if (dir.magnitude > 0.1) Move(dir);
+            else
+            {
+                timeToMove -= Time.deltaTime;
+            }
 
-        if (timeToMove <= 0)
-        {
-            ChangeSpot();
+            if (timeToMove <= 0)
+            {
+                ChangeSpot();
+            }
         }
     }
 
