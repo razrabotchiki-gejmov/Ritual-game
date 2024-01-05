@@ -7,15 +7,15 @@ public class FoodEating : MonoBehaviour
     // Start is called before the first frame update
     public Food food;
     public NPCState state;
+
     void Start()
     {
-        
+        state = GetComponent<NPCState>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void EatFood()

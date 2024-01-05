@@ -68,6 +68,7 @@ public class NPCState : MonoBehaviour
         GetComponentInChildren<SpriteRenderer>().color = Color.magenta;
         GameData.SmearedNPC = this;
     }
+    
 
     // cause
     // 0 - заговорил игрок

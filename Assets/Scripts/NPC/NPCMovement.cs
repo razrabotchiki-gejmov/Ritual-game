@@ -9,9 +9,15 @@ public class NPCMovement : MonoBehaviour
     public float speed;
     private float timeToMove;
     public List<float> cooldowns = new();
+
+    public List<int> methods = new();
+
+    // 0 - ничего
+    // 1 - поесть
     public List<Vector2> spots;
-    public int spotIndex;
+    private int spotIndex;
     public List<Sprite> sprites = new();
+    public NPCState npcState;
     private SpriteRenderer spriteRenderer;
     private Transform body;
 
@@ -20,6 +26,7 @@ public class NPCMovement : MonoBehaviour
         body = GetComponentInChildren<NPCVision>().transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
         timeToMove = cooldowns[0];
+        npcState = GetComponent<NPCState>();
     }
 
     // Update is called once per frame
@@ -95,7 +102,13 @@ public class NPCMovement : MonoBehaviour
 
     public void ChangeSpot()
     {
+        if (methods[spotIndex] == 1)
+        {
+            GetComponent<FoodEating>().EatFood();
+        }
+
         spotIndex = (spotIndex + 1) % spots.Count;
         timeToMove = cooldowns[spotIndex];
     }
+
 }
