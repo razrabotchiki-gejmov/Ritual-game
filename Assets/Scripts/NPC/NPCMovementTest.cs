@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class NPCMovementTest : MonoBehaviour
 {
     // Start is called before the first frame update
     public float speed;
-    public float waitTime;
-    public float startWaitTime;
-    public Vector2 spot;
+    public float timeToMoveCooldown;
+    public float timeToMove;
+    public List<Vector2> spots;
+    public int spotIndex;
     public List<Sprite> sprites = new();
     public SpriteRenderer spriteRenderer;
 
@@ -20,8 +22,18 @@ public class NPCMovementTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var dir = (spot - (Vector2)transform.position).normalized;
+        var dir = (spots[spotIndex] - (Vector2)transform.position).normalized;
         if (dir.magnitude > 0.1) Move(dir);
+        else
+        {
+            timeToMove -= Time.deltaTime;
+        }
+
+        if (timeToMove <= 0)
+        {
+            ChangeSpot();
+            timeToMove = timeToMoveCooldown;
+        }
     }
 
     public void Move(Vector2 dir)
@@ -56,6 +68,11 @@ public class NPCMovementTest : MonoBehaviour
         {
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, spot, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, spots[spotIndex], speed * Time.deltaTime);
+    }
+
+    public void ChangeSpot()
+    {
+        spotIndex = (spotIndex + 1) % spots.Count;
     }
 }
