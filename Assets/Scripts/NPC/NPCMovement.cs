@@ -15,6 +15,8 @@ public class NPCMovement : MonoBehaviour
     // 0 - ничего
     // 1 - поесть
     public List<Vector2> spots;
+    public List<Quaternion> rotations;
+    private int rotIndex;
     private int spotIndex;
     public List<Sprite> sprites = new();
     public NPCState npcState;
@@ -25,7 +27,8 @@ public class NPCMovement : MonoBehaviour
     {
         body = GetComponentInChildren<NPCVision>().transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        timeToMove = cooldowns[0];
+        if(cooldowns.Count> 0 )
+            timeToMove = cooldowns[0];
         npcState = GetComponent<NPCState>();
     }
 
@@ -45,6 +48,26 @@ public class NPCMovement : MonoBehaviour
             {
                 ChangeSpot();
             }
+        }
+        else if(npcState.type == 2)
+        {
+            if (rotations.Count > 0)
+            {
+                var rot = rotations[rotIndex].eulerAngles;
+                if(rot.z > body.rotation.z )
+                {
+                    body.Rotate(rot * Time.deltaTime * 0.1f);
+                }
+                else
+                {
+                    timeToMove -= Time.deltaTime;
+                }
+                
+                if (timeToMove <= 0)
+                {
+                    ChangeSpot();
+                }
+            }   
         }
     }
 
@@ -109,9 +132,16 @@ public class NPCMovement : MonoBehaviour
         {
             GetComponent<FoodEating>().EatFood();
         }
-
-        spotIndex = (spotIndex + 1) % spots.Count;
-        timeToMove = cooldowns[spotIndex];
+        if (spots.Count > 0)
+        {
+            spotIndex = (spotIndex + 1) % spots.Count;
+            timeToMove = cooldowns[spotIndex];
+        }
+        else
+        {
+            rotIndex = (rotIndex + 1) % rotations.Count;
+            timeToMove = cooldowns[rotIndex];
+        }
     }
 
 }
