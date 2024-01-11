@@ -22,11 +22,12 @@ public class PlayerSpeak : MonoBehaviour
     {
     }
 
-    public void StartSpeak(string phrase, bool isOneOff = false)
+    public void StartSpeak(string phrase, bool isOneOff = false, bool isLoud = false)
     {
         if (GameData.SpokenPhrases.Contains(phrase)) return;
         if (isOneOff) GameData.SpokenPhrases.Add(phrase);
         CancelInvoke();
+        if (!isLoud) phrase = "<i>" + phrase + "</i>";
         dialogMessage.text = phrase;
         dialogWindow.SetActive(true);
         Invoke(nameof(StopSpeak), 5f);

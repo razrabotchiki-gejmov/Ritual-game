@@ -65,17 +65,17 @@ public class Interaction : MonoBehaviour
                     npcState.StartSpeak(6);
                 }
 
-                else if (npcState.type == 2 && GameData.SmearedNPC != null)
+                else if (npcState.type == 2 && gameManager.smearedNPC != null)
                 {
-                    playerSpeak.StartSpeak("Я видел человека запачканного кровью");
+                    playerSpeak.StartSpeak("Я видел человека запачканного кровью", false, true);
                     npcState.StartSpeak(10);
-                    GameData.SmearedNPC.Die();
-                    GameData.SmearedNPC = null;
+                    gameManager.smearedNPC.Die();
+                    gameManager.smearedNPC = null;
                 }
                 else
                 {
                     if (NPC.GetComponent<NPCPotentialKiller>())
-                        GameData.SpokeWithPotentialKiller1[GameData.Day - 1] = 1;
+                        GameData.SpokeWithPotentialKiller[GameData.Day - 1] = 1;
                     npcState.StartSpeak(0);
                 }
             }
@@ -170,7 +170,7 @@ public class Interaction : MonoBehaviour
         {
             if (GetComponentInChildren<Item>())
             {
-                DropWeapon();
+                GetComponentInChildren<Item>().DropWeapon(GetComponent<Transform>());
             }
         }
 
@@ -189,20 +189,25 @@ public class Interaction : MonoBehaviour
                 var npcVision = NPC.GetComponentInChildren<NPCVision>();
                 if (npcVision.lastDetectionRating > 0)
                 {
-                    playerSpeak.StartSpeak("Ты ничего здесь не видел");
+                    playerSpeak.StartSpeak("Ты ничего здесь не видел", false, true);
                     NPC.GetComponent<NPCState>().StartSpeak(4);
                     gameManager.IncreaseDetectionRating(-npcVision.lastDetectionRating);
                     gameManager.BecomeOutOfUse(1);
                 }
-                else if (GameData.SpokeWithPotentialKiller1[0] + GameData.SpokeWithPotentialKiller1[1] == 2 &&
+                else if (GameData.SpokeWithPotentialKiller[0] + GameData.SpokeWithPotentialKiller[1] == 2 &&
                          potentialKiller)
                 {
+                    playerSpeak.StartSpeak(
+                        "Я знаю, как ты ненавидишь своего “друга”, и внутри каждый из нас понимает, что это он во всем виноват. Останови же его, спаси невинные души.",
+                        false, true);
+                    NPC.GetComponent<NPCState>()
+                        .StartSpeak("Ты абсолютно прав. Ооо, как же долго я ждал этого момента");
                     potentialKiller.KillTargetNPC();
                     gameManager.BecomeOutOfUse(1);
                 }
                 else if (NPC.GetComponent<NPCState>().type <= 2)
                 {
-                    playerSpeak.StartSpeak(" Иди найди тихое место и жди меня там");
+                    playerSpeak.StartSpeak(" Иди найди тихое место и жди меня там", false, true);
                     NPC.GetComponent<NPCMovementOld>().FullStop();
                     NPC.GetComponent<NPCMovementOld>().isMoveToPoint = true;
                     NPC.GetComponent<NPCState>().StartSpeak(5);
@@ -272,21 +277,21 @@ public class Interaction : MonoBehaviour
         havePoison = false;
     }
 
-    public void DropWeapon()
-    {
-        var equippedItem = GetComponentInChildren<Item>().gameObject;
-        var droppedWeapon = Instantiate(equippedItem,
-            GetComponent<Transform>().position, GetComponent<Transform>().rotation);
-        droppedWeapon.GetComponent<Collider2D>().enabled = true;
-        droppedWeapon.name = equippedItem.name;
-        haveWeapon = false;
-        havePoison = false;
-        haveKey = false;
-        havePaint = false;
-        haveCoin = false;
-        coinPoint.GetComponent<SpriteRenderer>().enabled = false;
-        Destroy(equippedItem);
-    }
+    // public void DropWeapon()
+    // {
+    //     var equippedItem = GetComponentInChildren<Item>().gameObject;
+    //     var droppedWeapon = Instantiate(equippedItem,
+    //         GetComponent<Transform>().position, GetComponent<Transform>().rotation);
+    //     droppedWeapon.GetComponent<Collider2D>().enabled = true;
+    //     droppedWeapon.name = equippedItem.name;
+    //     haveWeapon = false;
+    //     havePoison = false;
+    //     haveKey = false;
+    //     havePaint = false;
+    //     haveCoin = false;
+    //     coinPoint.GetComponent<SpriteRenderer>().enabled = false;
+    //     Destroy(equippedItem);
+    // }
 
     public void BloodyClothes()
     {
@@ -318,9 +323,9 @@ public class Interaction : MonoBehaviour
 
     public void KillNpcKnife()
     {
-        BloodyClothes();
-        gameManager.isSomeoneKilledDirectly = true;
         NPC.GetComponent<NPCState>().Die();
+        gameManager.isSomeoneKilledDirectly = true;
+        BloodyClothes();
         BecomeVisible();
         playerMovement.enabled = true;
     }
@@ -328,24 +333,24 @@ public class Interaction : MonoBehaviour
     public void KillNpcRock()
     {
         var currentItem = GetComponentInChildren<Item>();
+        NPC.GetComponent<NPCState>().Die();
+        gameManager.isSomeoneKilledDirectly = true;
         BloodyClothes();
         GameData.Items.Add(currentItem.gameObject.name);
         Destroy(currentItem.gameObject);
         haveWeapon = false;
-        gameManager.isSomeoneKilledDirectly = true;
-        NPC.GetComponent<NPCState>().Die();
         BecomeVisible();
         playerMovement.enabled = true;
     }
 
     public void KillNpcVein()
     {
+        NPC.GetComponent<NPCState>().Die();
+        gameManager.isSomeoneKilledDirectly = true;
         var currentItem = GetComponentInChildren<Item>();
         GameData.Items.Add(currentItem.gameObject.name);
         Destroy(currentItem.gameObject);
         haveWeapon = false;
-        gameManager.isSomeoneKilledDirectly = true;
-        NPC.GetComponent<NPCState>().Die();
         BecomeVisible();
         playerMovement.enabled = true;
     }

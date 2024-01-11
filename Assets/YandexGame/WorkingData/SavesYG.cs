@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace YG
 {
     [System.Serializable]
@@ -17,8 +19,12 @@ namespace YG
         public bool[] openLevels = new bool[3];
 
         // Ваши сохранения
-
-        // ...
+        public int day = 1;
+        public int chances = 3;
+        public  List<string> names = new();
+        public List<string> items = new();
+        public List<string> spokenPhrases = new();
+        public List<int> spokeWithPotentialKiller = new() { 0, 0, 0 };
 
         // Поля (сохранения) можно удалять и создавать новые. При обновлении игры сохранения ломаться не должны
 

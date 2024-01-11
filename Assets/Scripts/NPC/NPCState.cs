@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NPC;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ public class NPCState : MonoBehaviour
     // Start is called before the first frame update
     public bool isDead;
     public int type;
+    public bool canSpeak = true;
     public GameObject dialogWindow;
     public TextMeshProUGUI dialogMessage;
     public GameManager gameManager;
@@ -35,12 +37,20 @@ public class NPCState : MonoBehaviour
 
     public void StartSpeak(int cause)
     {
+        if (!canSpeak) return;
         if (isDead)
         {
             return;
         }
 
         dialogMessage.text = UsePhrase(cause);
+        dialogWindow.SetActive(true);
+        Invoke(nameof(StopSpeak), 5f);
+    }
+
+    public void StartSpeak(string phrase)
+    {
+        dialogMessage.text = phrase;
         dialogWindow.SetActive(true);
         Invoke(nameof(StopSpeak), 5f);
     }
@@ -57,8 +67,9 @@ public class NPCState : MonoBehaviour
         GetComponentInChildren<SpriteRenderer>().color = Color.red;
         // var npcMovement = GetComponent<NPCMovement>();
         // if (npcMovement.enabled) npcMovement.FullStop();
-        var npcMovementTest = GetComponent<NPCMovement>();
-        if (npcMovementTest) npcMovementTest.enabled = false;
+        var npcMovement = GetComponent<NPCMovement>();
+        if (npcMovement) npcMovement.enabled = false;
+        GetComponent<AudioSource>().Play();
         GameData.Names.Add(name);
         gameManager.SomeoneDied();
     }
@@ -66,9 +77,9 @@ public class NPCState : MonoBehaviour
     public void GetSmeared()
     {
         GetComponentInChildren<SpriteRenderer>().color = Color.magenta;
-        GameData.SmearedNPC = this;
+        gameManager.smearedNPC = this;
     }
-    
+
 
     // cause
     // 0 - заговорил игрок
@@ -90,6 +101,8 @@ public class NPCState : MonoBehaviour
             {
                 if (GameData.Day == 1)
                 {
+                    if (GetComponent<NPCPotentialKiller>())
+                        return "Спасибо, что скрасил эту минуту свои присутствием, а то компания этого мне изрядно надоела.";
                     return new[]
                     {
                         "Приветствую, брат", "Как настроение?", "Да будет вера твоя крепка",
@@ -97,8 +110,11 @@ public class NPCState : MonoBehaviour
                     }[
                         Random.Range(0, 5)];
                 }
-                else if (GameData.Day == 2)
+
+                if (GameData.Day == 2)
                 {
+                    if (GetComponent<NPCPotentialKiller>())
+                        return "Не верь ему на слово, я давно его знаю, у него за душой много грехов.";
                     return new[]
                     {
                         "Как такое могло произойти?", "Мира тебе", "Славо Богу ты в полном здравии",
@@ -106,6 +122,9 @@ public class NPCState : MonoBehaviour
                     }[
                         Random.Range(0, 5)];
                 }
+
+                if (GetComponent<NPCPotentialKiller>())
+                    return " Он точно хитрит в чем-то, я уверен. Еще и на меня наговаривает, я этого так не оставлю.";
 
                 return new[]
                 {

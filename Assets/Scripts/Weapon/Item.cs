@@ -13,10 +13,14 @@ public class Item : MonoBehaviour
     public Image image;
     public int type;
     public GameObject backlight;
+    public AudioSource audioSource;
+    public AudioClip pickUpSound;
+    public AudioClip dropSound;
 
     // 0 - нож, 1 - камень, 2 - жила животного, 3 - яд, 4 - краска, 5 - монета, 6 - ключи
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         if (GameData.Items.Contains(gameObject.name))
         {
             Destroy(gameObject);
@@ -58,7 +62,8 @@ public class Item : MonoBehaviour
         }
 
         if (type == 6) interaction.haveKey = true;
-
+        item.audioSource.clip = pickUpSound;
+        item.audioSource.Play();
         image.color = GetComponent<SpriteRenderer>().color;
         image.sprite = GetComponent<SpriteRenderer>().sprite;
         Destroy(gameObject);
@@ -77,6 +82,25 @@ public class Item : MonoBehaviour
         interaction.haveKey = false;
         interaction.haveCoin = false;
         interaction.coinPoint.GetComponent<SpriteRenderer>().enabled = false;
+        Destroy(equippedItem);
+    }
+
+    public void DropWeapon(Transform playerTransform)
+    {
+        var equippedItem = gameObject;
+        var droppedWeapon = Instantiate(equippedItem,
+            playerTransform.position, playerTransform.rotation);
+        droppedWeapon.GetComponent<Collider2D>().enabled = true;
+        droppedWeapon.name = equippedItem.name;
+        interaction.haveWeapon = false;
+        interaction.havePoison = false;
+        interaction.haveKey = false;
+        interaction.havePaint = false;
+        interaction.haveCoin = false;
+        interaction.coinPoint.GetComponent<SpriteRenderer>().enabled = false;
+        var droppedWeaponAudio = droppedWeapon.GetComponent<Item>().audioSource;
+        droppedWeaponAudio.clip = dropSound;
+        droppedWeaponAudio.Play();
         Destroy(equippedItem);
     }
 

@@ -100,7 +100,10 @@ public class NPCMovement : MonoBehaviour
             body.rotation = Quaternion.Euler(0, 0, 135);
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, spots[spotIndex], speed * Time.deltaTime);
+        transform.position =
+            (Vector3)Vector2.MoveTowards(transform.position, spots[spotIndex], speed * Time.deltaTime) +
+            Vector3.forward * transform.position.z;
+        // transform.position = Vector2.MoveTowards(transform.position, spots[spotIndex], speed * Time.deltaTime);
     }
 
     public void ChangeSpot()
@@ -113,5 +116,4 @@ public class NPCMovement : MonoBehaviour
         spotIndex = (spotIndex + 1) % spots.Count;
         timeToMove = cooldowns[spotIndex];
     }
-
 }

@@ -60,7 +60,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &1531048604495095672
 MonoBehaviour:
@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 7554657735504384348}
   - component: {fileID: 1829025259430077437}
   - component: {fileID: 3968153348753280913}
+  - component: {fileID: 3605439180610150507}
   m_Layer: 0
   m_Name: NPC_Guard
   m_TagString: NPC
@@ -132,7 +133,7 @@ Transform:
   m_GameObject: {fileID: 1632793557475089259}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.58, y: -2.89, z: 0}
+  m_LocalPosition: {x: 4.58, y: -2.89, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -172,7 +173,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0019369125, y: -0.60038674}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -183,7 +184,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.78695965, y: 0.69012284}
   m_EdgeRadius: 0
 --- !u!114 &4106051599858364481
 MonoBehaviour:
@@ -199,6 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDead: 0
   type: 2
+  canSpeak: 1
   dialogWindow: {fileID: 0}
   dialogMessage: {fileID: 0}
   gameManager: {fileID: 0}
@@ -247,17 +249,18 @@ MonoBehaviour:
   - 1
   - 3
   - 2
+  methods: 
   spots:
   - {x: 3, y: 2}
   - {x: -3, y: 2}
   - {x: -3, y: -1}
   - {x: 3, y: -1}
-  spotIndex: 0
   sprites:
   - {fileID: 21300000, guid: 3008c352443a2114fbd70fd9beee69fb, type: 3}
   - {fileID: 21300000, guid: 6b9d8e1d0073972499f97de27037fc13, type: 3}
   - {fileID: 21300000, guid: d2dc2f8f1a859a844a028619b34f3acc, type: 3}
   - {fileID: 21300000, guid: ed391d8a96268114ba4474c91197b40d, type: 3}
+  npcState: {fileID: 0}
 --- !u!212 &3968153348753280913
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -310,6 +313,102 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!82 &3605439180610150507
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632793557475089259}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 0c4a8d62d42f3764eb383fafb74a768e, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1739492417801867311
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,8 +453,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda2c0101d6fd694fa403e96bb425b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rays: 11
-  distance: 10
+  rays: 15
+  distance: 7
   angle: 50
   offset: {x: 0, y: 0}
   isPlayerSpotted: 0
