@@ -28,6 +28,7 @@ public class MoveToLevel : MonoBehaviour
         {
             collision.transform.position = nextLevel.position - new Vector3(2, 0, 0);
             curTime = 0;
+            time = 0.4f;
         }
     }
 }

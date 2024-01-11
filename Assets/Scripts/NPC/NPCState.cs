@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ public class NPCState : MonoBehaviour
     public GameManager gameManager;
     //0 -монахи, 1 - повара, 2 - стражники, 3 - паладины, 4- настоятель
 
+    [SerializeField] private GameObject dialog;
+    [SerializeField] private GameObject blackScreen;
     void Start()
     {
         if (GameData.Names.Contains(gameObject.name))
@@ -160,7 +163,7 @@ public class NPCState : MonoBehaviour
         }
         else if (cause == 5)
         {
-            return "Будет сделано";
+                return "Будет сделано";
         }
         else if (cause == 6)
         {
@@ -168,7 +171,7 @@ public class NPCState : MonoBehaviour
         }
         else if (cause == 7)
         {
-            return new[] { "Иди своей дорогой!", "Не стой столбом", "Проходи, не задерживайс" }[
+            return new[] { "Иди своей дорогой!", "Не стой столбом", "Проходи, не задерживайся" }[
                 Random.Range(0, 3)];
         }
         else if (cause == 8)
@@ -178,13 +181,49 @@ public class NPCState : MonoBehaviour
         }
         else if (cause == 9)
         {
-            return "Спасибо что рассказ, я обязательно займусь этим";
+            DialogWithFather();
+            return "";
+            // return "Спасибо что рассказ, я обязательно займусь этим";
         }
         else if (cause == 10)
-        {
+        {          
+            TeleportToScene();
             return "Я покараю этого нечестивого";
         }
 
         return "...";
+    }
+
+    public void DialogWithFather()
+    {
+        GameObject.Find("Player 1").GetComponent<MovementController>().enabled = false;
+        dialog.GetComponent<FatherDialog>().TalkWithFather = true;
+        dialog.SetActive(true);
+        GameData.TalkedToFather = true;
+        Invoke("FatherMove", 5f);
+    }
+
+    public void FatherMove()
+    {
+        var movement = GetComponent<NPCMovement>();
+        movement.cooldowns = new List<float> { 0, 0.23f, 0.1f, 0.1f, 0.3f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.35f, 0.1f, 0.3f, 10000000f };
+    }
+
+    public void TeleportToScene()
+    {
+        GameObject.Find("Player 1").GetComponent<MovementController>().enabled = false;
+        blackScreen.SetActive(true);
+        //TODO: НЕ РАБОТАЕТ ЗАТЕМНЕНИЕ ЭКРАНА
+        blackScreen.GetComponent<Image>().CrossFadeAlpha(1, 0.1f, false);
+        dialog.GetComponent<FatherDialog>().TalkWithFather = false;
+        var guardPlace = GameObject.Find("GuardPlace");
+        var monkPlace = GameObject.Find("MonkPlace");
+        var playerPlace = GameObject.Find("PlayerPlace");
+        transform.position = guardPlace.transform.position;
+        GameData.SmearedNPC.transform.position = monkPlace.transform.position;
+        GameData.SmearedNPC.GetComponent<NPCMovement>().enabled = false;
+        GameObject.Find("Player 1").transform.position = playerPlace.transform.position;
+        dialog.SetActive(true);
+        blackScreen.GetComponent<Image>().CrossFadeAlpha(0, 0.1f, false);
     }
 }

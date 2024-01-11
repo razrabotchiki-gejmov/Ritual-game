@@ -12,6 +12,7 @@ public static class GameData
     public static List<string> SpokenPhrases = new();
     public static List<int> SpokeWithPotentialKiller1 = new() { 0, 0, 0 };
     public static NPCState SmearedNPC;
+    public static bool TalkedToFather;
 
     public static void Reset()
     {
@@ -21,5 +22,6 @@ public static class GameData
         Items = new();
         SpokenPhrases = new();
         SmearedNPC = null;
+        TalkedToFather = false;
     }
 }
