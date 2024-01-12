@@ -8,12 +8,16 @@ public class NPCState : MonoBehaviour
 {
     // Start is called before the first frame update
     public bool isDead;
+    //0 -монахи, 1 - повара, 2 - стражники, 3 - паладины, 4- настоятель
+
     public int type;
     public bool canSpeak = true;
     public GameObject dialogWindow;
     public TextMeshProUGUI dialogMessage;
     public GameManager gameManager;
-    //0 -монахи, 1 - повара, 2 - стражники, 3 - паладины, 4- настоятель
+
+    [SerializeField] private GameObject dialog;
+    [SerializeField] private GameObject blackScreen;
 
     void Start()
     {
@@ -62,11 +66,8 @@ public class NPCState : MonoBehaviour
     public void Die()
     {
         // transform.GetComponent<SpriteRenderer>().color = Color.red;
-<<<<<<< Updated upstream
-=======
         GetComponent<Collider2D>().isTrigger = true;
         GetComponentInChildren<NPCVision>().enabled = false;
->>>>>>> Stashed changes
         isDead = true;
         GetComponentInChildren<SpriteRenderer>().color = Color.red;
         // var npcMovement = GetComponent<NPCMovement>();
@@ -106,7 +107,8 @@ public class NPCState : MonoBehaviour
                 if (GameData.Day == 1)
                 {
                     if (GetComponent<NPCPotentialKiller>())
-                        return "Спасибо, что скрасил эту минуту свои присутствием, а то компания этого мне изрядно надоела.";
+                        return
+                            "Спасибо, что скрасил эту минуту свои присутствием, а то компания этого мне изрядно надоела.";
                     return new[]
                     {
                         "Приветствую, брат", "Как настроение?", "Да будет вера твоя крепка",
@@ -191,7 +193,7 @@ public class NPCState : MonoBehaviour
         }
         else if (cause == 7)
         {
-            return new[] { "Иди своей дорогой!", "Не стой столбом", "Проходи, не задерживайс" }[
+            return new[] { "Иди своей дорогой!", "Не стой столбом", "Проходи, не задерживайся" }[
                 Random.Range(0, 3)];
         }
         else if (cause == 8)
@@ -201,17 +203,18 @@ public class NPCState : MonoBehaviour
         }
         else if (cause == 9)
         {
-            return "Спасибо что рассказ, я обязательно займусь этим";
+            DialogWithFather();
+            return "";
+            // return "Спасибо что рассказ, я обязательно займусь этим";
         }
         else if (cause == 10)
         {
+            TeleportToScene();
             return "Я покараю этого нечестивого";
         }
 
         return "...";
     }
-<<<<<<< Updated upstream
-=======
 
     public void DialogWithFather()
     {
@@ -247,5 +250,4 @@ public class NPCState : MonoBehaviour
         dialog.SetActive(true);
         blackScreen.GetComponent<Image>().CrossFadeAlpha(0, 0.1f, false);
     }
->>>>>>> Stashed changes
 }

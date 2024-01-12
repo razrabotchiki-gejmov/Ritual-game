@@ -220,6 +220,8 @@ MonoBehaviour:
   dialogWindow: {fileID: 5695804671219927993}
   dialogMessage: {fileID: 0}
   gameManager: {fileID: 0}
+  dialog: {fileID: 0}
+  blackScreen: {fileID: 0}
 --- !u!50 &6706757905587179420
 Rigidbody2D:
   serializedVersion: 4

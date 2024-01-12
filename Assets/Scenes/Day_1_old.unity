@@ -7366,11 +7366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 16478441585241008, guid: 47689edf0ca2d504a99fb905aba5dcf5, type: 3}
       propertyPath: m_LocalPosition.y
-<<<<<<< Updated upstream:Assets/Scenes/Day_1_test.unity
-      value: 2.6000001
-=======
       value: 2.4
->>>>>>> Stashed changes:Assets/Scenes/Day_1_old.unity
       objectReference: {fileID: 0}
     - target: {fileID: 16478441585241008, guid: 47689edf0ca2d504a99fb905aba5dcf5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8687,11 +8683,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 16478441585241008, guid: 1cef67d607858b04fb19b0d0141528c3, type: 3}
       propertyPath: m_LocalPosition.x
-<<<<<<< Updated upstream:Assets/Scenes/Day_1_test.unity
-      value: -11.99
-=======
       value: -14.29
->>>>>>> Stashed changes:Assets/Scenes/Day_1_old.unity
       objectReference: {fileID: 0}
     - target: {fileID: 16478441585241008, guid: 1cef67d607858b04fb19b0d0141528c3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8828,11 +8820,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 16478441585241008, guid: 1cef67d607858b04fb19b0d0141528c3, type: 3}
       propertyPath: m_LocalPosition.y
-<<<<<<< Updated upstream:Assets/Scenes/Day_1_test.unity
-      value: -2.2
-=======
       value: -2.4
->>>>>>> Stashed changes:Assets/Scenes/Day_1_old.unity
       objectReference: {fileID: 0}
     - target: {fileID: 16478441585241008, guid: 1cef67d607858b04fb19b0d0141528c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9712,11 +9700,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 16478441585241008, guid: 1cef67d607858b04fb19b0d0141528c3, type: 3}
       propertyPath: m_LocalPosition.y
-<<<<<<< Updated upstream:Assets/Scenes/Day_1_test.unity
-      value: 20.400002
-=======
       value: 20.2
->>>>>>> Stashed changes:Assets/Scenes/Day_1_old.unity
       objectReference: {fileID: 0}
     - target: {fileID: 16478441585241008, guid: 1cef67d607858b04fb19b0d0141528c3, type: 3}
       propertyPath: m_LocalPosition.z

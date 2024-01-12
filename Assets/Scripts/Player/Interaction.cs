@@ -72,8 +72,6 @@ public class Interaction : MonoBehaviour
                     gameManager.smearedNPC.Die();
                     gameManager.smearedNPC = null;
                 }
-<<<<<<< Updated upstream
-=======
                 else if (npcState.type == 4)
                 {
                     if(!GameData.TalkedToFather)
@@ -81,7 +79,6 @@ public class Interaction : MonoBehaviour
                         npcState.StartSpeak(9);
                     }
                 }    
->>>>>>> Stashed changes
                 else
                 {
                     if (NPC.GetComponent<NPCPotentialKiller>())
@@ -222,6 +219,10 @@ public class Interaction : MonoBehaviour
                     // NPC.GetComponent<NPCMovementOld>().isMoveToPoint = true;
                     NPC.GetComponent<NPCState>().StartSpeak(5);
                     gameManager.BecomeOutOfUse(1);
+                }
+                else if(NPC.GetComponentInChildren<NPCState>().type == 4)
+                {
+                    NPC.GetComponent<NPCState>().StartSpeak(9);
                 }
             }
         }
