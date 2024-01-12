@@ -235,7 +235,7 @@ public class NPCState : MonoBehaviour
 
     public void TeleportToScene()
     {
-        GameObject.Find("Player 1").GetComponent<MovementController>().enabled = false;
+        GameObject.FindWithTag("Player").GetComponent<MovementController>().enabled = false;
         blackScreen.SetActive(true);
         //TODO: НЕ РАБОТАЕТ ЗАТЕМНЕНИЕ ЭКРАНА
         blackScreen.GetComponent<Image>().CrossFadeAlpha(1, 0.1f, false);
@@ -246,7 +246,7 @@ public class NPCState : MonoBehaviour
         transform.position = guardPlace.transform.position;
         gameManager.smearedNPC.transform.position = monkPlace.transform.position;
         gameManager.smearedNPC.GetComponent<NPCMovement>().enabled = false;
-        GameObject.Find("Player 1").transform.position = playerPlace.transform.position;
+        GameObject.FindWithTag("Player").transform.position = playerPlace.transform.position;
         dialog.SetActive(true);
         blackScreen.GetComponent<Image>().CrossFadeAlpha(0, 0.1f, false);
     }
