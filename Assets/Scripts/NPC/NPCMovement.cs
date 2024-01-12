@@ -25,14 +25,14 @@ public class NPCMovement : MonoBehaviour
     {
         body = GetComponentInChildren<NPCVision>().transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        timeToMove = cooldowns[0];
+        if (cooldowns.Count > 0) timeToMove = cooldowns[0];
         npcState = GetComponent<NPCState>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (spots.Count > 0)
+        if (spots.Count > 0 && cooldowns.Count > 0 && methods.Count > 0)
         {
             var dir = (spots[spotIndex] - (Vector2)transform.position).normalized;
             if (dir.magnitude > 0.1) Move(dir);

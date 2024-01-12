@@ -72,6 +72,13 @@ public class Interaction : MonoBehaviour
                     gameManager.smearedNPC.Die();
                     gameManager.smearedNPC = null;
                 }
+                // else if (npcState.type == 4)
+                // {
+                //     if(!GameData.TalkedToFather)
+                //     {
+                //         npcState.StartSpeak(9);
+                //     }
+                // }    
                 else
                 {
                     if (NPC.GetComponent<NPCPotentialKiller>())
@@ -212,6 +219,10 @@ public class Interaction : MonoBehaviour
                     NPC.GetComponent<NPCMovementOld>().isMoveToPoint = true;
                     NPC.GetComponent<NPCState>().StartSpeak(5);
                     gameManager.BecomeOutOfUse(1);
+                }
+                else if(NPC.GetComponentInChildren<NPCState>().type == 4)
+                {
+                    NPC.GetComponent<NPCState>().StartSpeak(9);
                 }
             }
         }
