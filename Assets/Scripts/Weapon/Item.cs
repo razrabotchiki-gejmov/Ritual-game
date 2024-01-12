@@ -16,7 +16,6 @@ public class Item : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip pickUpSound;
     public AudioClip dropSound;
-
     // 0 - нож, 1 - камень, 2 - жила животного, 3 - яд, 4 - краска, 5 - монета, 6 - ключи
     void Start()
     {
