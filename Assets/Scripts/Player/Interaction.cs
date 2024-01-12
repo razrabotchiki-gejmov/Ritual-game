@@ -72,6 +72,16 @@ public class Interaction : MonoBehaviour
                     gameManager.smearedNPC.Die();
                     gameManager.smearedNPC = null;
                 }
+<<<<<<< Updated upstream
+=======
+                else if (npcState.type == 4)
+                {
+                    if(!GameData.TalkedToFather)
+                    {
+                        npcState.StartSpeak(9);
+                    }
+                }    
+>>>>>>> Stashed changes
                 else
                 {
                     if (NPC.GetComponent<NPCPotentialKiller>())
@@ -208,8 +218,8 @@ public class Interaction : MonoBehaviour
                 else if (NPC.GetComponent<NPCState>().type <= 2)
                 {
                     playerSpeak.StartSpeak(" Иди найди тихое место и жди меня там", false, true);
-                    NPC.GetComponent<NPCMovementOld>().FullStop();
-                    NPC.GetComponent<NPCMovementOld>().isMoveToPoint = true;
+                    // NPC.GetComponent<NPCMovementOld>().FullStop();
+                    // NPC.GetComponent<NPCMovementOld>().isMoveToPoint = true;
                     NPC.GetComponent<NPCState>().StartSpeak(5);
                     gameManager.BecomeOutOfUse(1);
                 }

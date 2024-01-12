@@ -463,6 +463,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+<<<<<<< Updated upstream
 --- !u!82 &5423449717688610660
 AudioSource:
   m_ObjectHideFlags: 0
@@ -559,6 +560,8 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+=======
+>>>>>>> Stashed changes
 --- !u!1 &4107582835711054090
 GameObject:
   m_ObjectHideFlags: 0

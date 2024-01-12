@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using NPC;
 using TMPro;
@@ -63,6 +62,11 @@ public class NPCState : MonoBehaviour
     public void Die()
     {
         // transform.GetComponent<SpriteRenderer>().color = Color.red;
+<<<<<<< Updated upstream
+=======
+        GetComponent<Collider2D>().isTrigger = true;
+        GetComponentInChildren<NPCVision>().enabled = false;
+>>>>>>> Stashed changes
         isDead = true;
         GetComponentInChildren<SpriteRenderer>().color = Color.red;
         // var npcMovement = GetComponent<NPCMovement>();
@@ -206,4 +210,42 @@ public class NPCState : MonoBehaviour
 
         return "...";
     }
+<<<<<<< Updated upstream
+=======
+
+    public void DialogWithFather()
+    {
+        GameObject.FindWithTag("Player").GetComponent<MovementController>().enabled = false;
+        dialog.GetComponent<FatherDialog>().TalkWithFather = true;
+        // dialog.GetComponent<Dialog>().enabled = false;
+        dialog.SetActive(true);
+        GameData.TalkedToFather = true;
+        Invoke("FatherMove", 5f);
+    }
+
+    public void FatherMove()
+    {
+        var movement = GetComponent<NPCMovement>();
+        movement.cooldowns = new List<float>
+            { 0, 0.23f, 0.1f, 0.1f, 0.3f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.35f, 0.1f, 0.3f, 10000000f };
+    }
+
+    public void TeleportToScene()
+    {
+        GameObject.Find("Player 1").GetComponent<MovementController>().enabled = false;
+        blackScreen.SetActive(true);
+        //TODO: НЕ РАБОТАЕТ ЗАТЕМНЕНИЕ ЭКРАНА
+        blackScreen.GetComponent<Image>().CrossFadeAlpha(1, 0.1f, false);
+        dialog.GetComponent<FatherDialog>().TalkWithFather = false;
+        var guardPlace = GameObject.Find("GuardPlace");
+        var monkPlace = GameObject.Find("MonkPlace");
+        var playerPlace = GameObject.Find("PlayerPlace");
+        transform.position = guardPlace.transform.position;
+        gameManager.smearedNPC.transform.position = monkPlace.transform.position;
+        gameManager.smearedNPC.GetComponent<NPCMovement>().enabled = false;
+        GameObject.Find("Player 1").transform.position = playerPlace.transform.position;
+        dialog.SetActive(true);
+        blackScreen.GetComponent<Image>().CrossFadeAlpha(0, 0.1f, false);
+    }
+>>>>>>> Stashed changes
 }
