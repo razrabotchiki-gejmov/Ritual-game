@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="18b6fc5c-49ee-47d3-a85b-5ed093bca1bf" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/NPC/NPCRotation.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NPC/NPCRotation.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UI/FatherDialog.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UI/FatherDialog.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Prefabs/Canvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/../Prefabs/Canvas.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Prefabs/NPC/NPC_Supperior.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/../Prefabs/NPC/NPC_Supperior.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scenes/Day_1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/../Scenes/Day_1.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scenes/Day_2.unity" beforeDir="false" afterPath="$PROJECT_DIR$/../Scenes/Day_2.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Scenes/Day_3.unity" beforeDir="false" afterPath="$PROJECT_DIR$/../Scenes/Day_3.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GameData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MoveToLevel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MoveToLevel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NPC/NPCMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NPC/NPCMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NPC/NPCState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NPC/NPCState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player/Interaction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Player/Interaction.cs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/GameData.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="2apSUgSDpzbxxEi8ySTnRKco48M" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\Владимир\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache",
+      "C:\\Users\\Владимир\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache",
+      "C:\\Users\\Владимир\\AppData\\Local\\Symbols\\src"
+    ]
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="18b6fc5c-49ee-47d3-a85b-5ed093bca1bf" name="Changes" comment="" />
+      <created>1705014046889</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1705014046889</updated>
+      <workItem from="1705014049800" duration="4000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>

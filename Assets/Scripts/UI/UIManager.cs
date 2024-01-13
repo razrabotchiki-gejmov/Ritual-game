@@ -17,13 +17,18 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
 
 
-    public void StartTheGame()
+    public void StartNewGame()
     {
         GameData.Reset();
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(6);
+    }
+    public void LoadGame()
+    {
+        GameData.Load();
+        SceneManager.LoadScene(5);
     }
 
-    public void GoTeMenu()
+    public void GoToMenu()
     {
         Resume();
         SceneManager.LoadScene(0);
@@ -42,6 +47,18 @@ public class UIManager : MonoBehaviour
     public void Pause()
     {
         gameManager.Pause();
+    }
+
+    public void ChangeGameState()
+    {
+        if (gameManager.isPaused)
+        {
+            Resume();
+        }
+        else
+        {
+            Pause();
+        }
     }
 
     public void LoadStartScreen()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NPC;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,11 +9,16 @@ public class NPCState : MonoBehaviour
 {
     // Start is called before the first frame update
     public bool isDead;
+    //0 -монахи, 1 - повара, 2 - стражники, 3 - паладины, 4- настоятель
+
     public int type;
+    public bool canSpeak = true;
     public GameObject dialogWindow;
     public TextMeshProUGUI dialogMessage;
     public GameManager gameManager;
-    //0 -монахи, 1 - повара, 2 - стражники, 3 - паладины, 4- настоятель
+    public NPCHint hint;
+    [SerializeField] private GameObject dialog;
+    [SerializeField] private GameObject blackScreen;
 
     void Start()
     {
@@ -20,7 +26,8 @@ public class NPCState : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
+        blackScreen = GameObject.Find("BlackScreen");
+        hint = GetComponent<NPCHint>();
         dialogWindow = transform.Find("DialogWindow").gameObject;
         dialogMessage = dialogWindow.transform.Find("Background").Find("Text").gameObject
             .GetComponent<TextMeshProUGUI>();
@@ -35,12 +42,21 @@ public class NPCState : MonoBehaviour
 
     public void StartSpeak(int cause)
     {
+        if (!canSpeak) return;
         if (isDead)
         {
             return;
         }
 
         dialogMessage.text = UsePhrase(cause);
+        dialogWindow.SetActive(true);
+        Invoke(nameof(StopSpeak), 5f);
+        hint.HideHint();
+    }
+
+    public void StartSpeak(string phrase)
+    {
+        dialogMessage.text = phrase;
         dialogWindow.SetActive(true);
         Invoke(nameof(StopSpeak), 5f);
     }
@@ -53,22 +69,26 @@ public class NPCState : MonoBehaviour
     public void Die()
     {
         // transform.GetComponent<SpriteRenderer>().color = Color.red;
+        GetComponent<Collider2D>().isTrigger = true;
+        GetComponentInChildren<NPCVision>().enabled = false;
         isDead = true;
         GetComponentInChildren<SpriteRenderer>().color = Color.red;
         // var npcMovement = GetComponent<NPCMovement>();
         // if (npcMovement.enabled) npcMovement.FullStop();
-        var npcMovementTest = GetComponent<NPCMovement>();
-        if (npcMovementTest) npcMovementTest.enabled = false;
+        var npcMovement = GetComponent<NPCMovement>();
+        if (npcMovement) npcMovement.enabled = false;
+        GetComponent<AudioSource>().Play();
         GameData.Names.Add(name);
         gameManager.SomeoneDied();
+        hint.HideHint();
     }
 
     public void GetSmeared()
     {
         GetComponentInChildren<SpriteRenderer>().color = Color.magenta;
-        GameData.SmearedNPC = this;
+        gameManager.smearedNPC = this;
     }
-    
+
 
     // cause
     // 0 - заговорил игрок
@@ -90,6 +110,9 @@ public class NPCState : MonoBehaviour
             {
                 if (GameData.Day == 1)
                 {
+                    if (GetComponent<NPCPotentialKiller>())
+                        return
+                            "Спасибо, что скрасил эту минуту свои присутствием, а то компания этого мне изрядно надоела.";
                     return new[]
                     {
                         "Приветствую, брат", "Как настроение?", "Да будет вера твоя крепка",
@@ -97,8 +120,11 @@ public class NPCState : MonoBehaviour
                     }[
                         Random.Range(0, 5)];
                 }
-                else if (GameData.Day == 2)
+
+                if (GameData.Day == 2)
                 {
+                    if (GetComponent<NPCPotentialKiller>())
+                        return "Не верь ему на слово, я давно его знаю, у него за душой много грехов.";
                     return new[]
                     {
                         "Как такое могло произойти?", "Мира тебе", "Славо Богу ты в полном здравии",
@@ -106,6 +132,9 @@ public class NPCState : MonoBehaviour
                     }[
                         Random.Range(0, 5)];
                 }
+
+                if (GetComponent<NPCPotentialKiller>())
+                    return " Он точно хитрит в чем-то, я уверен. Еще и на меня наговаривает, я этого так не оставлю.";
 
                 return new[]
                 {
@@ -168,7 +197,7 @@ public class NPCState : MonoBehaviour
         }
         else if (cause == 7)
         {
-            return new[] { "Иди своей дорогой!", "Не стой столбом", "Проходи, не задерживайс" }[
+            return new[] { "Иди своей дорогой!", "Не стой столбом", "Проходи, не задерживайся" }[
                 Random.Range(0, 3)];
         }
         else if (cause == 8)
@@ -178,13 +207,60 @@ public class NPCState : MonoBehaviour
         }
         else if (cause == 9)
         {
-            return "Спасибо что рассказ, я обязательно займусь этим";
+            DialogWithFather();
+            return "";
+            // return "Спасибо что рассказ, я обязательно займусь этим";
         }
         else if (cause == 10)
         {
+            TeleportToScene();
             return "Я покараю этого нечестивого";
         }
 
         return "...";
+    }
+
+    public void DialogWithFather()
+    {
+        GameObject.FindWithTag("Player").GetComponent<MovementController>().enabled = false;
+        dialog.GetComponent<FatherDialog>().TalkWithFather = true;
+        // dialog.GetComponent<Dialog>().enabled = false;
+        dialog.SetActive(true);
+        GameData.TalkedToFather = true;
+        Invoke("FatherMove", 5f);
+    }
+
+    public void FatherMove()
+    {
+        var movement = GetComponent<NPCMovement>();
+        movement.cooldowns = new List<float>
+            { 0, 0.23f, 0.1f, 0.1f, 0.3f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.35f, 0.1f, 0.3f, 10000000f };
+    }
+
+    private Vector3 initPlace;
+
+    public void TeleportToScene()
+    {
+        GameObject.FindWithTag("Player").GetComponent<MovementController>().enabled = false;
+        //TODO: НЕ РАБОТАЕТ ЗАТЕМНЕНИЕ ЭКРАНА
+        blackScreen.GetComponent<Image>().CrossFadeAlpha(1, 1, false);
+        dialog.GetComponent<FatherDialog>().TalkWithFather = false;
+        var guardPlace = GameObject.Find("GuardPlace");
+        var monkPlace = GameObject.Find("MonkPlace");
+        var playerPlace = GameObject.Find("PlayerPlace");
+        initPlace = transform.position;
+        transform.position = guardPlace.transform.position;
+        gameManager.smearedNPC.transform.position = monkPlace.transform.position;
+        gameManager.smearedNPC.GetComponent<NPCMovement>().enabled = false;
+        GameObject.FindWithTag("Player").transform.position = playerPlace.transform.position;
+        dialog.SetActive(true);
+
+        Invoke("TeleportBack", 5f);
+        blackScreen.GetComponent<Image>().CrossFadeAlpha(0, 0.1f, false);
+    }
+
+    public void TeleportBack()
+    {
+        transform.position = initPlace;
     }
 }

@@ -10,15 +10,21 @@ EditorBuildSettings:
     guid: 557bdd5f3dc5dd7468c444017ce37086
   - enabled: 1
     path: Assets/Scenes/Day_1.unity
-    guid: b9ea7844b3d562e4094e58f5cbdc9837
+    guid: daaf7c153f1c3d84bb2ff2612ff33f1e
   - enabled: 1
     path: Assets/Scenes/Day_2.unity
-    guid: 5c18c9721a46dae4698f42924555d7e6
+    guid: c9a9d81522ed5c340950e56d7c237921
   - enabled: 1
     path: Assets/Scenes/Day_3.unity
-    guid: 48687260f10d1834aaf80931f7057a59
+    guid: 0677421797212ac4ca51756b5c4dc526
   - enabled: 1
     path: Assets/Scenes/SuperiorScene.unity
     guid: c03d866ff0313d14f97a4b6449aee53f
+  - enabled: 1
+    path: Assets/Scenes/StartDayScene.unity
+    guid: dde68b0bfa85cf84cb6354b8fa4ffda0
+  - enabled: 1
+    path: Assets/Scenes/Introduction.unity
+    guid: 254b85b7519b81d44a05eece2cfd83de
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 49508fa4149750a4eb996f279ceefc46, type: 2}

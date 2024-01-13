@@ -149,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 1717778537300043596}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.25, y: 1.21, z: 0}
+  m_LocalPosition: {x: -3.25, y: 1.21, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -189,7 +189,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.008414984, y: -0.48469839}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -200,7 +200,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.7879443, y: 0.48837405}
   m_EdgeRadius: 0
 --- !u!114 &6585237855141587015
 MonoBehaviour:
@@ -337,19 +337,18 @@ MonoBehaviour:
   - 1
   - 3
   - 2
+  methods: 
   spots:
   - {x: 3, y: 2}
   - {x: -3, y: 2}
   - {x: -3, y: -1}
   - {x: 3, y: -1}
-  spotIndex: 0
   sprites:
   - {fileID: 21300000, guid: 3008c352443a2114fbd70fd9beee69fb, type: 3}
   - {fileID: 21300000, guid: 6b9d8e1d0073972499f97de27037fc13, type: 3}
   - {fileID: 21300000, guid: d2dc2f8f1a859a844a028619b34f3acc, type: 3}
   - {fileID: 21300000, guid: ed391d8a96268114ba4474c91197b40d, type: 3}
-  spriteRenderer: {fileID: 0}
-  body: {fileID: 4107582835711054090}
+  npcState: {fileID: 0}
 --- !u!1 &4107582835711054090
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,7 +446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda2c0101d6fd694fa403e96bb425b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rays: 11
+  rays: 15
   distance: 10
   angle: 50
   offset: {x: 0, y: 0}
