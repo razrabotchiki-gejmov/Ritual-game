@@ -29,7 +29,6 @@ public static class GameData
 
     public static void Save()
     {
-        Debug.Log("Saved");
         YandexGame.savesData.day = Day;
         YandexGame.savesData.chances = Chances;
         YandexGame.savesData.names = Names.ToList();
@@ -50,7 +49,6 @@ public static class GameData
 
     public static void Load()
     {
-        Debug.Log("Loaded");
         Day = YandexGame.savesData.day;
         Chances = YandexGame.savesData.chances;
         Names = YandexGame.savesData.names;

@@ -28,9 +28,9 @@ public class Dialog : MonoBehaviour
     {
         startChances = GameData.Chances;
         phraseText = phrase.GetComponent<TextMeshProUGUI>();
-        answer1Text = answer1.GetComponent<TextMeshProUGUI>();
-        answer2Text = answer2.GetComponent<TextMeshProUGUI>();
-        answer3Text = answer3.GetComponent<TextMeshProUGUI>();
+        answer1Text = answer1.GetComponentInChildren<TextMeshProUGUI>();
+        answer2Text = answer2.GetComponentInChildren<TextMeshProUGUI>();
+        answer3Text = answer3.GetComponentInChildren<TextMeshProUGUI>();
         GetPhrasesList();
         ChangeDialogState();
     }
@@ -121,9 +121,9 @@ public class Dialog : MonoBehaviour
             superiorName.SetActive(false);
             phrase.SetActive(false);
             playerName.SetActive(true);
-            answer1Text.text = "1) " + myClass.Answer1;
-            answer2Text.text = "2) " + myClass.Answer2;
-            answer3Text.text = "3) " + myClass.Answer3;
+            answer1Text.text = myClass.Answer1;
+            answer2Text.text = myClass.Answer2;
+            answer3Text.text = myClass.Answer3;
             answer1.SetActive(true);
             answer2.SetActive(true);
             answer3.SetActive(true);
