@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -11,8 +12,10 @@ public class Item : MonoBehaviour
     // public GameObject player;
     public Interaction interaction;
     public Image image;
+    public TextMeshProUGUI name;
     public int type;
     public GameObject backlight;
+    public GameObject canvas;
     public AudioSource audioSource;
     public AudioClip pickUpSound;
     public AudioClip dropSound;
@@ -30,13 +33,12 @@ public class Item : MonoBehaviour
         interaction = player.GetComponent<Interaction>();
         itemSlot = player.GetComponentInChildren<ItemSlotController>().gameObject;
         image = GameObject.Find("ItemImage").GetComponent<Image>();
+        name = GameObject.Find("ItemName").GetComponent<TextMeshProUGUI>();
         // backlight = GetComponentsInChildren<Transform>()[1].gameObject;
     }
 
     // Update is called once per frame
-    void Update()
-    {
-    }
+
 
     public void PickUpWeapon()
     {
@@ -49,23 +51,50 @@ public class Item : MonoBehaviour
         item.transform.SetParent(itemSlot.transform);
         item.transform.localScale = transform.lossyScale;
         item.GetComponent<Collider2D>().enabled = false;
-        item.RemoveBacklight();
+        item.HideHint();
         itemSlot.GetComponent<ItemSlotController>().AddWeapon(item.gameObject);
         item.gameObject.name = gameObject.name;
         if (type <= 2) interaction.haveWeapon = true;
-        if (type == 3) interaction.havePoison = true;
-        if (type == 4) interaction.havePaint = true;
-        if (type == 5)
+        if (type == 0) name.text = "Нож";
+        if (type == 1) name.text = "Камень";
+        if (type == 2) name.text = "Жила";
+        if (type == 3)
         {
-            interaction.haveCoin = true;
-            interaction.coinPoint.GetComponent<SpriteRenderer>().enabled = true;
+            name.text = "Яд";
+            interaction.havePoison = true;
+            if (interaction.food != null) interaction.food.CanBePoisoned();
         }
 
-        if (type == 6) interaction.haveKey = true;
+        if (type == 4)
+        {
+            name.text = "Краска";
+            interaction.havePaint = true;
+        }
+
+        if (type == 5)
+        {
+            name.text = "Монета";
+            interaction.haveCoin = true;
+            interaction.coinPoint.GetComponent<SpriteRenderer>().enabled = true;
+            if (interaction.isCoinPointNear) interaction.coinPoint.ShowHint();
+            if (interaction.lusterTrigger != null) interaction.lusterTrigger.HideHint();
+            interaction.coinPoint.isCoinHere = false;
+        }
+
+        if (type == 6)
+        {
+            name.text = "Ключ";
+            interaction.haveKey = true;
+            if (interaction.door != null && interaction.door.isLocked)
+                interaction.door.GetComponentInChildren<DoorHint>().DoorUnlockHint();
+        }
+
         item.audioSource.clip = pickUpSound;
         item.audioSource.Play();
-        image.color = GetComponent<SpriteRenderer>().color;
+        image.enabled = true;
+        name.enabled = true;
         image.sprite = GetComponent<SpriteRenderer>().sprite;
+        image.preserveAspect = true;
         Destroy(gameObject);
     }
 
@@ -102,15 +131,19 @@ public class Item : MonoBehaviour
         droppedWeaponAudio.clip = dropSound;
         droppedWeaponAudio.Play();
         Destroy(equippedItem);
+        image.enabled = false;
+        name.enabled = false;
     }
 
-    public void AddBacklight()
+    public void ShowHint()
     {
         backlight.SetActive(true);
+        canvas.SetActive(true);
     }
 
-    public void RemoveBacklight()
+    public void HideHint()
     {
         backlight.SetActive(false);
+        canvas.SetActive(false);
     }
 }

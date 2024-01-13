@@ -27,7 +27,7 @@ public class MovementController : MonoBehaviour
         _rb.velocity = dir * speed;
         if (dir == Vector2.zero) return;
         // Идёт вертикально
-        if (Mathf.Abs(dir.x) < 0.3)
+        if (Mathf.Abs(dir.x) < Mathf.Abs(dir.y))
         {
             // Смотрит вверх
             if (dir.y > 0)
@@ -41,7 +41,7 @@ public class MovementController : MonoBehaviour
             }
         }
         // Идёт горизонтально
-        else if (Mathf.Abs(dir.y) < 0.3)
+        else
         {
             // Смотрит вправо
             if (dir.x > 0)
@@ -53,19 +53,6 @@ public class MovementController : MonoBehaviour
             {
                 spriteRenderer.sprite = sprites[3];
             }
-        }
-        // Диагональное движение
-        else if (dir.x > 0.3 && dir.y > 0.3)
-        {
-        }
-        else if (dir.x > 0.3 && dir.y < -0.3)
-        {
-        }
-        else if (dir.x < -0.3 && dir.y < -0.3)
-        {
-        }
-        else if (dir.x < -0.3 && dir.y > 0.3)
-        {
         }
         // _rb.velocity = _input.Movement.Move.ReadValue<Vector2>() * speed;
     }

@@ -23,5 +23,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartDayScene.unity
     guid: dde68b0bfa85cf84cb6354b8fa4ffda0
+  - enabled: 1
+    path: Assets/Scenes/Introduction.unity
+    guid: 254b85b7519b81d44a05eece2cfd83de
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 49508fa4149750a4eb996f279ceefc46, type: 2}

@@ -9,8 +9,8 @@ public class NPCMovement : MonoBehaviour
     public float speed;
     private float timeToMove;
     public List<float> cooldowns = new();
-
     public List<int> methods = new();
+    private SpriteChanger spriteChanger;
 
     // 0 - ничего
     // 1 - поесть
@@ -23,6 +23,7 @@ public class NPCMovement : MonoBehaviour
 
     void Start()
     {
+        spriteChanger = GetComponent<SpriteChanger>();
         body = GetComponentInChildren<NPCVision>().transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (cooldowns.Count > 0) timeToMove = cooldowns[0];
@@ -51,53 +52,36 @@ public class NPCMovement : MonoBehaviour
     public void Move(Vector2 dir)
     {
         // Идёт вертикально
-        if (Mathf.Abs(dir.x) < 0.3)
+        if (Mathf.Abs(dir.x) < Mathf.Abs(dir.y))
         {
             // Смотрит вверх
             if (dir.y > 0)
             {
-                spriteRenderer.sprite = sprites[0];
+                spriteChanger.LookUp();
                 body.rotation = Quaternion.Euler(0, 0, 90);
             }
             // Смотрит вниз
             else
             {
-                spriteRenderer.sprite = sprites[1];
+                spriteChanger.LookDown();
                 body.rotation = Quaternion.Euler(0, 0, -90);
             }
         }
         // Идёт горизонтально
-        else if (Mathf.Abs(dir.y) < 0.3)
+        else
         {
             // Смотрит вправо
             if (dir.x > 0)
             {
-                spriteRenderer.sprite = sprites[2];
+                spriteChanger.LookRight();
                 body.rotation = Quaternion.Euler(0, 0, 0);
             }
             // Смотрит влево
             else
             {
-                spriteRenderer.sprite = sprites[3];
+                spriteChanger.LookLeft();
                 body.rotation = Quaternion.Euler(0, 0, 180);
             }
-        }
-        // Диагональное движение
-        else if (dir.x > 0.3 && dir.y > 0.3)
-        {
-            body.rotation = Quaternion.Euler(0, 0, 45);
-        }
-        else if (dir.x > 0.3 && dir.y < -0.3)
-        {
-            body.rotation = Quaternion.Euler(0, 0, -45);
-        }
-        else if (dir.x < -0.3 && dir.y < -0.3)
-        {
-            body.rotation = Quaternion.Euler(0, 0, -135);
-        }
-        else if (dir.x < -0.3 && dir.y > 0.3)
-        {
-            body.rotation = Quaternion.Euler(0, 0, 135);
         }
 
         transform.position =
