@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 605485628306882303}
   - component: {fileID: 6585237855141587015}
   - component: {fileID: 6706757905587179420}
-  - component: {fileID: 1617923119613779697}
+  - component: {fileID: 8799586321873159037}
   - component: {fileID: 4490869473458810978}
   m_Layer: 0
   m_Name: NPC_Supperior
@@ -353,7 +353,7 @@ MonoBehaviour:
   dialogWindow: {fileID: 5695804671219927993}
   dialogMessage: {fileID: 0}
   gameManager: {fileID: 0}
-  dialog: {fileID: 0}
+  dialog: {fileID: 1717778537300043596}
   blackScreen: {fileID: 0}
 --- !u!50 &6706757905587179420
 Rigidbody2D:
@@ -382,7 +382,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1617923119613779697
+--- !u!114 &8799586321873159037
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -399,19 +399,19 @@ MonoBehaviour:
   methods: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   spots:
   - {x: -2.3, y: 40.6}
-  - {x: 9.5, y: 40.6}
+  - {x: 10, y: 40.6}
   - {x: 7.4, y: 19.7}
   - {x: 7.4, y: 21.3}
-  - {x: 9.4, y: 21.3}
+  - {x: 9.8, y: 21.3}
   - {x: 7.4, y: -0.05}
   - {x: 7.4, y: 4}
   - {x: -6.8, y: 4}
   - {x: -6.8, y: -3.8}
   - {x: 7.4, y: -3.8}
   - {x: 7.4, y: -0.05}
-  - {x: 9.65, y: -0.05}
-  - {x: -9.7, y: 20.6}
-  - {x: 9.4, y: 19.7}
+  - {x: 10.258, y: 0.4}
+  - {x: -9.7, y: 20.7}
+  - {x: 9.8, y: 21.8}
   - {x: -2.3, y: 40.6}
   sprites:
   - {fileID: 21300000, guid: 3008c352443a2114fbd70fd9beee69fb, type: 3}

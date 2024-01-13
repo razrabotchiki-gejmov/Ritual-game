@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lusterConstruction: {fileID: 6118896694591999178}
+  lusterInfo: {fileID: 0}
 --- !u!1 &5641670256728288289
 GameObject:
   m_ObjectHideFlags: 0

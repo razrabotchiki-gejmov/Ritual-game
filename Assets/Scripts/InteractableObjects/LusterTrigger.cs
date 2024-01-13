@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 public class LusterTrigger : MonoBehaviour
 {
     public LusterConstruction lusterConstruction;
+    public GameObject lusterInfo;
     // Start is called before the first frame update
     void Start()
     {

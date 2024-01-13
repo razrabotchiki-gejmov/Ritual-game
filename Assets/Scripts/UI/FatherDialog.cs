@@ -27,10 +27,6 @@ public class FatherDialog : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (list[index - 1].Type == 2)
-            {
-                return;
-            }
 
             if (index < list.Count)
             {
@@ -40,6 +36,11 @@ public class FatherDialog : MonoBehaviour
             {
                 EndDialog();
             }
+            if (list[index - 1].Type == 2)
+            {
+                return;
+            }
+
         }
     }
 
@@ -55,23 +56,20 @@ public class FatherDialog : MonoBehaviour
             phrase.SetActive(true);
         }
 
-        if (myClass.Type == 1)
+        else if (myClass.Type == 1)
         {
             superiorName.SetActive(false);
             playerName.SetActive(true);
             phrase.GetComponent<TextMeshProUGUI>().text = myClass.Phrase;
             phrase.SetActive(true);
         }
-
-        if (myClass.Type == 2)
-        {
+        else 
+        { 
             superiorName.SetActive(false);
             phrase.SetActive(false);
             playerName.SetActive(true);
             answer1.GetComponent<TextMeshProUGUI>().text = "1) " + myClass.Answer1;
-            answer1.SetActive(true);
-            if (!TalkWithFather)
-                Destroy(gameManager.smearedNPC.gameObject);
+            answer1.SetActive(true);       
         }
 
         index++;
@@ -82,6 +80,8 @@ public class FatherDialog : MonoBehaviour
         GameObject.FindWithTag("Player").GetComponent<MovementController>().enabled = true;
         gameObject.SetActive(false);
         index = 0;
+        if (!TalkWithFather)
+            Destroy(gameManager.smearedNPC.gameObject);
     }
 
     public void GetPhrasesList()

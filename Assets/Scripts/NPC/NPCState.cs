@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using NPC;
 using TMPro;
@@ -233,21 +234,29 @@ public class NPCState : MonoBehaviour
             { 0, 0.23f, 0.1f, 0.1f, 0.3f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.35f, 0.1f, 0.3f, 10000000f };
     }
 
+    private Vector3 initPlace;
     public void TeleportToScene()
     {
         GameObject.FindWithTag("Player").GetComponent<MovementController>().enabled = false;
-        blackScreen.SetActive(true);
         //TODO: НЕ РАБОТАЕТ ЗАТЕМНЕНИЕ ЭКРАНА
-        blackScreen.GetComponent<Image>().CrossFadeAlpha(1, 0.1f, false);
+        blackScreen.GetComponent<Image>().CrossFadeAlpha(1, 1, false);
         dialog.GetComponent<FatherDialog>().TalkWithFather = false;
         var guardPlace = GameObject.Find("GuardPlace");
         var monkPlace = GameObject.Find("MonkPlace");
         var playerPlace = GameObject.Find("PlayerPlace");
+        initPlace = transform.position;
         transform.position = guardPlace.transform.position;
         gameManager.smearedNPC.transform.position = monkPlace.transform.position;
         gameManager.smearedNPC.GetComponent<NPCMovement>().enabled = false;
         GameObject.FindWithTag("Player").transform.position = playerPlace.transform.position;
         dialog.SetActive(true);
+        
+        Invoke("TeleportBack",5f);
         blackScreen.GetComponent<Image>().CrossFadeAlpha(0, 0.1f, false);
+    }
+
+    public void TeleportBack()
+    {
+        transform.position = initPlace;
     }
 }

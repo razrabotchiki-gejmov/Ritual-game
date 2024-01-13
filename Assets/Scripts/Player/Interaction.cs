@@ -31,6 +31,8 @@ public class Interaction : MonoBehaviour
     public GameManager gameManager;
     // private Controls _input;
 
+    private LusterTrigger lusterInfo;
+
     void Start()
     {
         playerMovement = GetComponent<MovementController>();
@@ -39,6 +41,7 @@ public class Interaction : MonoBehaviour
         coinPoint = GameObject.FindWithTag("CoinPoint");
         // _input = new Controls();
         // _input.Enable();
+        lusterInfo = GameObject.Find("Trigger").GetComponent<LusterTrigger>();
     }
 
     // Update is called once per frame
@@ -125,6 +128,11 @@ public class Interaction : MonoBehaviour
                 lusterTrigger.lusterConstruction.DropLuster();
             }
         }
+
+        if (lusterTrigger != null)
+            lusterInfo.lusterInfo.SetActive(true);
+        else
+            lusterInfo.lusterInfo.SetActive(false);
 
         if (Input.GetKeyDown(KeyCode.R))
         {
