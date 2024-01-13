@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
     public void StartNewGame()
     {
         GameData.Reset();
-        SceneManager.LoadScene(5);
+        SceneManager.LoadScene(6);
     }
     public void LoadGame()
     {

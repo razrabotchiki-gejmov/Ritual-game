@@ -7,17 +7,18 @@ public class LusterTrigger : MonoBehaviour
 {
     public LusterConstruction lusterConstruction;
     public GameObject lusterInfo;
+    public GameObject canvas;
     // Start is called before the first frame update
     void Start()
     {
         lusterConstruction = GetComponentInParent<LusterConstruction>();
     }
-
-    // Update is called once per frame
-    void Update()
+    public void ShowHint()
     {
-        
+        canvas.SetActive(true);
     }
-
-    
+    public void HideHint()
+    {
+        canvas.SetActive(false);
+    }
 }

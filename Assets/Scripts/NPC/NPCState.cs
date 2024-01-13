@@ -16,7 +16,7 @@ public class NPCState : MonoBehaviour
     public GameObject dialogWindow;
     public TextMeshProUGUI dialogMessage;
     public GameManager gameManager;
-
+    public NPCHint hint;
     [SerializeField] private GameObject dialog;
     [SerializeField] private GameObject blackScreen;
 
@@ -27,6 +27,7 @@ public class NPCState : MonoBehaviour
             Destroy(gameObject);
         }
 
+        hint = GetComponent<NPCHint>();
         dialogWindow = transform.Find("DialogWindow").gameObject;
         dialogMessage = dialogWindow.transform.Find("Background").Find("Text").gameObject
             .GetComponent<TextMeshProUGUI>();
@@ -50,6 +51,7 @@ public class NPCState : MonoBehaviour
         dialogMessage.text = UsePhrase(cause);
         dialogWindow.SetActive(true);
         Invoke(nameof(StopSpeak), 5f);
+        hint.HideHint();
     }
 
     public void StartSpeak(string phrase)
@@ -57,6 +59,7 @@ public class NPCState : MonoBehaviour
         dialogMessage.text = phrase;
         dialogWindow.SetActive(true);
         Invoke(nameof(StopSpeak), 5f);
+        
     }
 
     public void StopSpeak()
@@ -78,6 +81,7 @@ public class NPCState : MonoBehaviour
         GetComponent<AudioSource>().Play();
         GameData.Names.Add(name);
         gameManager.SomeoneDied();
+        hint.HideHint();
     }
 
     public void GetSmeared()

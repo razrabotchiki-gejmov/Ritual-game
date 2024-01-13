@@ -8,13 +8,13 @@ using UnityEngine.Serialization;
 public class Interaction : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject NPC;
+    public NPCState NPC;
     public Food food;
     public DoorNew door;
     public Item item;
     public Clothes clothes;
     public LusterTrigger lusterTrigger;
-    public GameObject coinPoint;
+    public CoinPoint coinPoint;
     public bool isCoinPointNear;
     public bool havePoison;
     public bool haveKey;
@@ -38,7 +38,7 @@ public class Interaction : MonoBehaviour
         playerMovement = GetComponent<MovementController>();
         playerSpeak = GetComponent<PlayerSpeak>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        coinPoint = GameObject.FindWithTag("CoinPoint");
+        coinPoint = GameObject.FindWithTag("CoinPoint").GetComponent<CoinPoint>();
         // _input = new Controls();
         // _input.Enable();
         lusterInfo = GameObject.Find("Trigger").GetComponent<LusterTrigger>();
@@ -62,31 +62,30 @@ public class Interaction : MonoBehaviour
         {
             if (NPC != null)
             {
-                var npcState = NPC.GetComponent<NPCState>();
                 if (isInvisible)
                 {
-                    npcState.StartSpeak(6);
+                    NPC.StartSpeak(6);
                 }
 
-                else if (npcState.type == 2 && gameManager.smearedNPC != null)
+                else if (NPC.type == 2 && gameManager.smearedNPC != null)
                 {
                     playerSpeak.StartSpeak("Я видел человека запачканного кровью", false, true);
-                    npcState.StartSpeak(10);
+                    NPC.StartSpeak(10);
                     gameManager.smearedNPC.Die();
                     gameManager.smearedNPC = null;
                 }
-                else if (npcState.type == 4)
+                else if (NPC.type == 4)
                 {
-                    if(!GameData.TalkedToFather)
+                    if (!GameData.TalkedToFather)
                     {
-                        npcState.StartSpeak(9);
+                        NPC.StartSpeak(9);
                     }
-                }    
+                }
                 else
                 {
                     if (NPC.GetComponent<NPCPotentialKiller>())
                         GameData.SpokeWithPotentialKiller[GameData.Day - 1] = 1;
-                    npcState.StartSpeak(0);
+                    NPC.StartSpeak(0);
                 }
             }
 
@@ -94,18 +93,8 @@ public class Interaction : MonoBehaviour
             {
                 if (door.isLocked)
                 {
-                    if (haveKey)
-                    {
-                        door.Unlock();
-                        haveKey = false;
-                        Destroy(GetComponentInChildren<Item>().gameObject);
-                    }
-                    else
-                    {
-                        playerSpeak.StartSpeak("Похоже она заперта");
-                    }
+                    playerSpeak.StartSpeak("Похоже она заперта");
                 }
-
                 else if (!door.isOpened)
                     door.Open();
                 else
@@ -123,7 +112,7 @@ public class Interaction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (lusterTrigger != null && coinPoint.transform.childCount > 0)
+            if (lusterTrigger != null && coinPoint.isCoinHere)
             {
                 lusterTrigger.lusterConstruction.DropLuster();
             }
@@ -136,13 +125,11 @@ public class Interaction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (NPC != null && NPC.GetComponent<NPCState>().type <= 1 && !NPC.GetComponent<NPCState>().isDead)
+            if (NPC != null && NPC.type <= 1 && !NPC.isDead)
             {
-                var npcState = NPC.GetComponent<NPCState>();
                 if (haveWeapon)
                 {
                     var currentItem = GetComponentInChildren<Item>();
-                    var npcMovement = NPC.GetComponent<NPCMovementOld>();
                     // if (npcMovement) npcMovement.FullStop();
                     playerMovement.enabled = false;
                     GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -164,7 +151,7 @@ public class Interaction : MonoBehaviour
 
                 if (havePaint)
                 {
-                    npcState.GetSmeared();
+                    NPC.GetSmeared();
                     Destroy(GetComponentInChildren<Item>().gameObject);
                     havePaint = false;
                 }
@@ -178,6 +165,15 @@ public class Interaction : MonoBehaviour
             if (haveCoin && isCoinPointNear)
             {
                 PlaceCoin();
+                coinPoint.HideHint();
+                if (lusterTrigger != null) lusterTrigger.ShowHint();
+            }
+
+            if (haveKey && door != null && door.isLocked)
+            {
+                door.Unlock();
+                haveKey = false;
+                Destroy(GetComponentInChildren<Item>().gameObject);
             }
         }
 
@@ -185,6 +181,9 @@ public class Interaction : MonoBehaviour
         {
             if (GetComponentInChildren<Item>())
             {
+                if (havePoison && food != null) food.CannotBePoisoned();
+                if (haveKey && door != null) door.GetComponentInChildren<DoorHint>().DoorOpenCloseHint();
+                if (haveCoin && isCoinPointNear) coinPoint.HideHint();
                 GetComponentInChildren<Item>().DropWeapon(GetComponent<Transform>());
             }
         }
@@ -197,7 +196,7 @@ public class Interaction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (NPC != null && !NPC.GetComponent<NPCState>().isDead &&
+            if (NPC != null && !NPC.isDead &&
                 gameManager.canUseConviction)
             {
                 var potentialKiller = NPC.GetComponent<NPCPotentialKiller>();
@@ -205,7 +204,7 @@ public class Interaction : MonoBehaviour
                 if (npcVision.lastDetectionRating > 0)
                 {
                     playerSpeak.StartSpeak("Ты ничего здесь не видел", false, true);
-                    NPC.GetComponent<NPCState>().StartSpeak(4);
+                    NPC.StartSpeak(4);
                     gameManager.IncreaseDetectionRating(-npcVision.lastDetectionRating);
                     gameManager.BecomeOutOfUse(1);
                 }
@@ -215,22 +214,21 @@ public class Interaction : MonoBehaviour
                     playerSpeak.StartSpeak(
                         "Я знаю, как ты ненавидишь своего “друга”, и внутри каждый из нас понимает, что это он во всем виноват. Останови же его, спаси невинные души.",
                         false, true);
-                    NPC.GetComponent<NPCState>()
-                        .StartSpeak("Ты абсолютно прав. Ооо, как же долго я ждал этого момента");
+                    NPC.StartSpeak("Ты абсолютно прав. Ооо, как же долго я ждал этого момента");
                     potentialKiller.KillTargetNPC();
                     gameManager.BecomeOutOfUse(1);
                 }
-                else if (NPC.GetComponent<NPCState>().type <= 2)
+                else if (NPC.type <= 2)
                 {
                     playerSpeak.StartSpeak(" Иди найди тихое место и жди меня там", false, true);
                     // NPC.GetComponent<NPCMovementOld>().FullStop();
                     // NPC.GetComponent<NPCMovementOld>().isMoveToPoint = true;
-                    NPC.GetComponent<NPCState>().StartSpeak(5);
+                    NPC.StartSpeak(5);
                     gameManager.BecomeOutOfUse(1);
                 }
-                else if(NPC.GetComponentInChildren<NPCState>().type == 4)
+                else if (NPC.type == 4)
                 {
-                    NPC.GetComponent<NPCState>().StartSpeak(9);
+                    NPC.StartSpeak(9);
                 }
             }
         }
@@ -245,9 +243,9 @@ public class Interaction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            if (NPC != null && NPC.GetComponent<NPCState>().type <= 2 && gameManager.canUseSuperpower)
+            if (NPC != null && NPC.type <= 2 && gameManager.canUseSuperpower)
             {
-                NPC.GetComponent<NPCState>().Die();
+                NPC.Die();
                 gameManager.isSomeoneKilledDirectly = true;
                 BecomeVisible();
                 BloodyClothes();
@@ -296,22 +294,6 @@ public class Interaction : MonoBehaviour
         havePoison = false;
     }
 
-    // public void DropWeapon()
-    // {
-    //     var equippedItem = GetComponentInChildren<Item>().gameObject;
-    //     var droppedWeapon = Instantiate(equippedItem,
-    //         GetComponent<Transform>().position, GetComponent<Transform>().rotation);
-    //     droppedWeapon.GetComponent<Collider2D>().enabled = true;
-    //     droppedWeapon.name = equippedItem.name;
-    //     haveWeapon = false;
-    //     havePoison = false;
-    //     haveKey = false;
-    //     havePaint = false;
-    //     haveCoin = false;
-    //     coinPoint.GetComponent<SpriteRenderer>().enabled = false;
-    //     Destroy(equippedItem);
-    // }
-
     public void BloodyClothes()
     {
         clothesSprite.color = Color.red;
@@ -338,11 +320,12 @@ public class Interaction : MonoBehaviour
         droppedCoin.name = coin.name;
         haveCoin = false;
         Destroy(coin);
+        coinPoint.isCoinHere = true;
     }
 
     public void KillNpcKnife()
     {
-        NPC.GetComponent<NPCState>().Die();
+        NPC.Die();
         gameManager.isSomeoneKilledDirectly = true;
         BloodyClothes();
         BecomeVisible();
@@ -352,7 +335,7 @@ public class Interaction : MonoBehaviour
     public void KillNpcRock()
     {
         var currentItem = GetComponentInChildren<Item>();
-        NPC.GetComponent<NPCState>().Die();
+        NPC.Die();
         gameManager.isSomeoneKilledDirectly = true;
         BloodyClothes();
         GameData.Items.Add(currentItem.gameObject.name);
@@ -364,7 +347,7 @@ public class Interaction : MonoBehaviour
 
     public void KillNpcVein()
     {
-        NPC.GetComponent<NPCState>().Die();
+        NPC.Die();
         gameManager.isSomeoneKilledDirectly = true;
         var currentItem = GetComponentInChildren<Item>();
         GameData.Items.Add(currentItem.gameObject.name);
