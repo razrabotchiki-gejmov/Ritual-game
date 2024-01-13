@@ -26,7 +26,7 @@ public class NPCState : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
+        blackScreen = GameObject.Find("BlackScreen");
         hint = GetComponent<NPCHint>();
         dialogWindow = transform.Find("DialogWindow").gameObject;
         dialogMessage = dialogWindow.transform.Find("Background").Find("Text").gameObject
@@ -59,7 +59,6 @@ public class NPCState : MonoBehaviour
         dialogMessage.text = phrase;
         dialogWindow.SetActive(true);
         Invoke(nameof(StopSpeak), 5f);
-        
     }
 
     public void StopSpeak()
@@ -239,6 +238,7 @@ public class NPCState : MonoBehaviour
     }
 
     private Vector3 initPlace;
+
     public void TeleportToScene()
     {
         GameObject.FindWithTag("Player").GetComponent<MovementController>().enabled = false;
@@ -254,8 +254,8 @@ public class NPCState : MonoBehaviour
         gameManager.smearedNPC.GetComponent<NPCMovement>().enabled = false;
         GameObject.FindWithTag("Player").transform.position = playerPlace.transform.position;
         dialog.SetActive(true);
-        
-        Invoke("TeleportBack",5f);
+
+        Invoke("TeleportBack", 5f);
         blackScreen.GetComponent<Image>().CrossFadeAlpha(0, 0.1f, false);
     }
 

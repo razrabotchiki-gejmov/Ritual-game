@@ -34,7 +34,7 @@ public class Detection : MonoBehaviour
             if (NPCs.Count > 0) interaction.NPC.hint.HideHint();
             NPCs.Add(other);
             interaction.NPC = other.GetComponent<NPCState>();
-            if (interaction.havePaint || interaction.haveWeapon) interaction.NPC.hint.ShowsSpeakHint();
+            if (interaction.havePaint || interaction.haveWeapon) interaction.NPC.hint.ShowsItemInteractionHint();
             else interaction.NPC.hint.ShowsSpeakHint();
         }
 

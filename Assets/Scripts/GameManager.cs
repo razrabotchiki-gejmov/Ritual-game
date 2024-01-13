@@ -29,10 +29,16 @@ public class GameManager : MonoBehaviour
     public NPCState rightNpcSpeaker;
     private IEnumerator coroutine;
     public NPCState smearedNPC;
+    public TextMeshProUGUI info;
+    public Image image;
+    public TextMeshProUGUI name;
 
 
     void Start()
     {
+        image = GameObject.Find("ItemImage").GetComponent<Image>();
+        name = GameObject.Find("ItemName").GetComponent<TextMeshProUGUI>();
+        info = GameObject.Find("HowToUse").GetComponentInChildren<TextMeshProUGUI>();
         detectionStep = 5;
         detectionRatingScaleTransform = detectionRatingScale.GetComponent<RectTransform>();
         endDayPoint = GameObject.FindWithTag("Finish");
@@ -73,17 +79,17 @@ public class GameManager : MonoBehaviour
     {
         detectionRating += value;
         var showedValue = detectionRating;
-        if (showedValue <= 33)
+        if (showedValue <= 25)
         {
             detectionRatingScale.GetComponent<Image>().color = Color.green;
             GameData.Chances = 3;
         }
-        else if (showedValue <= 66)
+        else if (showedValue <= 60)
         {
             detectionRatingScale.GetComponent<Image>().color = Color.yellow;
             GameData.Chances = 2;
         }
-        else if (showedValue <= 99)
+        else if (showedValue <= 95)
         {
             detectionRatingScale.GetComponent<Image>().color = new Color(1, 0.4f, 0);
             GameData.Chances = 1;
@@ -317,5 +323,35 @@ public class GameManager : MonoBehaviour
                 StopCoroutine(coroutine);
             }
         }
+    }
+
+    public void ShowLusterInfo(bool show = true)
+    {
+        if (show)
+        {
+            info.text =
+                "Е - Поговорить/ Открыть дверь\nF - Поднять предмет\nR - Использовать предмет\nT - Выбросить предмет\nQ - уронить люстру";
+            // info.transform.parent.GetComponent<RectTransform>().sizeDelta += Vector2.up * 27;
+        }
+        else
+        {
+            info.text =
+                "Е - Поговорить/ Открыть дверь\nF - Поднять предмет\nR - Использовать предмет\nT - Выбросить предмет";
+            // info.transform.parent.GetComponent<RectTransform>().sizeDelta -= Vector2.up * 27;
+        }
+    }
+
+    public void ShowItem(Sprite itemImage, string itemName)
+    {
+        image.enabled = true;
+        name.enabled = true;
+        image.sprite = itemImage;
+        name.text = itemName;
+        image.preserveAspect = true;
+    }
+    public void HideItem()
+    {
+        image.enabled = false;
+        name.enabled = false;
     }
 }

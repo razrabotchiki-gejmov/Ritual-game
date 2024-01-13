@@ -11,14 +11,14 @@ public class Item : MonoBehaviour
 
     // public GameObject player;
     public Interaction interaction;
-    public Image image;
-    public TextMeshProUGUI name;
     public int type;
     public GameObject backlight;
     public GameObject canvas;
     public AudioSource audioSource;
     public AudioClip pickUpSound;
+    public GameManager gameManager;
     public AudioClip dropSound;
+
     // 0 - нож, 1 - камень, 2 - жила животного, 3 - яд, 4 - краска, 5 - монета, 6 - ключи
     void Start()
     {
@@ -28,12 +28,10 @@ public class Item : MonoBehaviour
             Destroy(gameObject);
         }
 
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         var player = GameObject.FindWithTag("Player");
         interaction = player.GetComponent<Interaction>();
         itemSlot = player.GetComponentInChildren<ItemSlotController>().gameObject;
-        image = GameObject.Find("ItemImage").GetComponent<Image>();
-        name = GameObject.Find("ItemName").GetComponent<TextMeshProUGUI>();
-        // backlight = GetComponentsInChildren<Transform>()[1].gameObject;
     }
 
     // Update is called once per frame
@@ -53,27 +51,29 @@ public class Item : MonoBehaviour
         item.HideHint();
         itemSlot.GetComponent<ItemSlotController>().AddWeapon(item.gameObject);
         item.gameObject.name = gameObject.name;
+        var name = "";
         if (type <= 2) interaction.haveWeapon = true;
-        if (type == 0) name.text = "Нож";
-        if (type == 1) name.text = "Камень";
-        if (type == 2) name.text = "Жила";
+        if (type == 0) name = "Нож";
+        if (type == 1) name = "Камень";
+        if (type == 2) name = "Жила";
         if (type == 3)
         {
-            name.text = "Яд";
+            name = "Яд";
             interaction.havePoison = true;
             if (interaction.food != null) interaction.food.CanBePoisoned();
         }
 
         if (type == 4)
         {
-            name.text = "Краска";
+            name = "Краска";
             interaction.havePaint = true;
         }
 
         if (type == 5)
         {
-            name.text = "Монета";
+            name = "Монета";
             interaction.haveCoin = true;
+            gameManager.ShowLusterInfo(false);
             interaction.coinPoint.GetComponent<SpriteRenderer>().enabled = true;
             if (interaction.isCoinPointNear) interaction.coinPoint.ShowHint();
             if (interaction.lusterTrigger != null) interaction.lusterTrigger.HideHint();
@@ -82,7 +82,7 @@ public class Item : MonoBehaviour
 
         if (type == 6)
         {
-            name.text = "Ключ";
+            name = "Ключ";
             interaction.haveKey = true;
             if (interaction.door != null && interaction.door.isLocked)
                 interaction.door.GetComponentInChildren<DoorHint>().DoorUnlockHint();
@@ -90,10 +90,7 @@ public class Item : MonoBehaviour
 
         item.audioSource.clip = pickUpSound;
         item.audioSource.Play();
-        image.enabled = true;
-        name.enabled = true;
-        image.sprite = GetComponent<SpriteRenderer>().sprite;
-        image.preserveAspect = true;
+        gameManager.ShowItem(GetComponent<SpriteRenderer>().sprite, name);
         Destroy(gameObject);
     }
 
@@ -130,8 +127,7 @@ public class Item : MonoBehaviour
         droppedWeaponAudio.clip = dropSound;
         droppedWeaponAudio.Play();
         Destroy(equippedItem);
-        image.enabled = false;
-        name.enabled = false;
+        gameManager.HideItem();
     }
 
     public void ShowHint()

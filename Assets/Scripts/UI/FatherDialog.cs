@@ -36,10 +36,6 @@ public class FatherDialog : MonoBehaviour
             {
                 EndDialog();
             }
-            if (list[index - 1].Type == 2)
-            {
-                return;
-            }
 
         }
     }
@@ -80,8 +76,8 @@ public class FatherDialog : MonoBehaviour
         GameObject.FindWithTag("Player").GetComponent<MovementController>().enabled = true;
         gameObject.SetActive(false);
         index = 0;
-        if (!TalkWithFather)
-            Destroy(gameManager.smearedNPC.gameObject);
+        // if (!TalkWithFather)
+        //     Destroy(gameManager.smearedNPC.gameObject);
     }
 
     public void GetPhrasesList()

@@ -75,9 +75,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1947848973
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0.6169541, b: 0.1415093, a: 1}
   m_FlipX: 0
@@ -147,12 +147,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interaction: {fileID: 0}
-  image: {fileID: 0}
   type: 2
   backlight: {fileID: 9103731734496674704}
   canvas: {fileID: 6383925747884698985}
   audioSource: {fileID: 0}
   pickUpSound: {fileID: 8300000, guid: 088fa7d09ba65a442a94fd7149155d57, type: 3}
+  gameManager: {fileID: 0}
   dropSound: {fileID: 8300000, guid: a8300a8e32ee84a44991e6d0b7408ff6, type: 3}
 --- !u!82 &5259300887585926438
 AudioSource:

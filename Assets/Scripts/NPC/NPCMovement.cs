@@ -16,23 +16,20 @@ public class NPCMovement : MonoBehaviour
     // 1 - поесть
     public List<Vector2> spots;
     private int spotIndex;
-    public List<Sprite> sprites = new();
-    public NPCState npcState;
-    private SpriteRenderer spriteRenderer;
     private Transform body;
+    public bool cannotMove;
 
     void Start()
     {
         spriteChanger = GetComponent<SpriteChanger>();
         body = GetComponentInChildren<NPCVision>().transform;
-        spriteRenderer = GetComponent<SpriteRenderer>();
         if (cooldowns.Count > 0) timeToMove = cooldowns[0];
-        npcState = GetComponent<NPCState>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (cannotMove) return;
         if (spots.Count > 0 && cooldowns.Count > 0 && methods.Count > 0)
         {
             var dir = (spots[spotIndex] - (Vector2)transform.position).normalized;

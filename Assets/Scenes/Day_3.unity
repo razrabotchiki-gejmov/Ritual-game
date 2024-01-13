@@ -3629,7 +3629,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4994967329191567714, guid: 8b8d4ac0743767e43b6fa5e1a5740ce2, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7546900543602893419, guid: 8b8d4ac0743767e43b6fa5e1a5740ce2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4497,7 +4497,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7310814317012572470, guid: ce9cd4dbf80ddf14a9be65ddd67414da, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6129,8 +6129,16 @@ PrefabInstance:
       value: Vein
       objectReference: {fileID: 0}
     - target: {fileID: 7310814317012572470, guid: c977f3694adeadb4ca6f8f7676b8c191, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310814317012572470, guid: c977f3694adeadb4ca6f8f7676b8c191, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310814317012572470, guid: c977f3694adeadb4ca6f8f7676b8c191, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1947848973
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6324,10 +6332,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 383750165}
     m_Modifications:
-    - target: {fileID: 4433004626662005919, guid: 1cef67d607858b04fb19b0d0141528c3, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 459666254876331019, guid: 7244b2d164d5e434480e4cca5d8f45be, type: 3}
       propertyPath: m_Name
       value: NPC_Monk_4 Variant
@@ -6402,6 +6406,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3161288366256951416, guid: 7244b2d164d5e434480e4cca5d8f45be, type: 3}
       propertyPath: cooldowns.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433004626662005919, guid: 1cef67d607858b04fb19b0d0141528c3, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7355,7 +7363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7310814317012572470, guid: 4e4d6f85aba078a41836c6412d441a1a, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14540,7 +14548,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7310814317012572470, guid: ff0f0b37068ab354d88e15ad7d8dff4c, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15331,7 +15339,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7310814317012572470, guid: 6846d1d1146f9ff489cc125c88474f45, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17650,7 +17658,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 122750402292966867, guid: a3d686dffcd76e64589da51ee1823989, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2453681727802913469, guid: a3d686dffcd76e64589da51ee1823989, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18224,7 +18232,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 122750402292966867, guid: a3d686dffcd76e64589da51ee1823989, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2453681727802913469, guid: a3d686dffcd76e64589da51ee1823989, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18772,10 +18780,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 383750165}
     m_Modifications:
-    - target: {fileID: 4433004626662005919, guid: 1cef67d607858b04fb19b0d0141528c3, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4877590860959539641, guid: ecb1288e98ce7bd44b0cff61e5dfd521, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.5200002
@@ -18842,6 +18846,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8782816965282689334, guid: ecb1288e98ce7bd44b0cff61e5dfd521, type: 3}
       propertyPath: cooldowns.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433004626662005919, guid: 1cef67d607858b04fb19b0d0141528c3, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -20020,7 +20028,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3211568145392074098, guid: 43b50d174e8c3f04d8f2bc82f0103f16, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6926713280944357032, guid: 43b50d174e8c3f04d8f2bc82f0103f16, type: 3}
       propertyPath: m_Name
@@ -20647,6 +20655,9 @@ MonoBehaviour:
   leftNpcSpeaker: {fileID: 1801445102}
   rightNpcSpeaker: {fileID: 720668496}
   smearedNPC: {fileID: 0}
+  info: {fileID: 0}
+  image: {fileID: 0}
+  name: {fileID: 0}
 --- !u!4 &1938762013
 Transform:
   m_ObjectHideFlags: 0

@@ -29,9 +29,6 @@ public class Interaction : MonoBehaviour
     public PlayerSpeak playerSpeak;
     public MovementController playerMovement;
     public GameManager gameManager;
-    // private Controls _input;
-
-    private LusterTrigger lusterInfo;
 
     void Start()
     {
@@ -41,7 +38,6 @@ public class Interaction : MonoBehaviour
         coinPoint = GameObject.FindWithTag("CoinPoint").GetComponent<CoinPoint>();
         // _input = new Controls();
         // _input.Enable();
-        lusterInfo = GameObject.Find("Trigger").GetComponent<LusterTrigger>();
     }
 
     // Update is called once per frame
@@ -115,13 +111,9 @@ public class Interaction : MonoBehaviour
             if (lusterTrigger != null && coinPoint.isCoinHere)
             {
                 lusterTrigger.lusterConstruction.DropLuster();
+                gameManager.ShowLusterInfo(false);
             }
         }
-
-        if (lusterTrigger != null)
-            lusterInfo.lusterInfo.SetActive(true);
-        else
-            lusterInfo.lusterInfo.SetActive(false);
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -130,7 +122,8 @@ public class Interaction : MonoBehaviour
                 if (haveWeapon)
                 {
                     var currentItem = GetComponentInChildren<Item>();
-                    // if (npcMovement) npcMovement.FullStop();
+                    var npcMovement = NPC.GetComponent<NPCMovement>();
+                    if (npcMovement) npcMovement.cannotMove = true;
                     playerMovement.enabled = false;
                     GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                     if (currentItem.type == 0)
@@ -154,6 +147,7 @@ public class Interaction : MonoBehaviour
                     NPC.GetSmeared();
                     Destroy(GetComponentInChildren<Item>().gameObject);
                     havePaint = false;
+                    gameManager.HideItem();
                 }
             }
 
@@ -167,6 +161,7 @@ public class Interaction : MonoBehaviour
                 PlaceCoin();
                 coinPoint.HideHint();
                 if (lusterTrigger != null) lusterTrigger.ShowHint();
+                gameManager.ShowLusterInfo();
             }
 
             if (haveKey && door != null && door.isLocked)
@@ -292,6 +287,7 @@ public class Interaction : MonoBehaviour
         food.GetComponent<Food>().BecomePoisoned();
         Destroy(GetComponentInChildren<Item>().gameObject);
         havePoison = false;
+        gameManager.HideItem();
     }
 
     public void BloodyClothes()
@@ -343,6 +339,7 @@ public class Interaction : MonoBehaviour
         haveWeapon = false;
         BecomeVisible();
         playerMovement.enabled = true;
+        gameManager.HideItem();
     }
 
     public void KillNpcVein()
@@ -355,5 +352,6 @@ public class Interaction : MonoBehaviour
         haveWeapon = false;
         BecomeVisible();
         playerMovement.enabled = true;
+        gameManager.HideItem();
     }
 }
