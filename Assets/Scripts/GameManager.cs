@@ -32,10 +32,12 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI info;
     public Image image;
     public TextMeshProUGUI name;
+    public PlayerSpeak playerSpeak;
 
 
     void Start()
     {
+        playerSpeak = GameObject.FindWithTag("Player").GetComponent<PlayerSpeak>();
         image = GameObject.Find("ItemImage").GetComponent<Image>();
         name = GameObject.Find("ItemName").GetComponent<TextMeshProUGUI>();
         info = GameObject.Find("HowToUse").GetComponentInChildren<TextMeshProUGUI>();
@@ -174,6 +176,7 @@ public class GameManager : MonoBehaviour
     {
         endDayPoint.GetComponent<SpriteRenderer>().enabled = true;
         endDayPoint.GetComponent<CircleCollider2D>().enabled = true;
+        playerSpeak.StartSpeak("На сегодня все, нужно быстрее вернуться в свою комнату");
     }
 
     IEnumerator Coroutine()

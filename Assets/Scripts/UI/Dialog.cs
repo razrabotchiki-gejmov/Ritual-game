@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Dialog : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject playerName;
-    public GameObject superiorName;
+    public GameObject leftName;
+    public GameObject rightName;
     public GameObject phrase;
     public GameObject answer1;
     public GameObject answer2;
@@ -18,20 +19,22 @@ public class Dialog : MonoBehaviour
     private TextMeshProUGUI answer1Text;
     private TextMeshProUGUI answer2Text;
     private TextMeshProUGUI answer3Text;
-    public List<MyClass> list = new();
+    public List<MyClass> dialogList = new();
     public int index;
     public GameObject gameOverMenu;
     public GameObject victoryMenu;
-    private int startChances;
+    public bool isPlayerFailed;
+    public int dialogType;
 
     void Start()
     {
-        startChances = GameData.Chances;
         phraseText = phrase.GetComponent<TextMeshProUGUI>();
         answer1Text = answer1.GetComponentInChildren<TextMeshProUGUI>();
         answer2Text = answer2.GetComponentInChildren<TextMeshProUGUI>();
         answer3Text = answer3.GetComponentInChildren<TextMeshProUGUI>();
-        GetPhrasesList();
+        if (dialogType == 0) GetSuperiorDialog();
+        if (dialogType == 1) GetGoodEndingDialog();
+        if (dialogType == 2) GetBadEndingDialog();
         ChangeDialogState();
     }
 
@@ -40,12 +43,12 @@ public class Dialog : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (list[index - 1].Type == 2)
+            if (dialogList[index - 1].Type == 2)
             {
                 return;
             }
 
-            if (index < list.Count)
+            if (index < dialogList.Count)
             {
                 ChangeDialogState();
             }
@@ -79,6 +82,12 @@ public class Dialog : MonoBehaviour
             Phrase = phrase;
         }
 
+        public MyClass(string phrase)
+        {
+            Type = 3;
+            Phrase = phrase;
+        }
+
         public MyClass(string goodAnswer1, string badAnswer1, string goodAnswer2, string badAnswer2, string goodAnswer3,
             string badAnswer3)
         {
@@ -94,42 +103,52 @@ public class Dialog : MonoBehaviour
 
     public void ChangeDialogState()
     {
-        var myClass = list[index];
+        var myClass = dialogList[index];
         if (myClass.Type == 0)
         {
-            playerName.SetActive(false);
+            leftName.SetActive(false);
             answer1.SetActive(false);
             answer2.SetActive(false);
             answer3.SetActive(false);
             phraseText.text = myClass.Phrase;
-            superiorName.SetActive(true);
+            rightName.SetActive(true);
             phrase.SetActive(true);
         }
 
         else if (myClass.Type == 1)
         {
-            superiorName.SetActive(false);
+            rightName.SetActive(false);
             answer1.SetActive(false);
             answer2.SetActive(false);
             answer3.SetActive(false);
-            playerName.SetActive(true);
+            leftName.SetActive(true);
             phraseText.text = myClass.Phrase;
             phrase.SetActive(true);
         }
-        else
+        else if (myClass.Type == 2)
         {
-            superiorName.SetActive(false);
+            rightName.SetActive(false);
             phrase.SetActive(false);
-            playerName.SetActive(true);
+            leftName.SetActive(true);
             answer1Text.text = myClass.Answer1;
             answer2Text.text = myClass.Answer2;
             answer3Text.text = myClass.Answer3;
             answer1.SetActive(true);
             answer2.SetActive(true);
             answer3.SetActive(true);
-            if (startChances <= 0) answer1.GetComponent<Answer>().isBad = true;
-            if (startChances <= 1) answer2.GetComponent<Answer>().isBad = true;
-            if (startChances <= 2) answer3.GetComponent<Answer>().isBad = true;
+            if (GameData.Chances <= 0) answer1.GetComponent<Answer>().isBad = true;
+            if (GameData.Chances <= 1) answer2.GetComponent<Answer>().isBad = true;
+            if (GameData.Chances <= 2) answer3.GetComponent<Answer>().isBad = true;
+        }
+        else if (myClass.Type == 3)
+        {
+            rightName.SetActive(false);
+            leftName.SetActive(false);
+            answer1.SetActive(false);
+            answer2.SetActive(false);
+            answer3.SetActive(false);
+            phraseText.text = myClass.Phrase;
+            phrase.SetActive(true);
         }
 
         index++;
@@ -138,15 +157,27 @@ public class Dialog : MonoBehaviour
 
     public void EndDialog()
     {
-        if (GameData.Chances <= 0)
+        if (dialogType == 1)
+        {
+            Win();
+            return;
+        }
+
+        if (dialogType == 2)
         {
             Loose();
+            return;
+        }
+
+        if (isPlayerFailed)
+        {
+            ShowBadEnding();
         }
         else
         {
             if (GameData.Day == 3)
             {
-                Win();
+                ShowGoodEnding();
             }
             else
             {
@@ -160,7 +191,6 @@ public class Dialog : MonoBehaviour
         {
             GameData.Day += 1;
             GameData.Chances = 3;
-            // SceneManager.LoadScene(GameData.Day);
             SceneManager.LoadScene(5);
         }
     }
@@ -175,11 +205,11 @@ public class Dialog : MonoBehaviour
         victoryMenu.SetActive(true);
     }
 
-    public void GetPhrasesList()
+    public void GetSuperiorDialog()
     {
         if (GameData.Day == 1)
         {
-            list = new List<MyClass>
+            dialogList = new List<MyClass>
             {
                 new(0, "Приветствую, сын мой. Я пришел сообщить пренеприятнейшую новость."),
                 new(1, "Что же случилось, Отец?"),
@@ -215,7 +245,7 @@ public class Dialog : MonoBehaviour
 
         if (GameData.Day == 2)
         {
-            list = new List<MyClass>
+            dialogList = new List<MyClass>
             {
                 new(0, "Доброе утро, сын мой, хотя оно не такое уж и доброе."),
                 new(1, "Здравствуй, Отец. Что же случилось?"),
@@ -257,7 +287,7 @@ public class Dialog : MonoBehaviour
 
         if (GameData.Day == 3)
         {
-            list = new List<MyClass>
+            dialogList = new List<MyClass>
             {
                 new(0,
                     "Здравствуй, сын мой. Похоже наши опасения оказались не напрасными и с теории о убийце окончательно отпадают все сомнения. Новый день…"),
@@ -309,9 +339,89 @@ public class Dialog : MonoBehaviour
         }
     }
 
+    public void GetGoodEndingDialog()
+    {
+        dialogList = new List<MyClass>
+        {
+            new("(В подземелье монастыря царит мрак, а воздух пропитан запахом крови и смерти, " +
+                "только слабый свет свечей освещает ужасающую картину: тела убитых лежат разбросанными по комнате, " +
+                "а на полу вычерчена кровавой линией пентаграмма. В центре стоит монах, в глазах которого мерцает " +
+                "зловещий свет, и его тело дрожит под воздействием заклинания призыва.)"),
+            new(1, "(с искаженным голосом) Скоро, мой господин, скоро ты пройдешь сквозь этот портал. " +
+                   "Твоя власть над этим миром станет неоспоримой."),
+            new("(Внезапно, каждая темь в комнате начинает собираться в одной точке, образовывая силуэт существа. " +
+                "И вот через некоторое время на каменный пол подвала ступает нога Дьявола. Его глаза сверкают огнем, " +
+                "из головы торчат величественные рога, а рот украшает кровожадная улыбка.)"),
+            new(0,
+                "Мой верный слуга, ты сделал то, что я требовал. Твои руки пролили достаточно крови, чтобы открыть портал."),
+            new(1,
+                "Да, мой господин. Я выполнил ваши указания. Теперь вы пришли, чтобы принести великую тьму в этот мир."),
+            new(0, "(смеется) Ты был верен своему слову, и я оценю твою работу по достоинству. " +
+                   "Ты станешь моим помощником в этом мире, слуга мой, и я одарю тебя новой силой."),
+            new("(Дьявол поднимает руку, из которой исходит поток темной энергии. Она обрушивается на монаха, " +
+                "обволакивая его тело и даруя ему новые, куда более страшные и разрушительные способности, нежели были у него ранее.)"),
+            new(
+                "(Монах падает на колени перед своим владыкой, выказывая ему тем самым безграничное уважение и благодарность)"),
+            new(1, "Благодарю вас, мой господин. Теперь я буду служить вам с еще большим усердием."),
+            new(0,
+                "Так и будет. Мы станем правителями на в этом мире, распространяя тьму и подчиняя себе человечество. Пойдем, мой верный слуга, это еще только начало, время начать великую жатву."),
+            new(
+                "(Дьявол и монах исчезают во тьме, оставив за собой пустой монастырь, комнаты которого были осквернены кровью. " +
+                "Так все и начиналось, мир уже никогда не будет прежним.)")
+        };
+    }
+
+    public void GetBadEndingDialog()
+    {
+        dialogList = new List<MyClass>
+        {
+            new(0, "Мальчик, ты же понимал, что рано или поздно, но я узнал бы о твоих злодеяниях. " +
+                   "Твоя душа находится под влиянием темных сил, и я должен попытаться изгнать их. " +
+                   "Мы проведем сеанс экзорцизма, правда боюсь твое сознание слишком сильно отравлено бесовским влиянием " +
+                   "и вероятность твоего выживания крайне мала. Мне очень жаль…"),
+            new(1,
+                " Глупый старик, ты не понимаешь, все уже зашло слишком далеко, это не остановить, и моя смерть ни на что не повлияет. " +
+                "Скоро вся ваша обыденная жизнь превратиться в ад, все вокруг озарится пламенем, а подпитывать его будут реки крови."),
+            new(0, "Наша вера велика. Силы зла не победят нас, если мы объединимся. " +
+                   "Я сожалею, что ты не сможешь помочь нам в этой войне света и тьмы. Но я приложу все усилия, чтобы переломить эту ситуацию."),
+            new(1,
+                "А я бы очень сильно хотел переломать тебе все кости, но не могу. Давай не будет растягивать это, закончи все раз и навсегда."),
+            new(0,
+                "Мы будем молиться за твою душу, сын мой. Имей веру в свет Божий, он проведет тебя сквозь любую тьму. Начнем же братья."),
+            new(
+                "(Настоятель с другими монахами собирается вокруг монаха, который стоит в центре круга, не в силах пошевелиться. " +
+                "Все, что ему остается, сжимать кулаки в бессильной злобе ко всем собравшимся вокруг него, да и ко всему миру тоже. Настоятель начинает молитву.)"),
+            new(0,
+                "Великий свет, защити нас! Мы отвергаем тебя, зло. Этот монах должен быть свободен от твоего порабощения!"),
+            new(
+                "(Свет заполняет комнату, а монах начинает испытывать мучительные чувства, крича от боли. " +
+                "Однако настоятель и все собравшиеся продолжают молиться, несмотря на страх и сомнения.)"),
+            new(0, "Великий свет, я призываю твою силу! Изгони зло из этой души, омой ее светом твоей любви!"),
+            new(
+                "(После окончания процесса в комнате воцарятся оглушительная тишина, тело монаха падает на каменный пол подвала монастыря. " +
+                "Тьма ушла из его тела, но забрала с собой жизненную энергию. Последнее что говорит монах – это: " +
+                "“Простите меня, братья... Настоятель, будьте осторожны...” и его глаза закрываются, отправляя хозяина в вечный сон)"),
+            new(
+                0, "Прости меня, что не смог защитить тебя, мы будем скучать."),
+            new("(Пока все, собравшиеся здесь, склонились над телом погибшего, дабы почтить его память, " +
+                "никто из них не был в состояние заметить, как странная тень скользнула по стене к выходу из комнаты и скрылась на лестнице наверх. " +
+                "Похоже, что это действительно не конец…)"),
+        };
+    }
+
+    public void ShowGoodEnding()
+    {
+        SceneManager.LoadScene(7);
+    }
+
+    public void ShowBadEnding()
+    {
+        SceneManager.LoadScene(8);
+    }
+
     public int GetEnding()
     {
-        if (GameData.Chances > 0) return 0;
+        if (!isPlayerFailed) return 0;
         return 1;
     }
 }

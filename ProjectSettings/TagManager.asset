@@ -53,3 +53,6 @@ TagManager:
   - name: Items
     uniqueID: 2347118323
     locked: 0
+  - name: Speaking
+    uniqueID: 1649931499
+    locked: 0

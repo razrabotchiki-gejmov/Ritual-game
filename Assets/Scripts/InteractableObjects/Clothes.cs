@@ -5,29 +5,14 @@ using UnityEngine;
 
 public class Clothes : MonoBehaviour
 {
-    // public bool isInBlood = false;
-    // [SerializeField] private GameObject clothesSlot;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject hint;
 
-    // Update is called once per frame
-    void Update()
+    public void ShowHint()
     {
-        
+        hint.SetActive(true);
     }
-    public void PickUpClothes()
+    public void HideHint()
     {
-        // var clothes = Instantiate(this, clothesSlot.transform.position, clothesSlot.transform.rotation);
-        // clothes.transform.parent = clothesSlot.transform;
-        // clothes.GetComponent<BoxCollider2D>().enabled = false;
-        Destroy(gameObject);
+        hint.SetActive(false);
     }
-    
-    // public void PaintInBlood()
-    // {
-    //     isInBlood = true;
-    // }
 }

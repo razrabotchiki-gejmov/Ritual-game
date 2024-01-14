@@ -19,6 +19,7 @@ public class NPCState : MonoBehaviour
     public NPCHint hint;
     [SerializeField] private GameObject dialog;
     [SerializeField] private GameObject blackScreen;
+    public GameObject bloodyStain;
 
     void Start()
     {
@@ -85,8 +86,8 @@ public class NPCState : MonoBehaviour
 
     public void GetSmeared()
     {
-        GetComponentInChildren<SpriteRenderer>().color = Color.magenta;
         gameManager.smearedNPC = this;
+        bloodyStain.SetActive(true);
     }
 
 

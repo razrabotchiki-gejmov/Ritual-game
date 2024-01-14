@@ -6,18 +6,15 @@ public class Answer : MonoBehaviour
 {
     // Start is called before the first frame update
     public bool isBad;
+    public Dialog dialog;
 
     void Start()
     {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        dialog = GetComponentInParent<Dialog>();
     }
 
     public void Answered()
     {
-        if (isBad) GameData.Chances -= 1;
+        if (isBad) dialog.isPlayerFailed = true;
     }
 }
