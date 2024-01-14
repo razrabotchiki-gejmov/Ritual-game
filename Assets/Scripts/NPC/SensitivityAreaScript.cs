@@ -12,9 +12,11 @@ public class SensitivityAreaScript : MonoBehaviour
     public bool isPlayerNear;
     public GameManager gameManager;
     public GameObject NPC;
+    public NPCMovement movement;
 
     void Start()
     {
+        movement = GetComponentInParent<NPCMovement>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
@@ -41,6 +43,8 @@ public class SensitivityAreaScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerNear = true;
+            movement.isPlayerDetected = true;
+            movement.cannotMove = true;
         }
     }
 
@@ -49,6 +53,8 @@ public class SensitivityAreaScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerNear = false;
+            movement.isPlayerDetected = false;
+            movement.cannotMove = false;
         }
     }
 }

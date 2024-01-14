@@ -25,10 +25,10 @@ public class Interaction : MonoBehaviour
     public float timeToBecomeVisible;
     public bool isInvisible;
     public bool isClothesBlooded;
-    public SpriteRenderer clothesSprite;
     public PlayerSpeak playerSpeak;
     public MovementController playerMovement;
     public GameManager gameManager;
+    public GameObject bloodStain;
 
     void Start()
     {
@@ -117,39 +117,49 @@ public class Interaction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (NPC != null && NPC.type <= 1 && !NPC.isDead)
+            if (NPC != null)
             {
-                if (haveWeapon)
+                if (NPC.type >= 2 && (haveWeapon || havePaint))
                 {
-                    var currentItem = GetComponentInChildren<Item>();
-                    var npcMovement = NPC.GetComponent<NPCMovement>();
-                    if (npcMovement) npcMovement.cannotMove = true;
-                    playerMovement.enabled = false;
-                    GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                    if (currentItem.type == 0)
-                    {
-                        Invoke(nameof(KillNpcKnife), 0);
-                    }
-
-                    if (currentItem.type == 1)
-                    {
-                        Invoke(nameof(KillNpcRock), 2);
-                    }
-
-                    if (currentItem.type == 2)
-                    {
-                        Invoke(nameof(KillNpcVein), 3);
-                    }
+                    playerSpeak.StartSpeak(
+                        "Свет слишком силен в нем, не буду рисковать, сосредоточусь на других целях");
                 }
 
-                if (havePaint)
+                if (NPC.type <= 1 && !NPC.isDead)
                 {
-                    NPC.GetSmeared();
-                    Destroy(GetComponentInChildren<Item>().gameObject);
-                    havePaint = false;
-                    gameManager.HideItem();
+                    if (haveWeapon)
+                    {
+                        var currentItem = GetComponentInChildren<Item>();
+                        var npcMovement = NPC.GetComponent<NPCMovement>();
+                        if (npcMovement) npcMovement.cannotMove = true;
+                        playerMovement.enabled = false;
+                        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                        if (currentItem.type == 0)
+                        {
+                            Invoke(nameof(KillNpcKnife), 0);
+                        }
+
+                        if (currentItem.type == 1)
+                        {
+                            Invoke(nameof(KillNpcRock), 2);
+                        }
+
+                        if (currentItem.type == 2)
+                        {
+                            Invoke(nameof(KillNpcVein), 3);
+                        }
+                    }
+
+                    if (havePaint)
+                    {
+                        NPC.GetSmeared();
+                        Destroy(GetComponentInChildren<Item>().gameObject);
+                        havePaint = false;
+                        gameManager.HideItem();
+                    }
                 }
             }
+
 
             if (food != null && havePoison)
             {
@@ -185,8 +195,10 @@ public class Interaction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            clothes.PickUpClothes();
-            CleanClothes();
+            if (clothes != null)
+            {
+                CleanClothes();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -238,13 +250,20 @@ public class Interaction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            if (NPC != null && NPC.type <= 2 && gameManager.canUseSuperpower)
+            if (NPC != null && gameManager.canUseSuperpower)
             {
-                NPC.Die();
-                gameManager.isSomeoneKilledDirectly = true;
-                BecomeVisible();
-                BloodyClothes();
-                gameManager.BecomeOutOfUse(3);
+                if (NPC.type <= 2)
+                {
+                    NPC.Die();
+                    gameManager.isSomeoneKilledDirectly = true;
+                    BecomeVisible();
+                    BloodyClothes();
+                    gameManager.BecomeOutOfUse(3);
+                }
+                else
+                {
+                    NPC.StartSpeak("Свет слишком силен в нем, не буду рисковать, сосредоточусь на других целях");
+                }
             }
             else if (door != null && door.isLocked)
             {
@@ -292,14 +311,14 @@ public class Interaction : MonoBehaviour
 
     public void BloodyClothes()
     {
-        clothesSprite.color = Color.red;
+        bloodStain.SetActive(true);
         isClothesBlooded = true;
         playerSpeak.StartSpeak("В таком виде мне лучше не попадаться на глаза", false);
     }
 
     public void CleanClothes()
     {
-        clothesSprite.color = Color.white;
+        bloodStain.SetActive(false);
         isClothesBlooded = false;
     }
 

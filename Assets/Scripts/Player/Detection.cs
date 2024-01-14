@@ -12,7 +12,7 @@ public class Detection : MonoBehaviour
     public List<Collider2D> foods;
     public List<Collider2D> doors;
     public List<Collider2D> items;
-    public List<Collider2D> clothes;
+    public Collider2D clothes;
     public PlayerSpeak playerSpeak;
 
     void Start()
@@ -59,8 +59,8 @@ public class Detection : MonoBehaviour
 
         if (other.CompareTag("Clothes"))
         {
-            clothes.Add(other);
             interaction.clothes = other.GetComponentInParent<Clothes>();
+            interaction.clothes.ShowHint();
         }
 
         if (other.CompareTag("Item"))
@@ -157,15 +157,8 @@ public class Detection : MonoBehaviour
 
         if (other.CompareTag("Clothes"))
         {
-            clothes.Remove(other);
-            if (clothes.Count == 0)
-            {
-                interaction.clothes = null;
-            }
-            else
-            {
-                interaction.clothes = clothes[^1].GetComponent<Clothes>();
-            }
+            interaction.clothes.HideHint();
+            interaction.clothes = null;
         }
 
         if (other.CompareTag("Item"))

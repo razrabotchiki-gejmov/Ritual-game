@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -18,9 +20,16 @@ public class NPCMovement : MonoBehaviour
     private int spotIndex;
     private Transform body;
     public bool cannotMove;
+    private bool isMovingToPoint;
+    private CoinPoint coinPoint;
+    private NPCState npcState;
+    public bool isPlayerDetected;
+    public Transform playerTransform;
 
     void Start()
     {
+        playerTransform = GameObject.FindWithTag("Player").transform;
+        npcState = GetComponent<NPCState>();
         spriteChanger = GetComponent<SpriteChanger>();
         body = GetComponentInChildren<NPCVision>().transform;
         if (cooldowns.Count > 0) timeToMove = cooldowns[0];
@@ -29,8 +38,21 @@ public class NPCMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isPlayerDetected) LookAtPoint(playerTransform);
         if (cannotMove) return;
-        if (spots.Count > 0 && cooldowns.Count > 0 && methods.Count > 0)
+        if (isMovingToPoint)
+        {
+            if (!coinPoint.isCoinHere) isMovingToPoint = false;
+            var dir = (Vector2)coinPoint.transform.position - (Vector2)transform.position;
+            if (dir.magnitude > 0.1)
+            {
+                transform.position =
+                    (Vector3)Vector2.MoveTowards(transform.position, coinPoint.transform.position,
+                        speed * Time.deltaTime) +
+                    Vector3.forward * transform.position.z;
+            }
+        }
+        else if (spots.Count > 0 && cooldowns.Count > 0 && methods.Count > 0)
         {
             var dir = (spots[spotIndex] - (Vector2)transform.position).normalized;
             if (dir.magnitude > 0.1) Move(dir);
@@ -96,5 +118,41 @@ public class NPCMovement : MonoBehaviour
 
         spotIndex = (spotIndex + 1) % spots.Count;
         timeToMove = cooldowns[spotIndex];
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Door"))
+        {
+            other.GetComponentInParent<DoorNew>().Open();
+        }
+        if (other.CompareTag("CoinPoint") && npcState.type <= 1 && other.GetComponent<CoinPoint>().isCoinHere)
+        {
+            isMovingToPoint = true;
+            coinPoint = other.GetComponent<CoinPoint>();
+        }
+    }
+
+    public void LookAtPoint(Transform point)
+    {
+        var dir = (Vector2)point.transform.position - (Vector2)transform.position;
+        var angle = Mathf.Atan2(dir.y, dir.x) * 180 / Mathf.PI;
+        body.rotation = Quaternion.Euler(0, 0, angle);
+        if (angle is <= 45 and > -45)
+        {
+            spriteChanger.LookRight();
+        }
+        else if (angle is > 45 and <= 135)
+        {
+            spriteChanger.LookUp();
+        }
+        else if (angle is > 135 or <= -135)
+        {
+            spriteChanger.LookLeft();
+        }
+        else if (angle is > -135 and <= -45)
+        {
+            spriteChanger.LookDown();
+        }
     }
 }

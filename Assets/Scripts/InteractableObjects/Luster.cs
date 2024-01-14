@@ -19,7 +19,8 @@ public class Luster : MonoBehaviour
     {
         if (other.CompareTag("NPC"))
         {
-            other.GetComponent<NPCState>().Die();
+            var npcState = other.GetComponent<NPCState>();
+            if (npcState.type <= 1) npcState.Die();
             Destroy(GetComponentInParent<LusterConstruction>().gameObject);
         }
     }

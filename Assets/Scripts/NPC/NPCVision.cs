@@ -59,17 +59,17 @@ public class NPCVision : MonoBehaviour
                     break;
                 }
 
-                if (hit.collider.gameObject.GetComponent<Item>())
-                {
-                    if (hit.collider.gameObject.GetComponent<Item>().type == 5 &&
-                        gameObject.GetComponentInParent<NPCState>().type == 0)
-                    {
-                        Debug.DrawLine((Vector2)transform.position + offset, hit.point, Color.blue);
-                        // gameObject.GetComponentInParent<NPCMovementOld>().MoveToPoint(hit.point);
-                        // gameObject.GetComponentInParent<NPCMovementOld>().isMovingToCoin = true;
-                        break;
-                    }
-                }
+                // if (hit.collider.gameObject.GetComponent<Item>())
+                // {
+                //     if (hit.collider.gameObject.GetComponent<Item>().type == 5 &&
+                //         gameObject.GetComponentInParent<NPCState>().type == 0)
+                //     {
+                //         Debug.DrawLine((Vector2)transform.position + offset, hit.point, Color.blue);
+                //         // gameObject.GetComponentInParent<NPCMovementOld>().MoveToPoint(hit.point);
+                //         // gameObject.GetComponentInParent<NPCMovementOld>().isMovingToCoin = true;
+                //         break;
+                //     }
+                // }
             }
 
             if (!isSomethingFounded)
