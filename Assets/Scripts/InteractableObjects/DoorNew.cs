@@ -51,4 +51,6 @@ public class DoorNew : MonoBehaviour
         audioSource.Play();
         Open(true);
     }
+
+    
 }

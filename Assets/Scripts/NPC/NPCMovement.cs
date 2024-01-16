@@ -16,6 +16,7 @@ public class NPCMovement : MonoBehaviour
 
     // 0 - ничего
     // 1 - поесть
+    // 2 - телепортироваться к следующей точке
     public List<Vector2> spots;
     private int spotIndex;
     private Transform body;
@@ -117,15 +118,17 @@ public class NPCMovement : MonoBehaviour
         }
 
         spotIndex = (spotIndex + 1) % spots.Count;
+        if (methods[spotIndex] == 2)
+        {
+            transform.position = spots[spotIndex];
+            spotIndex = (spotIndex + 1) % spots.Count;
+        }
+
         timeToMove = cooldowns[spotIndex];
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Door"))
-        {
-            other.GetComponentInParent<DoorNew>().Open();
-        }
         if (other.CompareTag("CoinPoint") && npcState.type <= 1 && other.GetComponent<CoinPoint>().isCoinHere)
         {
             isMovingToPoint = true;

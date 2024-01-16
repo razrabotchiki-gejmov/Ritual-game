@@ -21,7 +21,7 @@ public class Interaction : MonoBehaviour
     public bool haveWeapon;
     public bool havePaint;
     public bool haveCoin;
-    public float invisibilityCooldown = 60f;
+    private float invisibilityCooldown = 10f;
     public float timeToBecomeVisible;
     public bool isInvisible;
     public bool isClothesBlooded;
@@ -172,10 +172,12 @@ public class Interaction : MonoBehaviour
                 coinPoint.HideHint();
                 if (lusterTrigger != null) lusterTrigger.ShowHint();
                 gameManager.ShowLusterInfo();
+                gameManager.HideItem();
             }
 
             if (haveKey && door != null && door.isLocked)
             {
+                gameManager.HideItem();
                 door.Unlock();
                 haveKey = false;
                 Destroy(GetComponentInChildren<Item>().gameObject);
@@ -189,7 +191,7 @@ public class Interaction : MonoBehaviour
                 if (havePoison && food != null) food.CannotBePoisoned();
                 if (haveKey && door != null) door.GetComponentInChildren<DoorHint>().DoorOpenCloseHint();
                 if (haveCoin && isCoinPointNear) coinPoint.HideHint();
-                GetComponentInChildren<Item>().DropWeapon(GetComponent<Transform>());
+                DropWeapon();
             }
         }
 
@@ -225,14 +227,10 @@ public class Interaction : MonoBehaviour
                     potentialKiller.KillTargetNPC();
                     gameManager.BecomeOutOfUse(1);
                 }
-                else if (NPC.type <= 2)
-                {
-                    playerSpeak.StartSpeak(" Иди найди тихое место и жди меня там", false, true);
-                    // NPC.GetComponent<NPCMovementOld>().FullStop();
-                    // NPC.GetComponent<NPCMovementOld>().isMoveToPoint = true;
-                    NPC.StartSpeak(5);
-                    gameManager.BecomeOutOfUse(1);
-                }
+                // else if (NPC.GetComponent<Persuadable>())
+                // {
+                //     NPC.GetComponent<Persuadable>().StartMethod();
+                // }
                 else if (NPC.type == 4)
                 {
                     NPC.StartSpeak(9);
@@ -242,6 +240,7 @@ public class Interaction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
+            if (isInvisible) BecomeVisible();
             if (gameManager.canUseInvisibility)
             {
                 BecomeInvisible();
@@ -279,13 +278,20 @@ public class Interaction : MonoBehaviour
         {
             gameManager.EndDay();
         }
+
+        if (other.CompareTag("CoroutineTrigger"))
+        {
+            if (gameManager.isCoroutineWas) return;
+            gameManager.StartCoroutine(gameManager.coroutine);
+            gameManager.isCoroutineWas = true;
+        }
     }
 
     public void BecomeInvisible()
     {
         gameManager.BecomeOutOfUse(2);
         var newColor = GetComponent<SpriteRenderer>().color;
-        newColor.a = 0.1f;
+        newColor.a = 0.2f;
         GetComponent<SpriteRenderer>().color = newColor;
         isInvisible = true;
         gameManager.ShowInvisibilityTimeScale();
@@ -313,7 +319,8 @@ public class Interaction : MonoBehaviour
     {
         bloodStain.SetActive(true);
         isClothesBlooded = true;
-        playerSpeak.StartSpeak("В таком виде мне лучше не попадаться на глаза", false);
+        playerSpeak.StartSpeak("В таком виде мне лучше не попадаться на глаза");
+        playerSpeak.StartSpeakEndDayWait();
     }
 
     public void CleanClothes()
@@ -372,5 +379,10 @@ public class Interaction : MonoBehaviour
         BecomeVisible();
         playerMovement.enabled = true;
         gameManager.HideItem();
+    }
+
+    public void DropWeapon()
+    {
+        GetComponentInChildren<Item>().DropWeapon(GetComponent<Transform>());
     }
 }

@@ -12,19 +12,22 @@ public class NPCVision : MonoBehaviour
     public Vector2 offset;
     public bool isPlayerSpotted;
     public bool isPlayerHaveWeapon;
+    public bool isPlayerHaveCoinOrKey;
     public bool isSomeoneKilledDirectly;
     public GameManager gameManager;
     public GameObject player;
     public Interaction interaction;
     public GameObject NPC;
     public int lastDetectionRating;
+    public NPCState npcState;
 
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         player = GameObject.FindWithTag("Player");
         interaction = player.GetComponent<Interaction>();
-        NPC = GetComponentInParent<NPCState>().gameObject;
+        npcState = GetComponentInParent<NPCState>();
+        NPC = npcState.gameObject;
     }
 
     // Update is called once per frame
@@ -32,6 +35,7 @@ public class NPCVision : MonoBehaviour
     {
         var newIsPlayerSpotted = false;
         var newIsPlayerHaveWeapon = interaction.haveWeapon;
+        var newIsPlayerHaveCoinOrKey = (interaction.haveCoin || interaction.haveKey);
         var newIsPlayerSmeared = interaction.isClothesBlooded;
         for (int i = -rays / 2; i < rays / 2 + 1; i++)
         {
@@ -59,6 +63,11 @@ public class NPCVision : MonoBehaviour
                     break;
                 }
 
+                if (hit.collider.gameObject.CompareTag("NPC") && hit.collider.GetComponent<NPCState>().isDead)
+                {
+                    if (npcState.seenCorpse) continue;
+                    npcState.StartSpeak(11);
+                }
                 // if (hit.collider.gameObject.GetComponent<Item>())
                 // {
                 //     if (hit.collider.gameObject.GetComponent<Item>().type == 5 &&
@@ -90,6 +99,13 @@ public class NPCVision : MonoBehaviour
             lastDetectionRating = 20;
             NPC.GetComponent<NPCState>().StartSpeak(1);
         }
+        else if (npcState.type == 4 && isPlayerSpotted && !isPlayerHaveCoinOrKey && newIsPlayerHaveCoinOrKey)
+        {
+            gameManager.IncreaseDetectionRating(10);
+            lastDetectionRating = 10;
+            NPC.GetComponent<NPCState>().StartSpeak(12);
+            player.GetComponent<Interaction>().DropWeapon();
+        }
 
         else if (!isPlayerSpotted && newIsPlayerSpotted)
         {
@@ -115,5 +131,6 @@ public class NPCVision : MonoBehaviour
         isSomeoneKilledDirectly = gameManager.isSomeoneKilledDirectly;
         isPlayerSpotted = newIsPlayerSpotted;
         isPlayerHaveWeapon = newIsPlayerHaveWeapon;
+        isPlayerHaveCoinOrKey = newIsPlayerHaveWeapon;
     }
 }
