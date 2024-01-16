@@ -551,9 +551,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda2c0101d6fd694fa403e96bb425b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rays: 11
+  rays: 19
   distance: 10
-  angle: 50
+  angle: 80
   offset: {x: 0, y: 0}
   isPlayerSpotted: 0
   isPlayerHaveWeapon: 0

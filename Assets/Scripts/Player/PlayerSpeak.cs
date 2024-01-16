@@ -37,4 +37,14 @@ public class PlayerSpeak : MonoBehaviour
     {
         dialogWindow.SetActive(false);
     }
+
+    public void StartSpeakEndDay()
+    {
+        StartSpeak("На сегодня все, нужно быстрее вернуться в свою комнату");
+    }
+    public void StartSpeakEndDayWait()
+    {
+        Invoke(nameof(StartSpeakEndDay), 5);
+    }
+    
 }

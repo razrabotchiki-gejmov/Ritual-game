@@ -27,12 +27,13 @@ public class GameManager : MonoBehaviour
     public bool isSomeoneKilledDirectly;
     public NPCState leftNpcSpeaker;
     public NPCState rightNpcSpeaker;
-    private IEnumerator coroutine;
+    public IEnumerator coroutine;
     public NPCState smearedNPC;
     public TextMeshProUGUI info;
     public Image image;
     public TextMeshProUGUI name;
     public PlayerSpeak playerSpeak;
+    public bool isCoroutineWas;
 
 
     void Start()
@@ -58,7 +59,7 @@ public class GameManager : MonoBehaviour
         }
 
         coroutine = Coroutine();
-        StartCoroutine(coroutine);
+        // StartCoroutine(coroutine);
     }
 
     // Update is called once per frame
@@ -220,23 +221,23 @@ public class GameManager : MonoBehaviour
                 leftNpcSpeaker.canSpeak = false;
                 rightNpcSpeaker.canSpeak = false;
                 leftNpcSpeaker.StartSpeak(
-                    "Здравствуй, брат. Надеюсь, ты нашел в своей душе спокойствие в эти благословенные дни.");
+                    "Здравствуй, брат. Надеюсь, ты нашел в своей\nдуше спокойствие в эти благословенные дни.");
             }
 
             if (number == 1)
             {
                 rightNpcSpeaker.StartSpeak(
-                    "Здравствуй и ты, брат. Конечно, душа моя замечательно пребывает в мире молитв и покаяния.");
+                    "Здравствуй и ты, брат. Конечно, душа моя\nзамечательно пребывает в мире молитв и покаяния.");
             }
 
             if (number == 2)
             {
-                leftNpcSpeaker.StartSpeak("Ну в твоем случае не лишним будет уточнить, а то я тебя знаю.");
+                leftNpcSpeaker.StartSpeak("Ну в твоем случае не лишним\nбудет уточнить, а то я тебя знаю.");
             }
 
             if (number == 3)
             {
-                rightNpcSpeaker.StartSpeak("Опять ты за свое, почему ты так ко мне относишься, я не понимаю.");
+                rightNpcSpeaker.StartSpeak("Опять ты за свое, почему ты так\nко мне относишься, я не понимаю.");
             }
 
             if (number == 4)
@@ -254,7 +255,7 @@ public class GameManager : MonoBehaviour
                 leftNpcSpeaker.canSpeak = false;
                 rightNpcSpeaker.canSpeak = false;
                 leftNpcSpeaker.StartSpeak(
-                    " Брат, слышал ли ты об ужасном событии вчерашнего вечера?");
+                    " Брат, слышал ли ты об ужасном\nсобытии вчерашнего вечера?");
             }
 
             if (number == 1)
@@ -266,17 +267,17 @@ public class GameManager : MonoBehaviour
             if (number == 2)
             {
                 leftNpcSpeaker.StartSpeak(
-                    "Похоже, кто-то из нас совершил убийство. Подумай, кто из монахов мог бы совершить такое?");
+                    "Похоже, кто-то из нас совершил убийство.\nПодумай, кто из монахов мог бы совершить такое?");
             }
 
             if (number == 3)
             {
-                rightNpcSpeaker.StartSpeak("Брат, ты что, с ума сошел, разве мог слуга Божий сделать подобное?");
+                rightNpcSpeaker.StartSpeak("Брат, ты что, с ума сошел,\nразве мог слуга Божий сделать подобное?");
             }
 
             if (number == 4)
             {
-                leftNpcSpeaker.StartSpeak("Говори, что угодно, но меня не обманешь, я знаю о мраке в твоей душе.");
+                leftNpcSpeaker.StartSpeak("Говори, что угодно, но меня не обманешь,\nя знаю о мраке в твоей душе.");
             }
 
             if (number == 5)
@@ -299,24 +300,24 @@ public class GameManager : MonoBehaviour
                 leftNpcSpeaker.canSpeak = false;
                 rightNpcSpeaker.canSpeak = false;
                 leftNpcSpeaker.StartSpeak(
-                    "Как думаешь, кто стоит за этим ужасом? Неужели ты не видишь, что это кто-то из наших?");
+                    "Как думаешь, кто стоит за этим ужасом?\nНеужели ты не видишь, что это кто-то из наших?");
             }
 
             if (number == 1)
             {
                 rightNpcSpeaker.StartSpeak(
-                    "Ты, кажется, умеешь только обвинять других. Может быть, ты сам причастен к этим злодеяниям?");
+                    "Ты, кажется, умеешь только обвинять других.\nМожет быть, ты сам причастен к этим злодеяниям?");
             }
 
             if (number == 2)
             {
-                leftNpcSpeaker.StartSpeak("Не кати на меня бочку, ты можешь об этом пожалеть!");
+                leftNpcSpeaker.StartSpeak("Не кати на меня бочку,\nты можешь об этом пожалеть!");
             }
 
             if (number == 3)
             {
                 rightNpcSpeaker.StartSpeak(
-                    "Мы все знаем, как твое сердце исполнено зависти и ненависти. Не удивительно, что темные силы нашли тебя.");
+                    "Мы все знаем, как твое сердце исполнено зависти и ненависти.\nНе удивительно, что темные силы нашли тебя.");
             }
 
             if (number == 4)

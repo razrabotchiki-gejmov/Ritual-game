@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NPC;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class NPCState : MonoBehaviour
 {
@@ -20,6 +22,12 @@ public class NPCState : MonoBehaviour
     [SerializeField] private GameObject dialog;
     [SerializeField] private GameObject blackScreen;
     public GameObject bloodyStain;
+    public bool seenCorpse;
+    public bool isSpeaking;
+
+    private void Awake()
+    {
+    }
 
     void Start()
     {
@@ -27,11 +35,11 @@ public class NPCState : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
         blackScreen = GameObject.Find("BlackScreen");
         hint = GetComponent<NPCHint>();
         dialogWindow = transform.Find("DialogWindow").gameObject;
-        dialogMessage = dialogWindow.transform.Find("Background").Find("Text").gameObject
-            .GetComponent<TextMeshProUGUI>();
+        dialogMessage = dialogWindow.GetComponentInChildren<TextMeshProUGUI>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         // dialogMessage = transform.Find("Text").gameObject.GetComponent<Text>();
     }
@@ -103,6 +111,8 @@ public class NPCState : MonoBehaviour
     // 8 - игрок подошёл близко к паладину 
     // 9 - настоятель отвлекается
     // 10 - игрок сообщаект стражнику о запятнаном NPC
+    // 11 - Увидкл труп
+    // 12 - Настоятель палит
     public string UsePhrase(int cause)
     {
         if (cause == 0)
@@ -217,6 +227,16 @@ public class NPCState : MonoBehaviour
             TeleportToScene();
             return "Я покараю этого нечестивого";
         }
+        else if (cause == 11)
+        {
+            seenCorpse = true;
+            return new[] { "АаАаА!", "Убийца здесь!"}[
+                Random.Range(0, 2)];
+        }
+        else if (cause == 12)
+        {
+            return "Куда руки тянешь, это не твое!";
+        }
 
         return "...";
     }
@@ -235,7 +255,9 @@ public class NPCState : MonoBehaviour
     {
         var movement = GetComponent<NPCMovement>();
         movement.cooldowns = new List<float>
-            { 0, 0.23f, 0.1f, 0.1f, 0.3f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.35f, 0.1f, 0.3f, 10000000f };
+        {
+            0.1f, 0.1f, 0.1f, 0.23f, 0.1f, 0.1f, 0.1f, 0.3f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.35f, 0.1f, 0.1f, 0.3f, 0.1f, 0.1f, 0.1f, 0.1f, 10000000f
+        };
     }
 
     private Vector3 initPlace;

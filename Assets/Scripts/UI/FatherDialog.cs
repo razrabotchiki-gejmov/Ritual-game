@@ -64,7 +64,7 @@ public class FatherDialog : MonoBehaviour
             superiorName.SetActive(false);
             phrase.SetActive(false);
             playerName.SetActive(true);
-            answer1.GetComponent<TextMeshProUGUI>().text = "1) " + myClass.Answer1;
+            answer1.GetComponent<TextMeshProUGUI>().text = myClass.Answer1;
             answer1.SetActive(true);       
         }
 

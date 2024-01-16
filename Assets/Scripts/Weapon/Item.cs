@@ -55,7 +55,7 @@ public class Item : MonoBehaviour
         if (type <= 2) interaction.haveWeapon = true;
         if (type == 0) name = "Нож";
         if (type == 1) name = "Камень";
-        if (type == 2) name = "Жила";
+        if (type == 2) name = "Верёвка";
         if (type == 3)
         {
             name = "Яд";

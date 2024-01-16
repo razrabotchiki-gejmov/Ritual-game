@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject info;
-    public GameObject menu;
+    public GameObject htpPanel;
     public GameManager gameManager;
 
     void Start()
@@ -38,6 +38,10 @@ public class UIManager : MonoBehaviour
     {
         info.SetActive(true);
     }
+    public void HideInfo()
+    {
+        info.SetActive(false);
+    }
 
     public void Resume()
     {
@@ -64,5 +68,14 @@ public class UIManager : MonoBehaviour
     public void LoadStartScreen()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void ShowHowToPlay()
+    {
+        htpPanel.SetActive(true);
+    }
+    public void HideHowToPlay()
+    {
+        htpPanel.SetActive(false);
     }
 }
